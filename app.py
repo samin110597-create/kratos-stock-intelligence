@@ -14,6 +14,7 @@ from kratos.engine import analyze
 from kratos.data import valid_symbol
 from kratos.technicals import finite
 from kratos.options_ui import fetch_options_ui
+from kratos.structure import causal_structure
 
 ET = ZoneInfo("America/Toronto")
 
@@ -83,6 +84,21 @@ def result_view(r):
                f"**52-week range:** {money(t['low52w'])} – {money(t['high52w'])} · **EMA20:** {money(t['ema20'])} · **EMA50:** {money(t['ema50'])}\n\n"+
                f"**Relative daily volume:** {money(t['volume_ratio'])}× 20-day average.\n\n"
                "Missing intraday bars produce UNKNOWN, never fabricated indicators. Weekly bar may be incomplete during trading week and is provisional.")
+    structure=causal_structure(t["daily"])
+    recent_gaps=structure.get("fvg", [])
+    technical += ("\n\n### Price-action and liquidity context — observed closed bars\n\n"
+                  + f"**Latest event:** {structure.get('status','UNKNOWN')} — {structure.get('reason','')}\n\n"
+                  + f"**Prior 20-bar high/low:** {money(structure.get('reference_high'))} / "
+                  + f"{money(structure.get('reference_low'))}\n\n"
+                  + f"**Relative volume confirmation:** {structure.get('participation','UNKNOWN')}\n\n"
+                  + f"**Confirmed swing-high / swing-low sequence:** "
+                  + f"{structure.get('confirmed_pivot_trend',{}).get('highs','UNKNOWN')} / "
+                  + f"{structure.get('confirmed_pivot_trend',{}).get('lows','UNKNOWN')}\n\n"
+                  + "**Recent still-unfilled FVG price patterns:**\n"
+                  + ("\n".join(f"- {g['kind']}: {money(g['low'])}–{money(g['high'])}, "
+                                f"created {g['created_on']} ({g['state']})"
+                                for g in recent_gaps) if recent_gaps else "- None meeting the testable size filter.") 
+                  + "\n\n*These patterns do not prove institutional orders or offer validated probabilities.*")
     facts = "| Fundamental fact | Reported value |\n|---|---|\n" + "\n".join(f"| {k} | {v} |" for k,v in r.facts)
     fundamentals = ("### Fundamentals — from data provider\n\n" + facts + "\n\n**Valuation:** " + r.valuation_note +
                     "\n\nAmounts and currency follow the provider and must be independently verified against filings. Data may be delayed or missing.")
