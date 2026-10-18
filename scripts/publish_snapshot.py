@@ -14,6 +14,7 @@ import pandas as pd
 
 from kratos.engine import analyze
 from kratos.technicals import only_closed_daily
+from kratos.structure import causal_structure
 
 ET = ZoneInfo("America/Toronto")
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,6 +90,7 @@ def pack(ticker, result):
             "high52w": tech["high52w"], "low52w": tech["low52w"],
             "history": history
         },
+        "market_structure": causal_structure(df),
         "fundamentals": {
             "facts": [{"label": k, "value": v} for k, v in result.facts],
             "valuation_note": result.valuation_note
