@@ -13,6 +13,7 @@ from kratos.audit import record, resolve, audit_stats, recent_records
 from kratos.engine import analyze
 from kratos.data import valid_symbol
 from kratos.technicals import finite
+from kratos.options_ui import fetch_options_ui
 
 ET = ZoneInfo("America/Toronto")
 
@@ -168,6 +169,14 @@ def build_app():
                 fundamentals=gr.Markdown("Run analysis first.")
             with gr.Tab("Projection"):
                 projection=gr.Markdown("Run analysis first.")
+            with gr.Tab("Options map · experimental"):
+                gr.Markdown("**Personal-use options research from free, possibly delayed chains.** "
+                            "Modeled GEX/VEX/DEX/Charm are NOT verified dealer positions. "
+                            "This feature runs here in Python, not on the static GitHub Pages website.")
+                options_btn=gr.Button("Fetch options positioning for ticker",variant="secondary")
+                options_summary=gr.Markdown("Click Fetch to inspect available chains and modeled exposures.")
+                options_chart=gr.Plot(label="Assumed dealer-sign gamma scenario")
+                options_table=gr.Dataframe(label="Nearby strike gamma concentrations",interactive=False)
             with gr.Tab("Accuracy audit"):
                 gr.Markdown("Forecasts are immutable. Statistics apply **only to matured, logged forecasts**, never invented historical wins. Outcomes use the 5th/20th future daily bar.")
                 save_btn=gr.Button("Record this forecast",variant="secondary")
@@ -185,6 +194,8 @@ def build_app():
                       projection,quality,chart,state,status],show_progress="full")
         ticker.submit(user_analyze,inputs=[ticker],outputs=[banner,decision,tech,fundamentals,
                       projection,quality,chart,state,status])
+        options_btn.click(fetch_options_ui,inputs=[ticker],
+                          outputs=[options_summary,options_chart,options_table],show_progress="full")
         save_btn.click(save_hypothesis,inputs=[state],outputs=[audit_msg,audit_summary,audit_table])
         refresh_btn.click(refresh_audit,outputs=[audit_summary,audit_table])
         settle_btn.click(verify_outcomes,inputs=[ticker],outputs=[audit_msg,audit_summary,audit_table])
