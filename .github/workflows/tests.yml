@@ -5,12 +5,36 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
-      - run: pip install -r requirements-dev.txt
-      - run: python -m compileall -q .
-      - run: python -m pytest -q
+      - name: Install
+        run: pip install -r requirements-dev.txt
+      - name: Syntax check
+        run: python -m compileall -q app.py kratos tests
+      - name: Unit and UI component tests
+        run: python -m pytest -q
+      - name: Webserver smoke test (HTTP 200)
+        shell: bash
+        run: |
+          export GRADIO_ANALYTICS_ENABLED=False
+          python app.py > /tmp/kratos-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 45); do
+            if curl --fail --silent --show-error --max-time 4 http://127.0.0.1:7860/ -o /tmp/kratos-response.html; then
+              echo "KRATOS application responded successfully."
+              exit 0
+            fi
+            if ! kill -0 "$server_pid" 2>/dev/null; then
+              echo "Server exited before it was ready."
+              break
+            fi
+            sleep 2
+          done
+          cat /tmp/kratos-server.log
+          exit 1
