@@ -121,7 +121,7 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
         z[f"{kind}_gex"] += gamma_usd
         z["scenario_net_gex"] += sign * gamma_usd
         z["gross_gex"] += abs(gamma_usd)
-        z["scenario_dex"] += sign * dex_usd
+        z["scenario_dex"] += dex_usd
         z["scenario_vex"] += sign * vex_usd_per_iv_point
         z["scenario_charm"] += sign * charm_usd_per_day
         z["contracts"] += 1
