@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-18T22:58:06.228702+00:00",
+  "generated_at_utc": "2026-10-18T23:03:22.342611+00:00",
   "provider_note": "Yahoo Finance (unofficial); delayed/limited or unavailable; not a real-time market-data agreement.",
   "coverage": 12,
   "fresh_results": 12,
@@ -8,13 +8,13 @@
       "ticker": "NVDA",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:07.304398+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:23.584170+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 214.1300048828125,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.1,
+        "age_minutes": 3064.4,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -32,24 +32,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          222.87122968032938,
-          226.74825243809593
+          222.8712296803113,
+          226.7482524381036
         ],
-        "stop": 211.65707602420284,
+        "stop": 211.6570760241949,
         "targets": [
-          244.53873861172738,
-          257.6914036467372,
-          277.42040119925196
+          244.53873861172627,
+          257.6914036467388,
+          277.42040119925764
         ],
-        "rr_to_resistance": 1.4111401764259246,
+        "rr_to_resistance": 1.4111401764260274,
         "ranges": {
           "5": {
-            "lower": 200.7926411340745,
-            "upper": 227.4673686315505
+            "lower": 200.7926411339859,
+            "upper": 227.4673686316391
           },
           "20": {
-            "lower": 187.4552773853365,
-            "upper": 240.8047323802885
+            "lower": 187.45527738515932,
+            "upper": 240.80473238046568
           }
         }
       },
@@ -61,10 +61,10 @@
           "1D": "MIXED",
           "1W": "MIXED"
         },
-        "atr": 5.964650396563915,
-        "rsi": 37.558176720408,
-        "ema20": 225.55532235878314,
-        "ema50": 221.97777473964913,
+        "atr": 5.96465039660354,
+        "rsi": 37.558176720680486,
+        "ema20": 225.5553223587829,
+        "ema50": 221.97777473751975,
         "volume_ratio": 1.1525171160880499,
         "support20": 212.85000610351562,
         "resistance20": 243.3699951171875,
@@ -554,6 +554,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 243.37,
+        "reference_low": 212.85,
+        "volume_ratio": 1.116,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "HL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 233.2100067138672,
+            "date": "2026-09-28",
+            "known_on": "2026-09-30"
+          },
+          {
+            "price": 243.3699951171875,
+            "date": "2026-10-06",
+            "known_on": "2026-10-08"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 208.92999267578125,
+            "date": "2026-09-14",
+            "known_on": "2026-09-16"
+          },
+          {
+            "price": 221.08999633789062,
+            "date": "2026-09-24",
+            "known_on": "2026-09-28"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BULLISH",
+            "low": 189.2275,
+            "high": 195.2936,
+            "created_on": "2026-04-15",
+            "known_on": "2026-04-15",
+            "state": "PARTIAL",
+            "age_completed_bars": 128
+          },
+          {
+            "kind": "BULLISH",
+            "low": 201.7742,
+            "high": 208.8163,
+            "created_on": "2026-08-04",
+            "known_on": "2026-08-04",
+            "state": "PARTIAL",
+            "age_completed_bars": 52
+          },
+          {
+            "kind": "BEARISH",
+            "low": 237.07,
+            "high": 238.93,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 233.92,
+            "high": 236.38,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 218.47,
+            "high": 223.06,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "PARTIAL",
+            "age_completed_bars": 1
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -634,13 +719,13 @@
       "ticker": "AVGO",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:07.845528+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:24.254051+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 328.75,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.1,
+        "age_minutes": 3064.4,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -657,24 +742,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          348.9228032080832,
-          356.4405835918929
+          348.92280321440563,
+          356.44058358955124
         ],
-        "stop": 326.26682337724725,
+        "stop": 326.26682337991315,
         "targets": [
-          392.3039984340992,
-          418.71886845684,
-          458.3411734909512
+          392.30399843507644,
+          418.71886845714175,
+          458.3411734902397
         ],
-        "rr_to_resistance": 3.0006500231628905,
+        "rr_to_resistance": 3.0006500231642694,
         "ranges": {
           "5": {
-            "lower": 302.8880492644417,
-            "upper": 354.6119507355583
+            "lower": 302.88804929424697,
+            "upper": 354.61195070575303
           },
           "20": {
-            "lower": 277.0260985288834,
-            "upper": 380.4739014711166
+            "lower": 277.02609858849394,
+            "upper": 380.47390141150606
           }
         }
       },
@@ -686,10 +771,10 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 11.565815975091812,
-        "rsi": 34.89164065371699,
-        "ema20": 354.1274203968745,
-        "ema50": 362.94930225192707,
+        "atr": 11.565815961762484,
+        "rsi": 34.89164061336322,
+        "ema20": 354.12742039719876,
+        "ema50": 362.9493022321496,
         "volume_ratio": 1.3313037689574725,
         "support20": 328.5799865722656,
         "resistance20": 380.8399963378906,
@@ -739,7 +824,7 @@
           },
           {
             "date": "2026-05-12",
-            "close": 417.8765
+            "close": 417.87646
           },
           {
             "date": "2026-05-13",
@@ -775,11 +860,11 @@
           },
           {
             "date": "2026-05-26",
-            "close": 420.57733
+            "close": 420.5773
           },
           {
             "date": "2026-05-27",
-            "close": 420.42776
+            "close": 420.4278
           },
           {
             "date": "2026-05-28",
@@ -795,7 +880,7 @@
           },
           {
             "date": "2026-06-02",
-            "close": 479.93512
+            "close": 479.93509
           },
           {
             "date": "2026-06-03",
@@ -835,7 +920,7 @@
           },
           {
             "date": "2026-06-16",
-            "close": 375.43106
+            "close": 375.43109
           },
           {
             "date": "2026-06-17",
@@ -1179,6 +1264,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "CLOSE_BELOW_PRIOR_LOW",
+        "reason": "Latest close below preceding 20-bar low; continuation unproven.",
+        "asof_date": "2026-10-16",
+        "reference_high": 380.84,
+        "reference_low": 334.61,
+        "volume_ratio": 1.29,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 361.8599853515625,
+            "date": "2026-09-29",
+            "known_on": "2026-10-01"
+          },
+          {
+            "price": 380.8399963378906,
+            "date": "2026-10-06",
+            "known_on": "2026-10-08"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 346.8900146484375,
+            "date": "2026-09-24",
+            "known_on": "2026-09-28"
+          },
+          {
+            "price": 343.2900085449219,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 385.0788,
+            "high": 387.7938,
+            "created_on": "2026-08-18",
+            "known_on": "2026-08-18",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 42
+          },
+          {
+            "kind": "BEARISH",
+            "low": 373.2304,
+            "high": 390.5987,
+            "created_on": "2026-08-19",
+            "known_on": "2026-08-19",
+            "state": "PARTIAL",
+            "age_completed_bars": 41
+          },
+          {
+            "kind": "BEARISH",
+            "low": 366.63,
+            "high": 369.12,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 344.7,
+            "high": 348.11,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          },
+          {
+            "kind": "BEARISH",
+            "low": 339.59,
+            "high": 342.82,
+            "created_on": "2026-10-16",
+            "known_on": "2026-10-16",
+            "state": "FRESH",
+            "age_completed_bars": 0
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -1259,13 +1429,13 @@
       "ticker": "AMAT",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:08.359047+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:24.936735+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 409.2900085449219,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.1,
+        "age_minutes": 3064.4,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -1283,24 +1453,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          468.2944696611635,
-          481.8935787103359
+          468.294469661168,
+          481.89357871033394
         ],
-        "stop": 403.0756685197258,
+        "stop": 403.0756685197278,
         "targets": [
-          583.1215576847854,
-          655.1399133508094,
-          763.1674468498452
+          583.1215576847858,
+          655.1399133508089,
+          763.1674468498437
         ],
-        "rr_to_resistance": 1.2227964479525135,
+        "rr_to_resistance": 1.222796447952507,
         "ranges": {
           "5": {
-            "lower": 362.50765121048806,
-            "upper": 456.0723658793557
+            "lower": 362.5076512105104,
+            "upper": 456.07236587933335
           },
           "20": {
-            "lower": 315.7252938760542,
-            "upper": 502.85472321378955
+            "lower": 315.72529387609893,
+            "upper": 502.8547232137448
           }
         }
       },
@@ -1312,10 +1482,10 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 20.92170622949598,
-        "rsi": 29.207069003651142,
-        "ema20": 477.7092374644367,
-        "ema50": 485.9686090961375,
+        "atr": 20.921706229485974,
+        "rsi": 29.207069003631773,
+        "ema20": 477.70923746443674,
+        "ema50": 485.9686090979755,
         "volume_ratio": 1.3278094138910967,
         "support20": 407.260009765625,
         "resistance20": 547.25,
@@ -1805,6 +1975,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "CLOSE_BELOW_PRIOR_LOW",
+        "reason": "Latest close below preceding 20-bar low; continuation unproven.",
+        "asof_date": "2026-10-16",
+        "reference_high": 547.25,
+        "reference_low": 418.24,
+        "volume_ratio": 1.271,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 474.0400085449219,
+            "date": "2026-09-09",
+            "known_on": "2026-09-11"
+          },
+          {
+            "price": 547.25,
+            "date": "2026-10-02",
+            "known_on": "2026-10-06"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 426.1300048828125,
+            "date": "2026-09-03",
+            "known_on": "2026-09-08"
+          },
+          {
+            "price": 411.510009765625,
+            "date": "2026-09-16",
+            "known_on": "2026-09-18"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 524.93,
+            "high": 533.59,
+            "created_on": "2026-10-07",
+            "known_on": "2026-10-07",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 7
+          },
+          {
+            "kind": "BEARISH",
+            "low": 485.63,
+            "high": 504.8,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 459.48,
+            "high": 491.83,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          },
+          {
+            "kind": "BEARISH",
+            "low": 434.56,
+            "high": 452.81,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          },
+          {
+            "kind": "BEARISH",
+            "low": 426.81,
+            "high": 445.54,
+            "created_on": "2026-10-16",
+            "known_on": "2026-10-16",
+            "state": "FRESH",
+            "age_completed_bars": 0
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -1885,13 +2140,13 @@
       "ticker": "MU",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:08.952393+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:25.735029+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 878.8400268554688,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.1,
+        "age_minutes": 3064.4,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -1909,24 +2164,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          973.5211427939531,
-          1005.4848361637696
+          973.521142836831,
+          1005.4848361689698
         ],
-        "stop": 848.1650174246719,
+        "stop": 848.165017436265,
         "targets": [
-          1201.5099475601455,
-          1342.8479196143348,
-          1554.854877695619
+          1201.5099476028536,
+          1342.8479196694889,
+          1554.854877769442
         ],
-        "rr_to_resistance": 0.842254429544768,
+        "rr_to_resistance": 0.8422544293005183,
         "ranges": {
           "5": {
-            "lower": 768.8815788756701,
-            "upper": 988.7984748352674
+            "lower": 768.8815790052857,
+            "upper": 988.7984747056518
           },
           "20": {
-            "lower": 658.9231308958714,
-            "upper": 1098.756922815066
+            "lower": 658.9231311551027,
+            "upper": 1098.7569225558348
           }
         }
       },
@@ -1938,10 +2193,10 @@
           "1D": "MIXED",
           "1W": "MIXED"
         },
-        "atr": 49.17491287664085,
-        "rsi": 34.03942187443624,
-        "ema20": 995.6498535884415,
-        "ema50": 982.7702578423114,
+        "atr": 49.174912818674976,
+        "rsi": 34.03942181074788,
+        "ema20": 995.6498536052347,
+        "ema50": 982.7702587524736,
         "volume_ratio": 1.1235216210773284,
         "support20": 858.0,
         "resistance20": 1108.545522504377,
@@ -1955,7 +2210,7 @@
           },
           {
             "date": "2026-04-29",
-            "close": 518.29871
+            "close": 518.29877
           },
           {
             "date": "2026-04-30",
@@ -1971,11 +2226,11 @@
           },
           {
             "date": "2026-05-05",
-            "close": 640.00079
+            "close": 640.00085
           },
           {
             "date": "2026-05-06",
-            "close": 666.38263
+            "close": 666.38269
           },
           {
             "date": "2026-05-07",
@@ -1983,7 +2238,7 @@
           },
           {
             "date": "2026-05-08",
-            "close": 746.5777
+            "close": 746.57764
           },
           {
             "date": "2026-05-11",
@@ -1995,11 +2250,11 @@
           },
           {
             "date": "2026-05-13",
-            "close": 803.38
+            "close": 803.37994
           },
           {
             "date": "2026-05-14",
-            "close": 775.76855
+            "close": 775.76862
           },
           {
             "date": "2026-05-15",
@@ -2019,7 +2274,7 @@
           },
           {
             "date": "2026-05-21",
-            "close": 761.86285
+            "close": 761.86292
           },
           {
             "date": "2026-05-22",
@@ -2027,15 +2282,15 @@
           },
           {
             "date": "2026-05-26",
-            "close": 895.60126
+            "close": 895.60132
           },
           {
             "date": "2026-05-27",
-            "close": 928.12109
+            "close": 928.12115
           },
           {
             "date": "2026-05-28",
-            "close": 923.23273
+            "close": 923.23267
           },
           {
             "date": "2026-05-29",
@@ -2051,23 +2306,23 @@
           },
           {
             "date": "2026-06-03",
-            "close": 1079.23401
+            "close": 1079.23413
           },
           {
             "date": "2026-06-04",
-            "close": 995.69012
+            "close": 995.69019
           },
           {
             "date": "2026-06-05",
-            "close": 863.74115
+            "close": 863.74121
           },
           {
             "date": "2026-06-08",
-            "close": 948.98474
+            "close": 948.98468
           },
           {
             "date": "2026-06-09",
-            "close": 935.59882
+            "close": 935.59888
           },
           {
             "date": "2026-06-10",
@@ -2079,11 +2334,11 @@
           },
           {
             "date": "2026-06-12",
-            "close": 981.30457
+            "close": 981.30463
           },
           {
             "date": "2026-06-15",
-            "close": 1087.65161
+            "close": 1087.65149
           },
           {
             "date": "2026-06-16",
@@ -2095,11 +2350,11 @@
           },
           {
             "date": "2026-06-18",
-            "close": 1133.63721
+            "close": 1133.63708
           },
           {
             "date": "2026-06-22",
-            "close": 1211.00305
+            "close": 1211.00317
           },
           {
             "date": "2026-06-23",
@@ -2107,7 +2362,7 @@
           },
           {
             "date": "2026-06-24",
-            "close": 1048.18372
+            "close": 1048.18384
           },
           {
             "date": "2026-06-25",
@@ -2115,7 +2370,7 @@
           },
           {
             "date": "2026-06-26",
-            "close": 1131.97766
+            "close": 1131.97778
           },
           {
             "date": "2026-06-29",
@@ -2127,7 +2382,7 @@
           },
           {
             "date": "2026-07-01",
-            "close": 1031.95886
+            "close": 1031.95898
           },
           {
             "date": "2026-07-02",
@@ -2431,6 +2686,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 1108.5455,
+        "reference_low": 858.0,
+        "volume_ratio": 1.112,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "LH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 1107.8255989808188,
+            "date": "2026-10-02",
+            "known_on": "2026-10-06"
+          },
+          {
+            "price": 1089.0486362234087,
+            "date": "2026-10-07",
+            "known_on": "2026-10-09"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 1022.7390196669652,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          },
+          {
+            "price": 1011.260886381257,
+            "date": "2026-10-07",
+            "known_on": "2026-10-09"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BULLISH",
+            "low": 735.4511,
+            "high": 746.9676,
+            "created_on": "2026-05-22",
+            "known_on": "2026-05-22",
+            "state": "PARTIAL",
+            "age_completed_bars": 101
+          },
+          {
+            "kind": "BEARISH",
+            "low": 1064.3088,
+            "high": 1124.3101,
+            "created_on": "2026-07-02",
+            "known_on": "2026-07-02",
+            "state": "PARTIAL",
+            "age_completed_bars": 74
+          },
+          {
+            "kind": "BEARISH",
+            "low": 1002.5122,
+            "high": 1031.9376,
+            "created_on": "2026-10-12",
+            "known_on": "2026-10-12",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 4
+          },
+          {
+            "kind": "BEARISH",
+            "low": 953.4499,
+            "high": 1016.84,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 949.42,
+            "high": 978.346,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -2511,13 +2851,13 @@
       "ticker": "CIFR",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:09.481682+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:26.341559+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 8.979999542236328,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.4,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -3056,6 +3396,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "SELL_SIDE_SWEEP_RECLAIM",
+        "reason": "Latest bar traded below prior 20-bar low but closed back above it.",
+        "asof_date": "2026-10-16",
+        "reference_high": 19.745,
+        "reference_low": 8.79,
+        "volume_ratio": 1.182,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 19.489999771118164,
+            "date": "2026-09-08",
+            "known_on": "2026-09-10"
+          },
+          {
+            "price": 19.7450008392334,
+            "date": "2026-09-22",
+            "known_on": "2026-09-24"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 14.850000381469727,
+            "date": "2026-09-15",
+            "known_on": "2026-09-17"
+          },
+          {
+            "price": 12.881999969482422,
+            "date": "2026-10-08",
+            "known_on": "2026-10-12"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 14.24,
+            "high": 15.215,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 13.68,
+            "high": 14.47,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 11.88,
+            "high": 13.12,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 10.86,
+            "high": 12.95,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          },
+          {
+            "kind": "BEARISH",
+            "low": 10.17,
+            "high": 10.68,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -3136,13 +3561,13 @@
       "ticker": "IREN",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:10.104530+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:27.032370+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 26.989999771118164,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -3682,6 +4107,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "SELL_SIDE_SWEEP_RECLAIM",
+        "reason": "Latest bar traded below prior 20-bar low but closed back above it.",
+        "asof_date": "2026-10-16",
+        "reference_high": 49.37,
+        "reference_low": 26.6,
+        "volume_ratio": 1.528,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "LH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 49.369998931884766,
+            "date": "2026-09-23",
+            "known_on": "2026-09-25"
+          },
+          {
+            "price": 43.90999984741211,
+            "date": "2026-10-02",
+            "known_on": "2026-10-06"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 40.970001220703125,
+            "date": "2026-09-15",
+            "known_on": "2026-09-17"
+          },
+          {
+            "price": 39.33000183105469,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 38.06,
+            "high": 40.5,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 36.29,
+            "high": 38.34,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "PARTIAL",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 33.85,
+            "high": 34.655,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          },
+          {
+            "kind": "BEARISH",
+            "low": 30.46,
+            "high": 32.685,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          },
+          {
+            "kind": "BEARISH",
+            "low": 29.27,
+            "high": 30.38,
+            "created_on": "2026-10-16",
+            "known_on": "2026-10-16",
+            "state": "FRESH",
+            "age_completed_bars": 0
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -3762,13 +4272,13 @@
       "ticker": "CRWV",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:10.630155+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:27.630691+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 61.38999938964844,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -4308,6 +4818,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 93.21,
+        "reference_low": 59.51,
+        "volume_ratio": 2.492,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "HL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 91.12300109863281,
+            "date": "2026-09-24",
+            "known_on": "2026-09-28"
+          },
+          {
+            "price": 93.20999908447266,
+            "date": "2026-10-06",
+            "known_on": "2026-10-08"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 83.52999877929688,
+            "date": "2026-09-28",
+            "known_on": "2026-09-30"
+          },
+          {
+            "price": 84.5,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 86.85,
+            "high": 88.6,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 83.45,
+            "high": 87.51,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 78.944,
+            "high": 81.21,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 72.52,
+            "high": 79.03,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          },
+          {
+            "kind": "BEARISH",
+            "low": 69.76,
+            "high": 76.11,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -4388,13 +4983,13 @@
       "ticker": "NBIS",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:11.176824+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:28.248104+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 165.47000122070312,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -4934,6 +5529,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "SELL_SIDE_SWEEP_RECLAIM",
+        "reason": "Latest bar traded below prior 20-bar low but closed back above it.",
+        "asof_date": "2026-10-16",
+        "reference_high": 255.1,
+        "reference_low": 163.36,
+        "volume_ratio": 1.914,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "HL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 250.47999572753906,
+            "date": "2026-09-30",
+            "known_on": "2026-10-02"
+          },
+          {
+            "price": 255.10000610351562,
+            "date": "2026-10-06",
+            "known_on": "2026-10-08"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 228.3800048828125,
+            "date": "2026-09-28",
+            "known_on": "2026-09-30"
+          },
+          {
+            "price": 228.47000122070312,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 236.2,
+            "high": 263.82,
+            "created_on": "2026-08-19",
+            "known_on": "2026-08-19",
+            "state": "PARTIAL",
+            "age_completed_bars": 41
+          },
+          {
+            "kind": "BEARISH",
+            "low": 225.3,
+            "high": 234.03,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 207.92,
+            "high": 218.5,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 198.6,
+            "high": 206.9,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 2
+          },
+          {
+            "kind": "BEARISH",
+            "low": 189.33,
+            "high": 197.6,
+            "created_on": "2026-10-15",
+            "known_on": "2026-10-15",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 1
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -5014,13 +5694,13 @@
       "ticker": "USAR",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:11.683382+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:28.892344+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 10.539999961853027,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -5560,6 +6240,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 17.1,
+        "reference_low": 9.82,
+        "volume_ratio": 0.766,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "LH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 19.299999237060547,
+            "date": "2026-09-04",
+            "known_on": "2026-09-09"
+          },
+          {
+            "price": 17.100000381469727,
+            "date": "2026-09-22",
+            "known_on": "2026-09-24"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 16.959999084472656,
+            "date": "2026-09-01",
+            "known_on": "2026-09-03"
+          },
+          {
+            "price": 14.880000114440918,
+            "date": "2026-09-16",
+            "known_on": "2026-09-18"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 14.59,
+            "high": 15.025,
+            "created_on": "2026-09-29",
+            "known_on": "2026-09-29",
+            "state": "PARTIAL",
+            "age_completed_bars": 13
+          },
+          {
+            "kind": "BEARISH",
+            "low": 13.29,
+            "high": 13.73,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 12.79,
+            "high": 13.03,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 11.64,
+            "high": 12.4,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 11.07,
+            "high": 11.8,
+            "created_on": "2026-10-14",
+            "known_on": "2026-10-14",
+            "state": "PARTIAL",
+            "age_completed_bars": 2
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -5640,13 +6405,13 @@
       "ticker": "AXTI",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:13.279448+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:29.502903+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 51.470001220703125,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -6185,6 +6950,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "CLOSE_BELOW_PRIOR_LOW",
+        "reason": "Latest close below preceding 20-bar low; continuation unproven.",
+        "asof_date": "2026-10-16",
+        "reference_high": 88.36,
+        "reference_low": 53.31,
+        "volume_ratio": 1.277,
+        "participation": "ABOVE_BASELINE",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "HL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 81.5,
+            "date": "2026-09-21",
+            "known_on": "2026-09-23"
+          },
+          {
+            "price": 88.36000061035156,
+            "date": "2026-10-06",
+            "known_on": "2026-10-08"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 56.900001525878906,
+            "date": "2026-09-14",
+            "known_on": "2026-09-16"
+          },
+          {
+            "price": 69.5999984741211,
+            "date": "2026-09-24",
+            "known_on": "2026-09-28"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 77.25,
+            "high": 83.91,
+            "created_on": "2026-10-08",
+            "known_on": "2026-10-08",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 6
+          },
+          {
+            "kind": "BEARISH",
+            "low": 75.49,
+            "high": 78.7,
+            "created_on": "2026-10-09",
+            "known_on": "2026-10-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 5
+          },
+          {
+            "kind": "BEARISH",
+            "low": 66.41,
+            "high": 71.02,
+            "created_on": "2026-10-12",
+            "known_on": "2026-10-12",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 4
+          },
+          {
+            "kind": "BEARISH",
+            "low": 64.96,
+            "high": 68.2,
+            "created_on": "2026-10-13",
+            "known_on": "2026-10-13",
+            "state": "PARTIAL",
+            "age_completed_bars": 3
+          },
+          {
+            "kind": "BEARISH",
+            "low": 56.58,
+            "high": 60.31,
+            "created_on": "2026-10-16",
+            "known_on": "2026-10-16",
+            "state": "FRESH",
+            "age_completed_bars": 0
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -6265,13 +7115,13 @@
       "ticker": "GOOG",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:13.854421+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:30.165716+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 336.9100036621094,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -6286,24 +7136,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          339.0931644721975,
-          344.73726153745486
+          339.0931644722104,
+          344.7372615374507
         ],
-        "stop": 328.89037362346306,
+        "stop": 328.8903736235068,
         "targets": [
-          361.45247207687083,
-          374.47731145823394,
-          394.0145705302786
+          361.4524720768162,
+          374.47731145814,
+          394.01457053012564
         ],
-        "rr_to_resistance": 3.043958963611127,
+        "rr_to_resistance": 3.0439589636199837,
         "ranges": {
           "5": {
-            "lower": 317.49371949361324,
-            "upper": 356.3262878306055
+            "lower": 317.49371949367185,
+            "upper": 356.3262878305469
           },
           "20": {
-            "lower": 298.0774353251171,
-            "upper": 375.74257199910164
+            "lower": 298.0774353252344,
+            "upper": 375.7425719989844
           }
         }
       },
@@ -6315,10 +7165,10 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 8.683226254242063,
-        "rsi": 43.973903726124,
-        "ema20": 343.00061628660643,
-        "ema50": 343.23424684427147,
+        "atr": 8.683226254215848,
+        "rsi": 43.97390372604632,
+        "ema20": 343.0006162866075,
+        "ema50": 343.23424685790513,
         "volume_ratio": 1.0445325121349802,
         "support20": 332.6499938964844,
         "resistance20": 359.9800109863281,
@@ -6808,6 +7658,91 @@
           }
         ]
       },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 359.98,
+        "reference_low": 332.65,
+        "volume_ratio": 0.992,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "LL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 353.5299987792969,
+            "date": "2026-10-08",
+            "known_on": "2026-10-12"
+          },
+          {
+            "price": 355.25,
+            "date": "2026-10-14",
+            "known_on": "2026-10-16"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 332.80999755859375,
+            "date": "2026-09-24",
+            "known_on": "2026-09-28"
+          },
+          {
+            "price": 332.6499938964844,
+            "date": "2026-10-01",
+            "known_on": "2026-10-05"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BULLISH",
+            "low": 298.052,
+            "high": 312.3142,
+            "created_on": "2026-04-08",
+            "known_on": "2026-04-08",
+            "state": "PARTIAL",
+            "age_completed_bars": 133
+          },
+          {
+            "kind": "BULLISH",
+            "low": 303.7199,
+            "high": 309.0832,
+            "created_on": "2026-04-09",
+            "known_on": "2026-04-09",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 132
+          },
+          {
+            "kind": "BEARISH",
+            "low": 361.7251,
+            "high": 365.9224,
+            "created_on": "2026-08-06",
+            "known_on": "2026-08-06",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 50
+          },
+          {
+            "kind": "BULLISH",
+            "low": 329.34,
+            "high": 332.55,
+            "created_on": "2026-09-11",
+            "known_on": "2026-09-11",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 25
+          },
+          {
+            "kind": "BULLISH",
+            "low": 330.89,
+            "high": 338.74,
+            "created_on": "2026-09-14",
+            "known_on": "2026-09-14",
+            "state": "PARTIAL",
+            "age_completed_bars": 24
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
+      },
       "fundamentals": {
         "facts": [
           {
@@ -6888,13 +7823,13 @@
       "ticker": "UBER",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T22:58:14.479805+00:00",
+      "retrieved_at_utc": "2026-10-18T23:03:30.805499+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 70.3499984741211,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 3059.2,
+        "age_minutes": 3064.5,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -7429,6 +8364,91 @@
             "close": 70.35
           }
         ]
+      },
+      "market_structure": {
+        "status": "INSIDE_PRIOR_RANGE",
+        "reason": "Latest closed bar did not confirm a breakout or liquidity sweep.",
+        "asof_date": "2026-10-16",
+        "reference_high": 72.08,
+        "reference_low": 67.22,
+        "volume_ratio": 0.91,
+        "participation": "NOT_CONFIRMED",
+        "confirmed_pivot_trend": {
+          "highs": "HH",
+          "lows": "HL"
+        },
+        "last_confirmed_highs": [
+          {
+            "price": 70.01000213623047,
+            "date": "2026-10-05",
+            "known_on": "2026-10-07"
+          },
+          {
+            "price": 72.08000183105469,
+            "date": "2026-10-09",
+            "known_on": "2026-10-13"
+          }
+        ],
+        "last_confirmed_lows": [
+          {
+            "price": 68.0,
+            "date": "2026-10-08",
+            "known_on": "2026-10-12"
+          },
+          {
+            "price": 68.62000274658203,
+            "date": "2026-10-14",
+            "known_on": "2026-10-16"
+          }
+        ],
+        "fvg": [
+          {
+            "kind": "BEARISH",
+            "low": 95.03,
+            "high": 96.15,
+            "created_on": "2025-11-04",
+            "known_on": "2025-11-04",
+            "state": "PARTIAL",
+            "age_completed_bars": 238
+          },
+          {
+            "kind": "BEARISH",
+            "low": 95.44,
+            "high": 96.78,
+            "created_on": "2025-11-05",
+            "known_on": "2025-11-05",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 237
+          },
+          {
+            "kind": "BEARISH",
+            "low": 88.75,
+            "high": 90.77,
+            "created_on": "2025-12-10",
+            "known_on": "2025-12-10",
+            "state": "UNTOUCHED",
+            "age_completed_bars": 213
+          },
+          {
+            "kind": "BEARISH",
+            "low": 85.745,
+            "high": 88.905,
+            "created_on": "2025-12-11",
+            "known_on": "2025-12-11",
+            "state": "PARTIAL",
+            "age_completed_bars": 212
+          },
+          {
+            "kind": "BEARISH",
+            "low": 73.101,
+            "high": 75.21,
+            "created_on": "2026-09-09",
+            "known_on": "2026-09-09",
+            "state": "PARTIAL",
+            "age_completed_bars": 27
+          }
+        ],
+        "limitations": "Closed-bar PRICE patterns only. FVG is not proven institutional order flow. Single-breakout close is not confirmed follow-through; no calibrated probability."
       },
       "fundamentals": {
         "facts": [
