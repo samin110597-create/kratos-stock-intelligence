@@ -1,0 +1,79 @@
+name: Publish KRATOS Web
+on:
+  push:
+    branches: [main]
+    paths:
+      - site/index.html
+      - scripts/publish_snapshot.py
+      - kratos/**
+      - .github/workflows/pages.yml
+  schedule:
+    # GitHub schedules are best-effort; 30 minutes is NOT a freshness guarantee.
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: kratos-public-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install KRATOS analysis dependencies
+        run: pip install -r requirements.txt
+      - name: Run market snapshot and update forward ledger
+        env:
+          KRATOS_SYMBOLS: NVDA,AVGO,AMAT,MU,CIFR,IREN,CRWV,NBIS,USAR,AXTI,GOOG,UBER
+        run: python -m scripts.publish_snapshot
+      - name: Validate generated JSON and entry page
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          snapshot=json.loads(Path("site/data/snapshots.json").read_text())
+          ledger=json.loads(Path("site/data/ledger.json").read_text())
+          assert Path("site/index.html").stat().st_size > 2000
+          assert isinstance(snapshot["tickers"], dict) and len(snapshot["tickers"]) > 0
+          assert isinstance(ledger, list)
+          print("Generated valid public site data for", len(snapshot["tickers"]), "symbols; successful fetches:", snapshot["fresh_results"])
+          PY
+      - name: Save public market snapshots and immutable forecast log
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data/snapshots.json site/data/ledger.json
+          if ! git diff --staged --quiet; then
+            git commit -m "data: publish dated KRATOS snapshots and forecast ledger"
+            git push origin HEAD:main
+          fi
+      - name: Prepare GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload public HTML & snapshots
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
