@@ -4,6 +4,16 @@
 
 > Important distinction: This code is **inspired by the original [Kratos Agent's](https://github.com/aiappsgbb/kratos-agent) "one agent, N skills" design**, but does **not bundle or claim to run** Microsoft's Copilot SDK, Azure Foundry, or the upstream agent. Please read [KRATOS_INTEGRATION.md](KRATOS_INTEGRATION.md) before asking Astra to integrate the upstream agent.
 
+## Free-data Smart Money Research Lab (v0.2 experimental)
+
+- **Public daily price structure:** The Technicals tab now shows completed-bar sweep/reclaim observations, prior 20-bar breakout boundaries, confirmed swing directions and still-open FVG price patterns. No unvalidated 90% predictions or asserted institutional orders.
+- **Personal-use options map:** The Gradio app (`python app.py` or `start_windows.bat`) has an **Options map · experimental** tab. Enter a US optionable ticker and click **Fetch options positioning for ticker**. It calculates Black-Scholes GEX/VEX/DEX/Charm sensitivities using up to three available Yahoo option expiries, showing gross concentration, call/put concentrations, modeled gamma flip, and data limitations.
+- **No paid API required.** The options data can be stale, throttled, missing, and is subject to Yahoo personal-use/redistribution restrictions. The public GitHub Pages site does **not** republish the new options-book figures.
+- The dealer-position sign is an ASSUMPTION, not proven institutional positioning or live trade flow.
+- **30 automated tests** were passing in GitHub Actions when v0.2 was validated; future changes must rerun CI.
+
+Read [KRATOS_FREE_RESEARCH_LAB.md](KRATOS_FREE_RESEARCH_LAB.md) for the complete methodology, personal usage, data constraints and next steps. TerraShade public concepts were referenced independently; no code, private APIs or proprietary site assets were copied.
+
 ## What works in v0.1
 
 - Gradio website, any valid Yahoo symbol (`NVDA`, `CIFR`, `RY.TO`, `BRK-B`, etc. subject to provider coverage).
