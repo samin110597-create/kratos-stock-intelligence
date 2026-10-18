@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-18T16:47:40.294250+00:00",
+  "generated_at_utc": "2026-10-18T19:22:47.331406+00:00",
   "provider_note": "Yahoo Finance (unofficial); delayed/limited or unavailable; not a real-time market-data agreement.",
   "coverage": 12,
   "fresh_results": 12,
@@ -8,13 +8,13 @@
       "ticker": "NVDA",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:42.172415+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:48.399834+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 214.1300048828125,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.7,
+        "age_minutes": 2843.8,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -32,24 +32,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          222.8712296803113,
-          226.74825243810358
+          222.87122968036545,
+          226.7482524380098
         ],
-        "stop": 211.65707602419494,
+        "stop": 211.65707602424044,
         "targets": [
-          244.53873861172622,
-          257.69140364673876,
-          277.4204011992575
+          244.53873861160838,
+          257.69140364655556,
+          277.4204011989763
         ],
-        "rr_to_resistance": 1.4111401764260305,
+        "rr_to_resistance": 1.4111401764345493,
         "ranges": {
           "5": {
-            "lower": 200.792641133986,
-            "upper": 227.467368631639
+            "lower": 200.79264113449472,
+            "upper": 227.46736863113028
           },
           "20": {
-            "lower": 187.4552773851595,
-            "upper": 240.8047323804655
+            "lower": 187.45527738617693,
+            "upper": 240.80473237944807
           }
         }
       },
@@ -61,10 +61,10 @@
           "1D": "MIXED",
           "1W": "MIXED"
         },
-        "atr": 5.9646503966035,
-        "rsi": 37.55817672067799,
-        "ema20": 225.5553223587829,
-        "ema50": 221.9777747378985,
+        "atr": 5.964650396375993,
+        "rsi": 37.55817671738491,
+        "ema20": 225.55532235873463,
+        "ema50": 221.97777473105484,
         "volume_ratio": 1.1525171160880499,
         "support20": 212.85000610351562,
         "resistance20": 243.3699951171875,
@@ -82,11 +82,11 @@
           },
           {
             "date": "2026-04-30",
-            "close": 199.11487
+            "close": 199.11488
           },
           {
             "date": "2026-05-01",
-            "close": 197.99744
+            "close": 197.99742
           },
           {
             "date": "2026-05-04",
@@ -126,7 +126,7 @@
           },
           {
             "date": "2026-05-15",
-            "close": 224.80615
+            "close": 224.80617
           },
           {
             "date": "2026-05-18",
@@ -158,7 +158,7 @@
           },
           {
             "date": "2026-05-28",
-            "close": 213.7614
+            "close": 213.76138
           },
           {
             "date": "2026-05-29",
@@ -634,13 +634,13 @@
       "ticker": "AVGO",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:42.886564+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:49.069637+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 328.75,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.7,
+        "age_minutes": 2843.8,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -657,24 +657,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          348.9228032080472,
-          356.44058359190126
+          348.9228032144058,
+          356.4405835895512
         ],
-        "stop": 326.2668233772336,
+        "stop": 326.2668233799132,
         "targets": [
-          392.30399843408514,
-          418.71886845682576,
-          458.3411734909367
+          392.3039984350763,
+          418.71886845714164,
+          458.3411734902395
         ],
-        "rr_to_resistance": 3.0006500231634328,
+        "rr_to_resistance": 3.0006500231642756,
         "ranges": {
           "5": {
-            "lower": 302.88804926428884,
-            "upper": 354.61195073571116
+            "lower": 302.8880492942479,
+            "upper": 354.6119507057521
           },
           "20": {
-            "lower": 277.0260985285777,
-            "upper": 380.4739014714223
+            "lower": 277.0260985884958,
+            "upper": 380.4739014115042
           }
         }
       },
@@ -686,10 +686,10 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 11.565815975160174,
-        "rsi": 34.89164065366535,
-        "ema20": 354.12742039686924,
-        "ema50": 362.9493022300581,
+        "atr": 11.565815961762073,
+        "rsi": 34.89164061336618,
+        "ema20": 354.12742039719876,
+        "ema50": 362.94930223371114,
         "volume_ratio": 1.3313037689574725,
         "support20": 328.5799865722656,
         "resistance20": 380.8399963378906,
@@ -739,7 +739,7 @@
           },
           {
             "date": "2026-05-12",
-            "close": 417.8765
+            "close": 417.87646
           },
           {
             "date": "2026-05-13",
@@ -775,11 +775,11 @@
           },
           {
             "date": "2026-05-26",
-            "close": 420.57733
+            "close": 420.5773
           },
           {
             "date": "2026-05-27",
-            "close": 420.42776
+            "close": 420.4278
           },
           {
             "date": "2026-05-28",
@@ -795,7 +795,7 @@
           },
           {
             "date": "2026-06-02",
-            "close": 479.93512
+            "close": 479.93509
           },
           {
             "date": "2026-06-03",
@@ -835,7 +835,7 @@
           },
           {
             "date": "2026-06-16",
-            "close": 375.43106
+            "close": 375.43109
           },
           {
             "date": "2026-06-17",
@@ -1231,7 +1231,7 @@
           },
           {
             "label": "Trailing P/E",
-            "value": "43.31"
+            "value": "41.99"
           },
           {
             "label": "Forward P/E",
@@ -1243,14 +1243,14 @@
           },
           {
             "label": "Forward EPS",
-            "value": "19.39"
+            "value": "19.40"
           },
           {
             "label": "Trailing EPS",
-            "value": "7.59"
+            "value": "7.83"
           }
         ],
-        "valuation_note": "Illustrative forward-EPS multiple SENSITIVITY ONLY (not intrinsic value, not a buy recommendation; currency per info if available): 12\u00d7 P/E \u2192 232.73, 16\u00d7 P/E \u2192 310.30, 20\u00d7 P/E \u2192 387.88. Assumptions are arbitrary illustrative multiples, not peer-derived."
+        "valuation_note": "Illustrative forward-EPS multiple SENSITIVITY ONLY (not intrinsic value, not a buy recommendation; currency per info if available): 12\u00d7 P/E \u2192 232.76, 16\u00d7 P/E \u2192 310.35, 20\u00d7 P/E \u2192 387.94. Assumptions are arbitrary illustrative multiples, not peer-derived."
       },
       "warnings": [],
       "error": null
@@ -1259,13 +1259,13 @@
       "ticker": "AMAT",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:43.608488+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:49.685680+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 409.2900085449219,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.7,
+        "age_minutes": 2843.8,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -1283,24 +1283,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          468.29446966116814,
-          481.8935787103339
+          468.294469661529,
+          481.89357871036515
         ],
-        "stop": 403.07566851972786,
+        "stop": 403.07566851982926,
         "targets": [
-          583.1215576847857,
-          655.1399133508088,
-          763.1674468498435
+          583.1215576851239,
+          655.1399133512416,
+          763.1674468504184
         ],
-        "rr_to_resistance": 1.222796447952508,
+        "rr_to_resistance": 1.222796447948177,
         "ranges": {
           "5": {
-            "lower": 362.5076512105109,
-            "upper": 456.07236587933284
+            "lower": 362.5076512116445,
+            "upper": 456.07236587819926
           },
           "20": {
-            "lower": 315.7252938761,
-            "upper": 502.85472321374374
+            "lower": 315.7252938783671,
+            "upper": 502.85472321147665
           }
         }
       },
@@ -1312,10 +1312,10 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 20.921706229485743,
-        "rsi": 29.207069003631318,
-        "ema20": 477.70923746443674,
-        "ema50": 485.96860909779554,
+        "atr": 20.9217062289788,
+        "rsi": 29.207069001005124,
+        "ema20": 477.7092374645694,
+        "ema50": 485.96860911710684,
         "volume_ratio": 1.3278094138910967,
         "support20": 407.260009765625,
         "resistance20": 547.25,
@@ -1329,7 +1329,7 @@
           },
           {
             "date": "2026-04-29",
-            "close": 381.70682
+            "close": 381.70679
           },
           {
             "date": "2026-04-30",
@@ -1345,7 +1345,7 @@
           },
           {
             "date": "2026-05-05",
-            "close": 409.87161
+            "close": 409.87164
           },
           {
             "date": "2026-05-06",
@@ -1361,7 +1361,7 @@
           },
           {
             "date": "2026-05-11",
-            "close": 442.59589
+            "close": 442.59592
           },
           {
             "date": "2026-05-12",
@@ -1385,7 +1385,7 @@
           },
           {
             "date": "2026-05-19",
-            "close": 405.97064
+            "close": 405.97067
           },
           {
             "date": "2026-05-20",
@@ -1885,13 +1885,13 @@
       "ticker": "MU",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:44.415940+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:50.339073+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 878.8400268554688,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.7,
+        "age_minutes": 2843.8,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -1909,24 +1909,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          973.5211427940221,
-          1005.484836163747
+          973.5211428368633,
+          1005.4848361689652
         ],
-        "stop": 848.1650174247001,
+        "stop": 848.1650174362763,
         "targets": [
-          1201.5099475601612,
-          1342.8479196143455,
-          1554.8548776956222
+          1201.509947602871,
+          1342.847919669509,
+          1554.854877769466
         ],
-        "rr_to_resistance": 0.8422544295446338,
+        "rr_to_resistance": 0.8422544293004053,
         "ranges": {
           "5": {
-            "lower": 768.8815788759853,
-            "upper": 988.7984748349522
+            "lower": 768.881579005412,
+            "upper": 988.7984747055255
           },
           "20": {
-            "lower": 658.9231308965017,
-            "upper": 1098.7569228144357
+            "lower": 658.9231311553553,
+            "upper": 1098.7569225555822
           }
         }
       },
@@ -1938,10 +1938,10 @@
           "1D": "MIXED",
           "1W": "MIXED"
         },
-        "atr": 49.17491287649991,
-        "rsi": 34.03942187434295,
-        "ema20": 995.6498535884471,
-        "ema50": 982.770257850125,
+        "atr": 49.17491281861846,
+        "rsi": 34.039421810684146,
+        "ema20": 995.6498536052416,
+        "ema50": 982.770258767882,
         "volume_ratio": 1.1235216210773284,
         "support20": 858.0,
         "resistance20": 1108.545522504377,
@@ -1955,7 +1955,7 @@
           },
           {
             "date": "2026-04-29",
-            "close": 518.29871
+            "close": 518.29877
           },
           {
             "date": "2026-04-30",
@@ -1971,11 +1971,11 @@
           },
           {
             "date": "2026-05-05",
-            "close": 640.00079
+            "close": 640.00085
           },
           {
             "date": "2026-05-06",
-            "close": 666.38263
+            "close": 666.38269
           },
           {
             "date": "2026-05-07",
@@ -1983,7 +1983,7 @@
           },
           {
             "date": "2026-05-08",
-            "close": 746.5777
+            "close": 746.57764
           },
           {
             "date": "2026-05-11",
@@ -1995,11 +1995,11 @@
           },
           {
             "date": "2026-05-13",
-            "close": 803.38
+            "close": 803.37994
           },
           {
             "date": "2026-05-14",
-            "close": 775.76855
+            "close": 775.76862
           },
           {
             "date": "2026-05-15",
@@ -2019,7 +2019,7 @@
           },
           {
             "date": "2026-05-21",
-            "close": 761.86285
+            "close": 761.86292
           },
           {
             "date": "2026-05-22",
@@ -2027,15 +2027,15 @@
           },
           {
             "date": "2026-05-26",
-            "close": 895.60126
+            "close": 895.60132
           },
           {
             "date": "2026-05-27",
-            "close": 928.12109
+            "close": 928.12115
           },
           {
             "date": "2026-05-28",
-            "close": 923.23273
+            "close": 923.23267
           },
           {
             "date": "2026-05-29",
@@ -2051,23 +2051,23 @@
           },
           {
             "date": "2026-06-03",
-            "close": 1079.23401
+            "close": 1079.23413
           },
           {
             "date": "2026-06-04",
-            "close": 995.69012
+            "close": 995.69019
           },
           {
             "date": "2026-06-05",
-            "close": 863.74115
+            "close": 863.74121
           },
           {
             "date": "2026-06-08",
-            "close": 948.98474
+            "close": 948.98468
           },
           {
             "date": "2026-06-09",
-            "close": 935.59882
+            "close": 935.59888
           },
           {
             "date": "2026-06-10",
@@ -2079,11 +2079,11 @@
           },
           {
             "date": "2026-06-12",
-            "close": 981.30457
+            "close": 981.30463
           },
           {
             "date": "2026-06-15",
-            "close": 1087.65161
+            "close": 1087.65149
           },
           {
             "date": "2026-06-16",
@@ -2095,11 +2095,11 @@
           },
           {
             "date": "2026-06-18",
-            "close": 1133.63721
+            "close": 1133.63708
           },
           {
             "date": "2026-06-22",
-            "close": 1211.00305
+            "close": 1211.00317
           },
           {
             "date": "2026-06-23",
@@ -2107,7 +2107,7 @@
           },
           {
             "date": "2026-06-24",
-            "close": 1048.18372
+            "close": 1048.18384
           },
           {
             "date": "2026-06-25",
@@ -2115,7 +2115,7 @@
           },
           {
             "date": "2026-06-26",
-            "close": 1131.97766
+            "close": 1131.97778
           },
           {
             "date": "2026-06-29",
@@ -2127,7 +2127,7 @@
           },
           {
             "date": "2026-07-01",
-            "close": 1031.95886
+            "close": 1031.95898
           },
           {
             "date": "2026-07-02",
@@ -2511,13 +2511,13 @@
       "ticker": "CIFR",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:45.068155+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:50.869208+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 8.979999542236328,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.8,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -3136,13 +3136,13 @@
       "ticker": "IREN",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:45.877031+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:51.448201+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 26.989999771118164,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -3762,13 +3762,13 @@
       "ticker": "CRWV",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:46.581493+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:51.988903+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 61.38999938964844,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -4388,13 +4388,13 @@
       "ticker": "NBIS",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:47.252147+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:52.505005+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 165.47000122070312,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -4950,7 +4950,7 @@
           },
           {
             "label": "Market capitalization",
-            "value": "42.01B"
+            "value": "44.98B"
           },
           {
             "label": "Revenue (ttm)",
@@ -4986,7 +4986,7 @@
           },
           {
             "label": "Trailing P/E",
-            "value": "131.33"
+            "value": "129.27"
           },
           {
             "label": "Forward P/E",
@@ -5002,7 +5002,7 @@
           },
           {
             "label": "Trailing EPS",
-            "value": "1.26"
+            "value": "1.28"
           }
         ],
         "valuation_note": "Forward EPS absent/nonpositive: meaningful EPS valuation scenario unavailable. No fair value asserted."
@@ -5014,13 +5014,13 @@
       "ticker": "USAR",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:47.911321+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:53.065339+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 10.539999961853027,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -5620,7 +5620,7 @@
           },
           {
             "label": "Price/book",
-            "value": "1.22"
+            "value": "1.02"
           },
           {
             "label": "Forward EPS",
@@ -5640,13 +5640,13 @@
       "ticker": "AXTI",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:48.723719+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:53.686748+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 51.470001220703125,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -6265,13 +6265,13 @@
       "ticker": "GOOG",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:49.511332+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:54.266154+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 336.9100036621094,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
@@ -6286,24 +6286,24 @@
           "Minute price is not verified <=15 min during estimated market hours. No live entry approval."
         ],
         "entry_zone": [
-          339.0931644721975,
-          344.73726153745486
+          339.09316447308237,
+          344.7372615371761
         ],
-        "stop": 328.89037362346306,
+        "stop": 328.8903736264514,
         "targets": [
-          361.45247207687083,
-          374.47731145823394,
-          394.0145705302786
+          361.45247207314594,
+          374.47731145182377,
+          394.0145705198405
         ],
-        "rr_to_resistance": 3.043958963611127,
+        "rr_to_resistance": 3.043958964215423,
         "ranges": {
           "5": {
-            "lower": 317.49371949361324,
-            "upper": 356.3262878306055
+            "lower": 317.4937194976162,
+            "upper": 356.32628782660254
           },
           "20": {
-            "lower": 298.0774353251171,
-            "upper": 375.74257199910164
+            "lower": 298.07743533312305,
+            "upper": 375.7425719910957
           }
         }
       },
@@ -6315,16 +6315,16 @@
           "1D": "DOWN",
           "1W": "MIXED"
         },
-        "atr": 8.683226254242063,
-        "rsi": 43.973903726124,
-        "ema20": 343.00061628660643,
-        "ema50": 343.2342468442748,
+        "atr": 8.683226252451885,
+        "rsi": 43.973903732626205,
+        "ema20": 343.0006162866857,
+        "ema50": 343.2342468627176,
         "volume_ratio": 1.0445325121349802,
         "support20": 332.6499938964844,
         "resistance20": 359.9800109863281,
         "resistance60": 381.5622895893216,
         "high52w": 403.9644697672297,
-        "low52w": 244.03294603047038,
+        "low52w": 244.03296088432552,
         "history": [
           {
             "date": "2026-04-28",
@@ -6332,7 +6332,7 @@
           },
           {
             "date": "2026-04-29",
-            "close": 346.87592
+            "close": 346.87589
           },
           {
             "date": "2026-04-30",
@@ -6348,7 +6348,7 @@
           },
           {
             "date": "2026-05-05",
-            "close": 383.78967
+            "close": 383.7897
           },
           {
             "date": "2026-05-06",
@@ -6396,7 +6396,7 @@
           },
           {
             "date": "2026-05-21",
-            "close": 382.99069
+            "close": 382.99072
           },
           {
             "date": "2026-05-22",
@@ -6424,11 +6424,11 @@
           },
           {
             "date": "2026-06-02",
-            "close": 357.94205
+            "close": 357.94208
           },
           {
             "date": "2026-06-03",
-            "close": 355.23544
+            "close": 355.23541
           },
           {
             "date": "2026-06-04",
@@ -6888,13 +6888,13 @@
       "ticker": "UBER",
       "provider": "Yahoo Finance (unofficial yfinance feed)",
       "currency": "USD",
-      "retrieved_at_utc": "2026-10-18T16:47:50.257088+00:00",
+      "retrieved_at_utc": "2026-10-18T19:22:54.853131+00:00",
       "minute_bar_utc": "2026-10-16T19:59:00+00:00",
       "price": 70.3499984741211,
       "last_closed_bar_date": "2026-10-16",
       "freshness_at_build": {
         "market_open_estimate": false,
-        "age_minutes": 2688.8,
+        "age_minutes": 2843.9,
         "live_enough": false,
         "status": "MARKET CLOSED / session unknown \u2014 last reported minute bar",
         "last_bar": "2026-10-16 03:59 PM EDT"
