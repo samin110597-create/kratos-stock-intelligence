@@ -5,7 +5,6 @@ on:
     paths:
       - site/index.html
       - scripts/publish_snapshot.py
-      - kratos/**
       - .github/workflows/pages.yml
   schedule:
     # GitHub schedules are best-effort; 30 minutes is NOT a freshness guarantee.
@@ -58,7 +57,20 @@ jobs:
           git add -f site/data/snapshots.json site/data/ledger.json
           if ! git diff --staged --quiet; then
             git commit -m "data: publish dated KRATOS snapshots and forecast ledger"
-            git push origin HEAD:main
+            # Repository may receive a developer commit during the refresh.
+            # Rebase and retry rather than failing after successful data retrieval.
+            for attempt in 1 2 3; do
+              if git push origin HEAD:main; then
+                echo "Market snapshot saved successfully."
+                break
+              fi
+              echo "Data push diverged; fetching and rebasing (attempt $attempt)."
+              git fetch origin main
+              git rebase -X theirs origin/main
+              if [ "$attempt" = 3 ]; then
+                git push origin HEAD:main
+              fi
+            done
           fi
       - name: Prepare GitHub Pages
         uses: actions/configure-pages@v5
