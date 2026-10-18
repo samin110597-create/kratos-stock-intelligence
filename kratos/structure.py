@@ -98,10 +98,8 @@ def causal_structure(completed_daily, *, breakout_lookback: int=20,
         participation="NOT_CONFIRMED"
     swing_highs=_pivots(df,"High")
     swing_lows=_pivots(df,"Low")
-    high_state=("HH" if swing_highs[-1]["price"]>swing_highs[-2]["price"] else "LH")
-                if len(swing_highs)>=2 else "UNKNOWN"
-    low_state=("HL" if swing_lows[-1]["price"]>swing_lows[-2]["price"] else "LL")
-               if len(swing_lows)>=2 else "UNKNOWN"
+    high_state=("HH" if swing_highs[-1]["price"]>swing_highs[-2]["price"] else "LH") if len(swing_highs)>=2 else "UNKNOWN"
+    low_state=("HL" if swing_lows[-1]["price"]>swing_lows[-2]["price"] else "LL") if len(swing_lows)>=2 else "UNKNOWN"
 
     # True range average is evaluated using only known prior/current bars.
     tr=[max(float(h.iloc[j]-l.iloc[j]),abs(float(h.iloc[j]-c.iloc[j-1])),
