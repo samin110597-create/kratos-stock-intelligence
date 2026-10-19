@@ -44,7 +44,9 @@ def report(info: dict) -> tuple[list[tuple[str, str]], str]:
     fwd_eps = info.get("forwardEps")
     sector = str(info.get("sector") or "").lower()
     # Deliberately do NOT apply P/E to banks, pre-revenue firms, or loss makers.
-    if "financial" in sector or "bank" in sector:
+    if str(info.get('quoteType','')).upper()=='ETF':
+        note = 'ETF: assess holdings, concentration, fees, liquidity, tracking and currency exposure. Stock-style intrinsic value omitted; verified holdings unavailable.'
+    elif "financial" in sector or "bank" in sector:
         note = ("Bank/financial business: P/E scenarios and generic cash-flow DCF deliberately omitted. "
                 "Use verified tangible book, normalized ROTCE, capital and credit-loss analysis before pricing.")
     else:

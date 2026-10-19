@@ -1,90 +1,116 @@
-# KRATOS Stock Intelligence — Independent MVP
+# KRATOS Stock Intelligence — evidence-first research
 
-**A real, testable baseline, not a proven trading system.** Analyze a ticker using fetched historical/near-current OHLCV and fundamentals, with an explainable technical rule engine and an immutable 5/20-session forecast ledger. This is a completely **separate repo** from Q-State and contains **no Vercel, Azure or brokerage execution**.
+[Open the public dashboard](https://samin110597-create.github.io/kratos-stock-intelligence/)
 
-> Important distinction: This code is **inspired by the original [Kratos Agent's](https://github.com/aiappsgbb/kratos-agent) "one agent, N skills" design**, but does **not bundle or claim to run** Microsoft's Copilot SDK, Azure Foundry, or the upstream agent. Please read [KRATOS_INTEGRATION.md](KRATOS_INTEGRATION.md) before asking Astra to integrate the upstream agent.
+An upgrade to the existing KRATOS project, separate from Q-State. The objective is
+reliable observations and measurable research, not a claimed guaranteed trading edge.
+No Vercel, brokerage automation, invented prices or calibrated confidence gauges.
 
-## Free-data Smart Money Research Lab (v0.2 experimental)
+## Use it
 
-- **Public daily price structure:** The Technicals tab now shows completed-bar sweep/reclaim observations, prior 20-bar breakout boundaries, confirmed swing directions and still-open FVG price patterns. No unvalidated 90% predictions or asserted institutional orders.
-- **Personal-use options map:** The Gradio app (`python app.py` or `start_windows.bat`) has an **Options map · experimental** tab. Enter a US optionable ticker and click **Fetch options positioning for ticker**. It calculates Black-Scholes GEX/VEX/DEX/Charm sensitivities using up to three available Yahoo option expiries, showing gross concentration, call/put concentrations, modeled gamma flip, and data limitations.
-- **No paid API required.** The options data can be stale, throttled, missing, and is subject to Yahoo personal-use/redistribution restrictions. The public GitHub Pages site does **not** republish the new options-book figures.
-- The dealer-position sign is an ASSUMPTION, not proven institutional positioning or live trade flow.
-- **30 automated tests** were passing in GitHub Actions when v0.2 was validated; future changes must rerun CI.
+1. Open the dashboard and choose a published symbol.
+2. Read the **minute price** and **completed daily close** separately. Check the
+   timestamp, market status and source warnings.
+3. Open **Technicals** to choose 15M, 1H, 4H, 1D or 1W candles and inspect FVG patterns.
+4. Use **Fundamentals** for available provider facts and **Forecast & Plan** for
+   explicitly illustrative scenarios and reference levels.
+5. Open **Accuracy** to inspect frozen observations and separate outcomes. There
+   is no proven trading accuracy yet. Institutional and news tabs disclose gaps.
 
-Read [KRATOS_FREE_RESEARCH_LAB.md](KRATOS_FREE_RESEARCH_LAB.md) for the complete methodology, personal usage, data constraints and next steps. TerraShade public concepts were referenced independently; no code, private APIs or proprietary site assets were copied.
+**The current public site is snapshot mode.** The Python API is implemented, but
+an external backend is not automatically created by publishing GitHub Pages. A
+symbol outside published coverage needs the Python service below. No fake response
+or watchlist substitution is used. The default published list includes a TSX example.
 
-## What works in v0.1
+## What changed in v0.2
 
-- Gradio website, any valid Yahoo symbol (`NVDA`, `CIFR`, `RY.TO`, `BRK-B`, etc. subject to provider coverage).
-- Queries real Yahoo Finance market data through `yfinance`; never substitutes synthetic price series when it fails. Uses 3y daily, 60d hourly, 5d 1-minute data. Provider may delay, throttle or block.
-- Technicals: EMA20/50/200, Wilder-style RSI14, ATR14, volume ratio, 1H/4H/1D/1W rule-based trend, support/resistance and 52-week high/low. Daily, hourly, weekly *unfinished* bars are excluded conservatively. Intraday 4H aggregation is an approximation; no exchange holiday calendar.
-- BUY SETUP / WAIT / AVOID-long classification with explicit filters. **BUY SETUP never appears if the minute source timestamp is older than 15 minutes during estimated regular hours.** A recent timestamp is **not proof of licensed real-time data**.
-- Fundamentals: available provider fields, and *illustrative* forward-EPS × fixed-P/E sensitivity scenarios only when sensible. These are not intrinsic value estimates.
-- Directional rule hypothesis and 5/20-session ATR-based sensitivity bands, **not calibrated forecast probabilities**.
-- Immutable forecasts logged **before** future outcomes to SQLite. Evaluation uses 5th/20th subsequently completed daily bar, with unresolved/open and evaluated status and observed direction accuracy. No fake backtested wins.
-- Unit tests and CI workflow. Secret-free code; local installation.
+- NYSE/TSX exchange holidays, half-days and DST; closed 15M/1H/4H/1D/1W signals.
+- Flat-price RSI = 50, missing warmup preserved, strict OHLCV/timestamp validation.
+- Source-aware data, partial-failure warnings, bounded cache/retries/health status.
+- Latest reported minute price kept separate from daily price references.
+- Causal pivots, failed-range breaks, FVG age/touches/penetration/invalidation and
+  explicitly labeled volume/VWAP proxies. No institutional-order inference.
+- Append-only forecast/outcome events, hashes, exact maturity, revision checks,
+  replayable exports. Legacy records remain archived and separately counted.
+- Read-only any-ticker FastAPI service, input validation, rate limits and health.
+- Real-data walk-forward experimental baselines; no model is promoted without
+  additional independent validation. The initial NVDA experiment is available
+  at [research.json](site/data/research.json) after a successful publishing run.
 
-## Windows — easiest
+See [audit and remaining gaps](docs/AUDIT.md) and [data/hosting assessment](docs/DATA_SOURCES.md).
 
-1. Install **Python 3.11 or 3.12** from https://www.python.org/downloads/ (tick **Add Python to PATH**).
-2. Download the project ZIP and extract the whole folder.
-3. Double-click `start_windows.bat`. The first run installs packages (requires internet).
-4. Open **http://127.0.0.1:7860** in your browser.
-5. Enter any ticker and click **Analyze**. Inspect the Decision/Technicals/Fundamentals/Projection tabs.
-6. To measure performance, go to **Accuracy audit → Record this forecast**. On later days, **Check completed outcomes**, or refresh the audit.
+## Run on Windows
 
-The app must be running on your computer to access it locally. Close its terminal to stop it.
+Install Python 3.11 or 3.12 and double-click `start_windows.bat`. This preserves the
+existing Gradio app at http://127.0.0.1:7860. Leave that window running.
 
-## Mac / Linux
+For the new dashboard and JSON API instead:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements.txt
-python app.py
+python server.py
 ```
 
-## Run tests
+Open http://127.0.0.1:7860. Any supported US or TSX symbol (`NVDA`, `RY.TO`, `TSX:RY`)
+can be requested, subject to vendor coverage and sufficient history. Provider
+requests can take up to a few minutes; errors never become simulated data.
+
+## Backend deployment
+
+The Dockerfile runs `server.py` on port 7860. Use an explicitly authorized host;
+verify current cost and data-display rights first. No paid service is auto-enabled.
+For an eligible Hugging Face Docker Space, use `SPACE_README.md` as its README and
+sync this repository. The current tool connection could not write to that account.
+
+Environment:
+
+- `PORT=7860`; `KRATOS_BIND=0.0.0.0` inside a container (local default is loopback).
+- `KRATOS_ALLOWED_ORIGINS=https://samin110597-create.github.io` (comma-separated).
+- `KRATOS_DB_DIR` for the Gradio local audit store; must point to persistent storage
+  if forward history is to survive restarts. Public API writes are disabled.
+
+After a real backend is deployed, set `site/config.json` `api_url` to its HTTPS
+origin. Keep `same_origin_api=false` on Pages. The Python-hosted dashboard detects
+its own API automatically; never put credentials in this configuration.
+
+Endpoints:
+- `GET /api/health`
+- `GET /api/analyze?symbol=RY.TO`
+- `GET /api/docs`
+
+## Tests and publishing
 
 ```bash
 python -m pip install -r requirements-dev.txt
 python -m pytest -q
+node --check site/app.js
+python -m scripts.publish_snapshot
 ```
 
-Unit tests use clearly labeled artificial fixtures **only inside the tests**; the website never surfaces fixture prices.
+Unit fixtures are artificial and are confined to tests; they never become quotes.
+Publishing uses real provider data, preserves explicit failed-refresh states, and
+keeps prior forecast events immutable. GitHub Actions builds Pages after passing
+Python tests. Scheduled builds are hourly and exchange-calendar gated. Browser
+refresh is 15 minutes, never every 30 seconds. Neither is a live-data guarantee.
 
-## GitHub status and hosting
+## Honest limits
 
-The source repository is **[samin110597-create/kratos-stock-intelligence](https://github.com/samin110597-create/kratos-stock-intelligence)** and is intentionally **public** with owner approval. **A public repository is not a deployed website**. GitHub Actions runs checks on commits; run the app locally using the instructions above or deploy it to a Gradio-capable Python host. GitHub Pages alone cannot run this Python backend. Never commit credentials, forecast databases, or private holdings.
+Yahoo is the only operational data adapter. No licensed second source, verified
+order flow, licensed options, filings/news engine, bank valuation, ETF holdings analysis,
+portfolio sizing or notifications is implemented. Short-history IPOs fail closed.
+The historical experiment uses revised single-symbol data, not a point-in-time
+survivor-aware universe or net-of-cost trading simulation. No Strict/Adaptive grade,
+BUY signal or confidence percentage has established positive expectancy.
 
-## Optional private hosting (Hugging Face)
+This uses a deterministic orchestrator; it does not install the upstream Microsoft
+Kratos Agent. See [integration notes](KRATOS_INTEGRATION.md). MIT license.
 
-You can create a private Gradio Space and upload this repository, with `SPACE_README.md` as the Space README. Set `KRATOS_DB_DIR` to persistent storage **only if available**. **Free Spaces may have ephemeral disk**; forecast records can disappear after restarts. Never treat ephemeral storage as a trustworthy accuracy ledger. For production, migrate forecasts to a persistent private database and add login/authentication before sharing.
+## Preserved personal options research
 
-## Data and reliability limitations
-
-- **Not financial advice / not proven accurate.** Rule-based baseline only. No ML model, no calibrated probability, no intrinsic value engine, no news/filings, options flow, dark-pool data, order blocks/FVGs or smart-money verification. These must be built and validated, not invented.
-- US/Canadian regular-market hours are approximated as weekdays 9:30–16:00 Toronto time; exchange holidays, global venues, halts, split errors and pre/post-market trading aren't supported. Currency follows upstream metadata.
-- `yfinance` is unofficial with no freshness or reliability SLA; during failure, the UI prints an error and records nothing. Daily volume on incomplete sessions is excluded from signals.
-- **Provisional buy setup is a rule filter, not a signal with established positive expectancy.** Test after costs and measure over hundreds of untouched forecasts across different market conditions before using financially.
-- sqlite is local only; do not deploy across workers without a durable transaction-safe database. No automated live orders or notifications.
-- Last bar date/time and data-source timestamps are visible; data-freshness reports are conservative, and market session detection is only approximate.
-
-## Files
-
-| File | Purpose |
-|---|---|
-| `app.py` | Gradio UI, interactive analysis, charts, ledger controls |
-| `kratos/data.py` | Verified source retrieval and freshness checks |
-| `kratos/technicals.py` | Closed-bar indicators and multi-timeframe trend |
-| `kratos/decision.py` | Explainable conditional trading rules |
-| `kratos/fundamentals.py` | Provider fundamentals + cautious sensitivity analysis |
-| `kratos/audit.py` | SQLite append-only forecast ledger + outcomes |
-| `kratos/engine.py` | One orchestrator coordinating separate skills |
-| `tests/` | Quality gates, including no-lookahead tests |
-| `ASTRA_NEXT.md` | Specific instructions to improve and validate the baseline |
-
-## License
-
-MIT for original code in this project. Referenced upstream libraries and frameworks have separate licenses; their source code is NOT redistributed here.
+The existing **Options map · experimental** tab in the Windows/Gradio app remains
+available. It computes assumption-based GEX/VEX/DEX/Charm scenarios from Yahoo
+chains for personal research. These are not verified dealer positions or a live
+options-flow feed; no options-book values are published on Pages or the public API.
+See [the Free Research Lab guide](KRATOS_FREE_RESEARCH_LAB.md). The earlier daily
+sweep/breakout and FVG research remains available alongside the new multi-timeframe
+pattern diagnostics. No TerraShade code or private APIs are copied.

@@ -1,65 +1,61 @@
-from datetime import datetime, timezone, timedelta
-from zoneinfo import ZoneInfo
-from pathlib import Path
-from unittest.mock import patch
+from datetime import datetime, timezone
+import copy
+import sqlite3
 import pandas as pd
 import pytest
-from kratos.audit import connect, record, resolve, recent_records, audit_stats
-
-
+from kratos.audit import connect,record,resolve,records,audit_stats,export_events,verify_events,import_events
+from kratos.calendar import schedule
+NOW=datetime(2026,1,2,22,tzinfo=timezone.utc)
 def sample():
-    et=datetime.now(ZoneInfo('America/Toronto'))
-    anchor=(et-timedelta(days=1)).date().isoformat()
-    tech={'close':100.,'asof_bar_date':anchor}
-    dec={'bias':'UP','classification':'WAIT','entry_zone':(99.,101.),
-         'stop':97.,'targets':[103.,106.,112.],
-         'ranges':{'5':{'lower':96.,'upper':104.},'20':{'lower':92.,'upper':108.}}}
-    return tech,dec
-
-
+    return {'close':100.,'asof_bar_date':'2026-01-02'}, {'bias':'UP','classification':'WAIT','entry_zone':(99.,101.),'stop':97.,'targets':[103.,106.,112.],'ranges':{'5':{'lower':96.,'upper':104.},'20':{'lower':92.,'upper':108.}}}
 def test_immutable_forecast_no_duplicate(tmp_path):
-    path=str(tmp_path/'db.sqlite3')
-    t,d=sample()
-    ids=record('NVDA',t,d,'TEST_PROVIDER',path)
-    assert len(ids)==2
-    assert record('NVDA',t,d,'TEST_PROVIDER',path)==[]
-    with connect(path) as conn:
-        rows=conn.execute('select count(*) from forecasts').fetchone()[0]
-        assert rows==2
-
-
+    p=str(tmp_path/'db');t,d=sample()
+    assert len(record('NVDA',t,d,'fixture',p,now=NOW))==2
+    assert record('NVDA',t,d,'fixture',p,now=NOW)==[]
+    with connect(p) as db:
+        with pytest.raises(sqlite3.IntegrityError): db.execute("UPDATE events SET payload='{}'")
+        with pytest.raises(sqlite3.IntegrityError): db.execute('DELETE FROM events')
 def test_reject_old_retroactive_prediction(tmp_path):
-    path=str(tmp_path/'db.sqlite3')
-    t,d=sample()
-    t['asof_bar_date']='2020-01-01'
-    with pytest.raises(ValueError,match='old'):
-        record('NVDA',t,d,'TEST_PROVIDER',path)
+    t,d=sample();t['asof_bar_date']='2020-01-01'
+    with pytest.raises(ValueError,match='old'): record('NVDA',t,d,'fixture',str(tmp_path/'db'),now=NOW)
+def test_exact_maturity_and_separate_outcomes(tmp_path):
+    p=str(tmp_path/'db');t,d=sample();record('NVDA',t,d,'fixture',p,now=NOW)
+    original=copy.deepcopy(export_events(p))
+    dates=schedule('NVDA','2026-01-02','2026-02-28').index
+    frame=pd.DataFrame({'Close':[100+i*.2 for i in range(len(dates))]},index=dates)
+    assert resolve('NVDA',frame,p,now=NOW)==0
+    assert resolve('NVDA',frame.drop(pd.Timestamp('2026-01-09')),p,now=datetime(2026,3,1,tzinfo=timezone.utc))==1
+    assert audit_stats(p)[5]['resolved']==0
+    assert resolve('NVDA',frame,p,now=datetime(2026,3,1,tzinfo=timezone.utc))==1
+    assert export_events(p)[:2]==original
+    assert len(export_events(p))==4
+    assert verify_events(export_events(p))
+def test_tampering_detected_and_export_roundtrip(tmp_path):
+    p=str(tmp_path/'db');q=str(tmp_path/'restored');t,d=sample();record('NVDA',t,d,'fixture',p,now=NOW)
+    events=export_events(p); import_events(events,q);assert export_events(q)==events
+    events[0]['payload']['base_close']=999
+    with pytest.raises(ValueError):verify_events(events)
+def test_revised_price_history_is_unscorable(tmp_path):
+    p=str(tmp_path/'db');t,d=sample();record('NVDA',t,d,'fixture',p,now=NOW)
+    frame=pd.DataFrame({'Close':50.},index=schedule('NVDA','2026-01-02','2026-02-28').index)
+    resolve('NVDA',frame,p,now=datetime(2026,3,1,tzinfo=timezone.utc))
+    assert all(x['outcome']['status']=='UNSCORABLE_REVISION' for x in records(p))
+    assert audit_stats(p)[5]['direction_evaluated']==0
 
+def test_publisher_serializes_read_compute_append(tmp_path,monkeypatch):
+    from filelock import FileLock, Timeout
+    import scripts.publish_snapshot as publisher
+    monkeypatch.setattr(publisher,'DATA',tmp_path)
+    with FileLock(str(tmp_path/'publisher.lock')):
+        with pytest.raises(Timeout): publisher.run(['NVDA'],analyzer=lambda _:None)
 
-def test_no_outcome_before_record_time(tmp_path):
-    path=str(tmp_path/'db.sqlite3')
-    t,d=sample()
-    record('NVDA',t,d,'TEST_PROVIDER',path)
-    # Historical future dates from years ago must NEVER resolve a newly saved record.
-    past=pd.date_range('2020-01-01',periods=200,freq='B')
-    df=pd.DataFrame({'Close':[100+i*.1 for i in range(200)]},index=past)
-    assert resolve('NVDA',df,path)==0
-    assert audit_stats(path)[5]['resolved']==0
-
-
-def test_matured_forecast_can_resolve_without_changing_original(tmp_path):
-    path=str(tmp_path/'db.sqlite3')
-    t,d=sample()
-    record('NVDA',t,d,'TEST_PROVIDER',path)
-    # Backdate the recorded_at date in the test database ONLY to simulate time passing.
-    with connect(path) as conn:
-        conn.execute("UPDATE forecasts SET source_bar_date='2026-01-02', recorded_at_utc='2026-01-02T22:00:00+00:00'")
-    past=pd.date_range('2025-12-29',periods=40,freq='B')
-    df=pd.DataFrame({'Close':[100+i*.15 for i in range(40)]},index=past)
-    assert resolve('NVDA',df,path)==2
-    stats=audit_stats(path)
-    assert stats[5]['resolved']==1
-    assert stats[20]['resolved']==1
-    with connect(path) as conn:
-        row=conn.execute('SELECT base_close, target_1, status FROM forecasts LIMIT 1').fetchone()
-    assert row==(100.,103.,'RESOLVED')
+def test_publisher_refuses_concurrent_history_replacement(tmp_path,monkeypatch):
+    import scripts.publish_snapshot as publisher
+    monkeypatch.setattr(publisher,'DATA',tmp_path)
+    monkeypatch.setattr(publisher,'SNAPSHOTS',tmp_path/'snapshots.json')
+    monkeypatch.setattr(publisher,'LEDGER',tmp_path/'legacy.json')
+    def changing_provider(_):
+        (tmp_path/'events.jsonl').write_text('concurrent writer\n')
+        raise ValueError('fixture')
+    with pytest.raises(RuntimeError,match='concurrently'): publisher.run(['NVDA'],analyzer=changing_provider)
+    assert (tmp_path/'events.jsonl').read_text()=='concurrent writer\n'

@@ -213,6 +213,10 @@ def fetch_free_options(symbol: str, *, expiries_limit: int = 3,
         raise ValueError("Invalid ticker")
     from .data import valid_symbol
     ticker = valid_symbol(symbol)
+    from .calendar import calendar_name
+    from .technicals import only_closed_daily
+    if calendar_name(ticker) != 'NYSE':
+        raise ValueError('This personal options module supports US optionable equities only.')
     import yfinance as yf
     now = datetime.now(timezone.utc)
     client = yf.Ticker(ticker)
@@ -221,8 +225,9 @@ def fetch_free_options(symbol: str, *, expiries_limit: int = 3,
         raise ValueError("No options expirations returned by provider")
     # Fast quote may be delayed; prefer prior close from daily history with provenance.
     d=client.history(period="7d",interval="1d",auto_adjust=False,prepost=False,timeout=15)
+    d=only_closed_daily(d,now=now,symbol=ticker)
     if d.empty:
-        raise ValueError("No actual underlying close from provider")
+        raise ValueError("No completed underlying daily close from provider")
     spot=float(d["Close"].dropna().iloc[-1])
     rows=[]
     for expiry in choices:

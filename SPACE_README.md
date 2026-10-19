@@ -3,12 +3,16 @@ title: KRATOS Stock Intelligence
 emoji: 📈
 colorFrom: gray
 colorTo: blue
-sdk: gradio
-sdk_version: 6.5.1
-app_file: app.py
+sdk: docker
+app_port: 7860
 pinned: false
 ---
 
-# KRATOS Stock Intelligence
+Source: https://github.com/samin110597-create/kratos-stock-intelligence
 
-Private stock research MVP, no proof of trading edge. The space requires data provider connectivity and persistent storage for meaningful long-term auditing. Upload `SPACE_README.md` as `README.md` for a new Hugging Face Space.
+On-demand research API and dashboard. Yahoo data has no freshness guarantee.
+Public API is read-only and does not record user queries or private portfolios.
+Free/sleeping compute cannot guarantee uptime. Audit storage is host-dependent;
+GitHub-published observations are separately versioned in the source repository.
+No paid hardware is required by this image. Verify current hosting eligibility
+and pricing before creating the Space; do not enable paid hardware implicitly.

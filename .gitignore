@@ -12,3 +12,6 @@ data/
 *.db
 .gradio/
 .DS_Store
+
+node_modules/
+site/data/publisher.lock

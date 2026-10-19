@@ -51,18 +51,24 @@ def propose_setup(t: dict, freshness: dict) -> dict:
     elif (bullish and hourly_ok and near_zone and 42 <= rsi <= 70 and
           reasonable_volume and r_to_res is not None and r_to_res >= 1.5 and
           freshness["live_enough"]):
-        decision = "BUY SETUP"
-        reasons.append("All rule filters passed on provided bars; this is NOT a verified edge.")
+        decision = "WAIT"
+        reasons.append("Rule candidate only: no independent predictive validation exists, so the decision remains WAIT.")
     elif bullish:
         reasons.append("Bullish context, but at least one buy filter or live-data check failed.")
     if not freshness["live_enough"]:
-        reasons.append("Minute price is not verified <=15 min during estimated market hours. No live entry approval.")
+        reasons.append("Minute price is not verified <=15 min during calendar-defined market hours. No live entry approval.")
     # Square-root-of-time ATR range is a heuristic sensitivity band, NOT a confidence interval.
     ranges = {str(n): {"lower":max(0.01, c - atr * math.sqrt(n)),
                          "upper":c + atr * math.sqrt(n)} for n in (5,20)}
     return {
         "classification":decision, "bias":"UP" if bullish else "DOWN" if bearish else "MIXED",
-        "grade":"RULE PASS — NOT BACKTEST-VALIDATED" if decision == "BUY SETUP" else "NO CONFIRMED LONG SETUP",
+        "grade":"NO RELIABLE EDGE — INSUFFICIENT VALIDATION",
+        "policies": {"Strict":{"grade":"UNVALIDATED","sample_size":0},
+                     "Adaptive":{"grade":"UNVALIDATED","sample_size":0}},
+        "scenarios": {
+            "bull":f"Reconsider strength after a completed daily close above {t['resistance20'] if 'resistance20' in t else t['resistance60']:.2f}, then a successful retest. No timing or probability is established.",
+            "base":"Follow the observed trend; wait for confirmation. ATR bands describe sensitivity, not expected prices.",
+            "bear":f"A completed daily close below {t['support20']:.2f} weakens the support case. Gaps can bypass a stop."},
         "reasons":reasons, "entry_zone":(zone_lo, zone_hi), "stop":stop,
         "targets": targets, "rr_to_resistance":r_to_res,
         "ranges":ranges,

@@ -1,158 +1,183 @@
-"""Append-only forecasts; outcome updates never alter a published prediction.
+"""Append-only, hash-chained forecasts and separate outcomes. Legacy rows stay unscored.
 
-Forecasts are evaluated at the Nth subsequently published DAILY bar. This is NOT an
-intraday prediction engine and does not use an exchange holiday calendar.
+Hashes detect accidental alteration, not a malicious database administrator. Durable
+hosting/backup is a deployment responsibility, disclosed by the API health endpoint.
 """
-from datetime import datetime, timezone, timedelta
-from zoneinfo import ZoneInfo
+from datetime import datetime, timezone
+from pathlib import Path
+import hashlib
+import json
+import math
 import os
 import sqlite3
-from pathlib import Path
 import pandas as pd
+from .calendar import schedule, utc, ET, session_state
+from .technicals import only_closed_daily
 
-CREATE_SQL = """
-CREATE TABLE IF NOT EXISTS forecasts (
- id INTEGER PRIMARY KEY AUTOINCREMENT,
- ticker TEXT NOT NULL,
- recorded_at_utc TEXT NOT NULL,
- source_bar_date TEXT NOT NULL,
- source_bar_utc TEXT,
- provider TEXT NOT NULL,
- horizon_sessions INTEGER NOT NULL CHECK(horizon_sessions IN (5,20)),
- base_close REAL NOT NULL,
- directional_bias TEXT NOT NULL,
- call TEXT NOT NULL,
- entry_low REAL,
- entry_high REAL,
- invalidation REAL,
- target_1 REAL,
- target_2 REAL,
- target_3 REAL,
- predicted_lower REAL,
- predicted_upper REAL,
- forecast_version TEXT NOT NULL,
- status TEXT NOT NULL DEFAULT 'OPEN',
- outcome_bar_date TEXT,
- outcome_close REAL,
- direction_correct INTEGER,
- target_reached_on_end INTEGER,
- resolved_at_utc TEXT,
- UNIQUE(ticker, source_bar_date, horizon_sessions, forecast_version)
-);
-"""
+MODEL_VERSION='rules-v2.0.0'
 
-def db_file() -> str:
-    root = Path(os.getenv("KRATOS_DB_DIR", "data"))
-    root.mkdir(parents=True, exist_ok=True)
-    return str(root / "forecasts.sqlite3")
+def canonical(value):
+    def default(v):
+        if hasattr(v,'item'): return v.item()
+        if hasattr(v,'isoformat'): return v.isoformat()
+        raise TypeError(f'Unsupported audit value: {type(v).__name__}')
+    return json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False,default=default)
 
+def digest(value): return hashlib.sha256(canonical(value).encode()).hexdigest()
 
-def connect(path: str | None = None):
-    path = path or db_file()
-    db = sqlite3.connect(path)
-    db.execute("PRAGMA busy_timeout=5000")
-    db.execute(CREATE_SQL)
-    db.commit()
+def db_file():
+    root=Path(os.getenv('KRATOS_DB_DIR','data'));root.mkdir(parents=True,exist_ok=True)
+    return str(root/'forecasts.sqlite3')
+
+def connect(path=None):
+    db=sqlite3.connect(path or db_file(),timeout=10)
+    db.execute('PRAGMA foreign_keys=ON')
+    db.execute('PRAGMA journal_mode=WAL')
+    db.executescript('''
+    CREATE TABLE IF NOT EXISTS events (
+      seq INTEGER PRIMARY KEY AUTOINCREMENT,
+      event_id TEXT NOT NULL UNIQUE,
+      kind TEXT NOT NULL CHECK(kind IN ('forecast','outcome')),
+      forecast_id TEXT NOT NULL,
+      payload TEXT NOT NULL,
+      previous_hash TEXT NOT NULL,
+      event_hash TEXT NOT NULL UNIQUE,
+      UNIQUE(kind,forecast_id)
+    );
+    CREATE TRIGGER IF NOT EXISTS events_no_update BEFORE UPDATE ON events
+      BEGIN SELECT RAISE(ABORT,'Published audit events are immutable'); END;
+    CREATE TRIGGER IF NOT EXISTS events_no_delete BEFORE DELETE ON events
+      BEGIN SELECT RAISE(ABORT,'Published audit events are immutable'); END;
+    ''')
     return db
 
+def _append(db,kind,forecast_id,payload):
+    event_id=f'{kind}:{forecast_id}'
+    if db.execute('SELECT 1 FROM events WHERE event_id=?',(event_id,)).fetchone(): return False
+    if kind=='outcome' and not db.execute("SELECT 1 FROM events WHERE kind='forecast' AND forecast_id=?",(forecast_id,)).fetchone():
+        raise ValueError('Outcome has no original forecast.')
+    last=db.execute('SELECT event_hash FROM events ORDER BY seq DESC LIMIT 1').fetchone()
+    previous=last[0] if last else '0'*64
+    body={'event_id':event_id,'kind':kind,'forecast_id':forecast_id,'payload':payload,'previous_hash':previous}
+    db.execute('INSERT INTO events(event_id,kind,forecast_id,payload,previous_hash,event_hash) VALUES(?,?,?,?,?,?)',
+               (event_id,kind,forecast_id,canonical(payload),previous,digest(body)))
+    return True
 
-def record(ticker: str, t: dict, s: dict, provider: str, path: str | None = None) -> list[int]:
-    """Record separate 5-session and 20-session hypotheses; no intraday signal claim."""
-    created = datetime.now(timezone.utc)
-    # Prevent historical cherry-picking / retrospective recording of old forecasts.
-    bar_date = datetime.fromisoformat(t["asof_bar_date"]).date()
-    age = (created.astimezone(ZoneInfo("America/Toronto")).date() - bar_date).days
-    if age < 0 or age > 5:
-        raise ValueError("Last completed daily bar is too old for a forward forecast. Try a fresh ticker/data source.")
-    start = created.isoformat()
-    zone = s["entry_zone"] or (None, None)
-    targets = s.get("targets") or [None, None, None]
-    added = []
+def records(path=None):
     with connect(path) as db:
-        for horizon in (5, 20):
-            band = s.get("ranges", {}).get(str(horizon), {})
-            data = (ticker, start, t["asof_bar_date"], provider, horizon, t["close"],
-                    s["bias"], s["classification"], zone[0], zone[1], s.get("stop"),
-                    *targets, band.get("lower"), band.get("upper"), "rules-v1")
-            cur = db.execute("""INSERT OR IGNORE INTO forecasts
-                (ticker, recorded_at_utc, source_bar_date, provider, horizon_sessions,
-                 base_close, directional_bias, call, entry_low, entry_high,
-                 invalidation, target_1, target_2, target_3,
-                 predicted_lower, predicted_upper, forecast_version)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", data)
-            if cur.rowcount:
-                added.append(int(cur.lastrowid))
+        rows=db.execute('SELECT kind,forecast_id,payload FROM events ORDER BY seq').fetchall()
+    forecasts={};outcomes={}
+    for kind,key,payload in rows:
+        (forecasts if kind=='forecast' else outcomes)[key]=json.loads(payload)
+    return [dict(p,forecast_id=key,outcome=outcomes.get(key)) for key,p in forecasts.items()]
+
+def record(ticker,t,s,provider,path=None,*,now=None):
+    created=utc(now or datetime.now(timezone.utc));bar_date=pd.Timestamp(t['asof_bar_date']).date()
+    age=(created.tz_convert(ET).date()-bar_date).days
+    if age<0 or age>5: raise ValueError('Last completed daily bar is too old for a forward forecast.')
+    if not math.isfinite(float(t['close'])) or t['close']<=0: raise ValueError('Invalid reference close.')
+    reference=t.get('observation_reference') or {}
+    ref_price=reference.get('price')
+    ref_stamp=reference.get('bar_open_utc')
+    if session_state(ticker,created)['market_open']:
+        if ref_price is None or not ref_stamp or not 0 <= (created-utc(ref_stamp)).total_seconds() <= 900:
+            raise ValueError('A recent timestamped reference price is required for an intraday forward observation.')
+    base_close=float(ref_price) if ref_price is not None else float(t['close'])
+    if not math.isfinite(base_close) or base_close<=0: raise ValueError('Invalid observation reference.')
+    zone=s.get('entry_zone');targets=s.get('targets',[])
+    features={k:v for k,v in t.items() if k not in ('daily','frames','structure','provenance','corporate_actions')}
+    # Replace missing numeric feature values with explicit nulls, never zero.
+    def scrub(v):
+        if isinstance(v,dict): return {k:scrub(x) for k,x in v.items()}
+        if isinstance(v,(list,tuple)): return [scrub(x) for x in v]
+        if isinstance(v,float) and not math.isfinite(v): return None
+        return v
+    added=[]
+    with connect(path) as db:
+        db.execute('BEGIN IMMEDIATE')
+        for horizon in (5,20):
+            key=digest({'ticker':ticker,'source_date':str(bar_date),'horizon':horizon,'model':MODEL_VERSION})
+            future=schedule(ticker,created.tz_convert(ET).date()+pd.Timedelta(days=1),created.tz_convert(ET).date()+pd.Timedelta(days=60))
+            maturity=future.index[horizon-1].date().isoformat()
+            payload=scrub({'ticker':ticker,'exchange_calendar':t.get('provenance',{}).get('calendar'),
+                'recorded_at_utc':created.isoformat(),'source_bar_date':str(bar_date),'provider':provider,
+                'source_provenance':t.get('provenance',{}),'model_version':MODEL_VERSION,
+                'features':features,'horizon_sessions':horizon,'maturity_date':maturity,
+                'outcome_definition':'Unadjusted endpoint close vs frozen reference close on Nth exchange session AFTER recording date. Not executable P&L.',
+                'base_close':base_close,'source_daily_close':t['close'],'reference_type':reference.get('kind','last completed daily close outside regular trading'),'reference_timestamp_utc':ref_stamp,
+                'bias':s['bias'],'classification':s['classification'],'entry_zone':zone,'stop':s.get('stop'),'targets':targets,
+                'ranges':s.get('ranges',{}).get(str(horizon),{}),
+                'validation_kind':'forward_observation','policy':'UNVALIDATED','published_grade':None,
+                'corporate_actions':t.get('corporate_actions',[])})
+            if _append(db,'forecast',key,payload): added.append(key)
     return added
 
+def resolve(ticker,daily,path=None,*,now=None,actions=None):
+    now=utc(now or datetime.now(timezone.utc))
+    rows=only_closed_daily(daily,now=now,symbol=ticker)
+    if rows.empty: return 0
+    rows=rows.copy();rows.index=rows.index.tz_convert(ET).tz_localize(None).normalize() if rows.index.tz is not None else rows.index.normalize()
+    count=0
+    for p in records(path):
+        if p['ticker']!=ticker or p['outcome']: continue
+        target=pd.Timestamp(p['maturity_date']);source=pd.Timestamp(p['source_bar_date'])
+        if target not in rows.index: continue  # Missing target NEVER shifts maturity to a later available bar.
+        known_revision=source in rows.index and not math.isclose(float(rows.loc[source,'Close']),p['source_daily_close'],rel_tol=1e-6,abs_tol=1e-6)
+        action_risk=any(source.date()<pd.Timestamp(a['date']).date()<=target.date() and a.get('split',0) for a in (actions or []))
+        actual=float(rows.loc[target,'Close']);bias=p['bias']
+        invalid=known_revision or action_risk or source not in rows.index
+        correct=None if invalid or bias not in ('UP','DOWN') else actual>p['base_close'] if bias=='UP' else actual<p['base_close']
+        lo,hi=p['ranges'].get('lower'),p['ranges'].get('upper')
+        outcome={'resolved_at_utc':now.isoformat(),'outcome_date':str(target.date()),'outcome_close':actual,
+                 'status':'UNSCORABLE_REVISION' if invalid else 'RESOLVED',
+                 'direction_correct':correct,'range_hit':None if invalid or lo is None or hi is None else lo<=actual<=hi,
+                 'revision_check':'source revised, missing, or split reported' if invalid else 'source compared' if source in rows.index else 'source unavailable — endpoint only',
+                 'scoring_version':'endpoint-v2','pnl':None,'target_before_stop':None}
+        with connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            count+=int(_append(db,'outcome',p['forecast_id'],outcome))
+    return count
 
-def _naive_trade_dates(daily: pd.DataFrame) -> pd.DataFrame:
-    df = daily.copy().sort_index()
-    if df.index.tz is not None:
-        df.index = df.index.tz_convert("America/Toronto").tz_localize(None)
-    df.index = df.index.normalize()
-    return df.loc[~df.index.duplicated(keep="last")]
+def recent_records(path=None,limit=100):
+    result=[]
+    for p in records(path)[-limit:][::-1]:
+        o=p['outcome'] or {}; band=p['ranges']
+        result.append((p['ticker'],p['source_bar_date'],p['horizon_sessions'],p['bias'],p['classification'],p['base_close'],o.get('status','OPEN'),o.get('outcome_date'),o.get('outcome_close'),o.get('direction_correct'),band.get('lower'),band.get('upper')))
+    return result
 
+def audit_stats(path=None):
+    data=records(path);stats={}
+    for h in (5,20):
+        group=[p for p in data if p['horizon_sessions']==h]
+        if not group: continue
+        outcomes=[p['outcome'] for p in group if p['outcome']]
+        scored=[o for o in outcomes if o['direction_correct'] is not None]
+        stats[h]={'total':len(group),'resolved':len(outcomes),'direction_wins':sum(o['direction_correct'] for o in scored),
+                  'direction_evaluated':len(scored),'range_hits':sum(o['range_hit'] is True for o in outcomes),
+                  'range_evaluated':sum(o['range_hit'] is not None for o in outcomes),
+                  'validation_status':'INSUFFICIENT VALIDATION','tradable_performance':False}
+    return stats
 
-def resolve(ticker: str, daily: pd.DataFrame, path: str | None = None) -> int:
-    """Only evaluate a forecast if its Nth FUTURE market bar is present.
-
-    This evaluation can run whenever future data becomes available. Callout: for
-    daily provider bars the latest trading day may still be forming. To prevent
-    premature outcomes, the most recent bar is excluded unless today is NOT its
-    date in ET; the previous day's final bar is always safe to use.
-    """
-    rows = _naive_trade_dates(daily)
-    from zoneinfo import ZoneInfo
-    today_et = datetime.now(ZoneInfo("America/Toronto")).date()
-    rows = rows.loc[rows.index.date < today_et]
-    resolved = 0
+def export_events(path=None):
     with connect(path) as db:
-        items = db.execute("""SELECT id, source_bar_date, horizon_sessions, base_close,
-                directional_bias, target_1, recorded_at_utc FROM forecasts
-                WHERE ticker=? AND status='OPEN'""", (ticker,)).fetchall()
-        for rid, anchor, horizon, close, direction, target1, recorded_at in items:
-            recorded_date = datetime.fromisoformat(recorded_at).astimezone(ZoneInfo("America/Toronto")).date()
-            # Cannot "forecast" any trading close that was already in the past at recording.
-            # Conservatively exclude the recording day: its close may already
-            # have happened before a forecast was saved. This avoids same-day
-            # look-ahead and defines horizons as *later* completed sessions.
-            future = rows.loc[(rows.index > pd.Timestamp(anchor)) & (rows.index.date > recorded_date)]
-            if len(future) < horizon:
-                continue
-            final = future.iloc[horizon-1]
-            final_close = float(final["Close"])
-            success = (final_close > close if direction == "UP" else
-                       final_close < close if direction == "DOWN" else None)
-            target_hit = int(final_close >= target1) if target1 is not None and direction == "UP" else None
-            db.execute("""UPDATE forecasts SET status='RESOLVED', outcome_bar_date=?,
-                outcome_close=?, direction_correct=?, target_reached_on_end=?,
-                resolved_at_utc=? WHERE id=? AND status='OPEN'""",
-                (str(future.index[horizon-1].date()), final_close,
-                 None if success is None else int(success), target_hit,
-                 datetime.now(timezone.utc).isoformat(), rid))
-            resolved += 1
-    return resolved
+        rows=db.execute('SELECT event_id,kind,forecast_id,payload,previous_hash,event_hash FROM events ORDER BY seq').fetchall()
+    return [dict(event_id=e,kind=k,forecast_id=f,payload=json.loads(p),previous_hash=prev,event_hash=h) for e,k,f,p,prev,h in rows]
 
+def verify_events(events):
+    previous='0'*64; seen=set();forecasts=set()
+    for event in events:
+        body={k:v for k,v in event.items() if k!='event_hash'}
+        if event['previous_hash']!=previous or digest(body)!=event['event_hash'] or event['event_id'] in seen:
+            raise ValueError('Audit event chain failed integrity verification.')
+        if event['kind']=='outcome' and event['forecast_id'] not in forecasts: raise ValueError('Orphan outcome')
+        if event['kind']=='forecast': forecasts.add(event['forecast_id'])
+        seen.add(event['event_id']);previous=event['event_hash']
+    return True
 
-def recent_records(path: str | None = None, limit: int = 100):
+def import_events(events,path=None):
+    verify_events(events)
+    existing=export_events(path)
+    if events[:len(existing)]!=existing: raise ValueError('Audit history is not an append-only extension.')
     with connect(path) as db:
-        rows = db.execute("""SELECT ticker, source_bar_date, horizon_sessions,
-            directional_bias, call, ROUND(base_close,3), status,
-            outcome_bar_date, ROUND(outcome_close,3), direction_correct,
-            predicted_lower, predicted_upper
-            FROM forecasts ORDER BY id DESC LIMIT ?""", (limit,)).fetchall()
-    return rows
-
-
-def audit_stats(path: str | None = None) -> dict:
-    with connect(path) as db:
-        rows = db.execute("""SELECT horizon_sessions,
-            COUNT(*) AS n, SUM(CASE WHEN status='RESOLVED' THEN 1 ELSE 0 END) AS done,
-            SUM(CASE WHEN direction_correct=1 THEN 1 ELSE 0 END) AS wins,
-            SUM(CASE WHEN direction_correct IN (0,1) THEN 1 ELSE 0 END) AS evaluated,
-            SUM(CASE WHEN status='RESOLVED' AND outcome_close BETWEEN predicted_lower AND predicted_upper
-                     THEN 1 ELSE 0 END) AS range_hits
-            FROM forecasts GROUP BY horizon_sessions ORDER BY horizon_sessions""").fetchall()
-    return {int(h): {"total":n,"resolved":done,"direction_wins":wins or 0,
-                     "direction_evaluated":evaluated or 0,"range_hits":range_hits or 0}
-            for h,n,done,wins,evaluated,range_hits in rows}
+        db.execute('BEGIN IMMEDIATE')
+        for e in events[len(existing):]: _append(db,e['kind'],e['forecast_id'],e['payload'])

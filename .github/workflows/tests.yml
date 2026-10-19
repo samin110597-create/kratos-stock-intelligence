@@ -14,15 +14,22 @@ jobs:
           cache: pip
       - name: Install
         run: pip install -r requirements-dev.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Dashboard DOM integration
+        run: npm test
       - name: Syntax check
-        run: python -m compileall -q app.py kratos tests
+        run: python -m compileall -q app.py server.py kratos scripts tests
       - name: Unit and UI component tests
         run: python -m pytest -q
       - name: Webserver smoke test (HTTP 200)
         shell: bash
         run: |
           export GRADIO_ANALYTICS_ENABLED=False
-          python app.py > /tmp/kratos-server.log 2>&1 &
+          python server.py > /tmp/kratos-server.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true' EXIT
           for attempt in $(seq 1 45); do

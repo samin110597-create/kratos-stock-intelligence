@@ -1,0 +1,549 @@
+{
+  "generated_at_utc": "2026-10-18T23:14:10.598531+00:00",
+  "experiments": {
+    "NVDA": {
+      "5": {
+        "spec": "daily-return-walkforward-v1",
+        "kind": "historical_walk_forward",
+        "horizon_sessions": 5,
+        "holdout_sessions": 120,
+        "dataset_sha256": "961a775be6aff8e689ab9a9a4c80316b0445e54bc6bbf2fa55f92e59d4ce45e0",
+        "data_start": "2023-10-17",
+        "data_end": "2026-10-16",
+        "metrics": {
+          "no_change": {
+            "samples": 23,
+            "mae_return": 0.04609581812294665,
+            "rmse_return": 0.05759866260780548,
+            "directional_samples": 0,
+            "direction_accuracy": null,
+            "mae_skill_vs_no_change": 0.0
+          },
+          "historical_mean": {
+            "samples": 23,
+            "mae_return": 0.04709270211253533,
+            "rmse_return": 0.05816245652331487,
+            "directional_samples": 23,
+            "direction_accuracy": 0.5217391304347826,
+            "mae_skill_vs_no_change": -0.02162634334702096
+          },
+          "momentum": {
+            "samples": 23,
+            "mae_return": 0.055264337086822456,
+            "rmse_return": 0.06762249712432822,
+            "directional_samples": 23,
+            "direction_accuracy": 0.391304347826087,
+            "mae_skill_vs_no_change": -0.19890131767314667
+          },
+          "mean_reversion": {
+            "samples": 23,
+            "mae_return": 0.04762003989211396,
+            "rmse_return": 0.05763218008917565,
+            "directional_samples": 23,
+            "direction_accuracy": 0.7391304347826086,
+            "mae_skill_vs_no_change": -0.033066378496676485
+          },
+          "ridge_fixed_alpha_1": {
+            "samples": 23,
+            "mae_return": 0.04621165642057917,
+            "rmse_return": 0.05737396479879749,
+            "directional_samples": 23,
+            "direction_accuracy": 0.5652173913043478,
+            "mae_skill_vs_no_change": -0.002512989298151913
+          }
+        },
+        "forecasts": [
+          {
+            "origin": "2026-04-28",
+            "target": "2026-05-05",
+            "origin_index": 633,
+            "last_training_target_index": 628,
+            "actual_return": -0.07820048933778057,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013656120263996454,
+              "momentum": 0.07265241952552254,
+              "mean_reversion": -0.06648985872261015,
+              "ridge_fixed_alpha_1": 0.03236616207906471
+            },
+            "training_samples": 604
+          },
+          {
+            "origin": "2026-05-05",
+            "target": "2026-05-12",
+            "origin_index": 638,
+            "last_training_target_index": 633,
+            "actual_return": 0.12356233475469147,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013865726090438022,
+              "momentum": 0.025828176959452054,
+              "mean_reversion": 0.07820048933778057,
+              "ridge_fixed_alpha_1": 0.02815512936184837
+            },
+            "training_samples": 609
+          },
+          {
+            "origin": "2026-05-12",
+            "target": "2026-05-19",
+            "origin_index": 643,
+            "last_training_target_index": 638,
+            "actual_return": -0.000769988993048476,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013466059019440528,
+              "momentum": 0.03087629758141469,
+              "mean_reversion": -0.12356233475469147,
+              "ridge_fixed_alpha_1": 0.008419857546801171
+            },
+            "training_samples": 614
+          },
+          {
+            "origin": "2026-05-19",
+            "target": "2026-05-27",
+            "origin_index": 648,
+            "last_training_target_index": 643,
+            "actual_return": -0.03630839256912677,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013949469587108486,
+              "momentum": 0.025928050856928953,
+              "mean_reversion": 0.000769988993048476,
+              "ridge_fixed_alpha_1": 0.01573126117834785
+            },
+            "training_samples": 619
+          },
+          {
+            "origin": "2026-05-27",
+            "target": "2026-06-03",
+            "origin_index": 653,
+            "last_training_target_index": 648,
+            "actual_return": 0.010112859053435397,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.014255322591974026,
+              "momentum": -0.0006684712557181172,
+              "mean_reversion": 0.03630839256912677,
+              "ridge_fixed_alpha_1": 0.013833345031264214
+            },
+            "training_samples": 624
+          },
+          {
+            "origin": "2026-06-03",
+            "target": "2026-06-10",
+            "origin_index": 658,
+            "last_training_target_index": 653,
+            "actual_return": -0.06672876289198926,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013834377190530297,
+              "momentum": 0.02321882951653942,
+              "mean_reversion": -0.010112859053435397,
+              "ridge_fixed_alpha_1": 0.03425864399767992
+            },
+            "training_samples": 629
+          },
+          {
+            "origin": "2026-06-10",
+            "target": "2026-06-17",
+            "origin_index": 663,
+            "last_training_target_index": 658,
+            "actual_return": 0.02110565695132549,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.01374058430706373,
+              "momentum": -0.02305462533169103,
+              "mean_reversion": 0.06672876289198926,
+              "ridge_fixed_alpha_1": 0.018707143767677046
+            },
+            "training_samples": 634
+          },
+          {
+            "origin": "2026-06-17",
+            "target": "2026-06-25",
+            "origin_index": 668,
+            "last_training_target_index": 663,
+            "actual_return": -0.04353769200612412,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.01330368417223868,
+              "momentum": -0.01808622305166513,
+              "mean_reversion": -0.02110565695132549,
+              "ridge_fixed_alpha_1": 0.013554563108582681
+            },
+            "training_samples": 639
+          },
+          {
+            "origin": "2026-06-25",
+            "target": "2026-07-02",
+            "origin_index": 673,
+            "last_training_target_index": 668,
+            "actual_return": -0.004649042794377389,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.013158458364240375,
+              "momentum": -0.01982596440065762,
+              "mean_reversion": 0.04353769200612412,
+              "ridge_fixed_alpha_1": 0.02055965722858578
+            },
+            "training_samples": 644
+          },
+          {
+            "origin": "2026-07-02",
+            "target": "2026-07-10",
+            "origin_index": 678,
+            "last_training_target_index": 673,
+            "actual_return": 0.08279014900795167,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012907270695489468,
+              "momentum": -0.023189753398073693,
+              "mean_reversion": 0.004649042794377389,
+              "ridge_fixed_alpha_1": 0.01239848703676527
+            },
+            "training_samples": 649
+          },
+          {
+            "origin": "2026-07-10",
+            "target": "2026-07-17",
+            "origin_index": 683,
+            "last_training_target_index": 678,
+            "actual_return": -0.038632958361285996,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.01255890921148307,
+              "momentum": 0.013147401258876756,
+              "mean_reversion": -0.08279014900795167,
+              "ridge_fixed_alpha_1": 0.005816309881420047
+            },
+            "training_samples": 654
+          },
+          {
+            "origin": "2026-07-17",
+            "target": "2026-07-24",
+            "origin_index": 688,
+            "last_training_target_index": 683,
+            "actual_return": 0.01987080926882112,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012698808521909152,
+              "momentum": -0.0022477356373894197,
+              "mean_reversion": 0.038632958361285996,
+              "ridge_fixed_alpha_1": 0.011463375331893982
+            },
+            "training_samples": 659
+          },
+          {
+            "origin": "2026-07-24",
+            "target": "2026-07-31",
+            "origin_index": 693,
+            "last_training_target_index": 688,
+            "actual_return": -0.029443030582644636,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012816320070696162,
+              "momentum": 0.014176957358257303,
+              "mean_reversion": -0.01987080926882112,
+              "ridge_fixed_alpha_1": 0.020501197720859572
+            },
+            "training_samples": 664
+          },
+          {
+            "origin": "2026-07-31",
+            "target": "2026-08-07",
+            "origin_index": 698,
+            "last_training_target_index": 693,
+            "actual_return": 0.11561647180008561,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012723276647888603,
+              "momentum": 0.007596363641774739,
+              "mean_reversion": 0.029443030582644636,
+              "ridge_fixed_alpha_1": 0.01722916214370611
+            },
+            "training_samples": 669
+          },
+          {
+            "origin": "2026-08-07",
+            "target": "2026-08-14",
+            "origin_index": 703,
+            "last_training_target_index": 698,
+            "actual_return": 0.005358085873677032,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012210432377748407,
+              "momentum": 0.015405763635607472,
+              "mean_reversion": -0.11561647180008561,
+              "ridge_fixed_alpha_1": -0.005976520327048567
+            },
+            "training_samples": 674
+          },
+          {
+            "origin": "2026-08-14",
+            "target": "2026-08-21",
+            "origin_index": 708,
+            "last_training_target_index": 703,
+            "actual_return": -0.04636703798012565,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012885573843107612,
+              "momentum": 0.02755042450145795,
+              "mean_reversion": -0.005358085873677032,
+              "ridge_fixed_alpha_1": 0.00643165156565939
+            },
+            "training_samples": 679
+          },
+          {
+            "origin": "2026-08-21",
+            "target": "2026-08-28",
+            "origin_index": 713,
+            "last_training_target_index": 708,
+            "actual_return": 0.013179963743320977,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.01298936096413681,
+              "momentum": 0.009524276037430224,
+              "mean_reversion": 0.04636703798012565,
+              "ridge_fixed_alpha_1": 0.017209322798227362
+            },
+            "training_samples": 684
+          },
+          {
+            "origin": "2026-08-28",
+            "target": "2026-09-04",
+            "origin_index": 718,
+            "last_training_target_index": 713,
+            "actual_return": 0.0588830033504808,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.01279579108617397,
+              "momentum": 0.020921548009661062,
+              "mean_reversion": -0.013179963743320977,
+              "ridge_fixed_alpha_1": 0.02562752877722595
+            },
+            "training_samples": 689
+          },
+          {
+            "origin": "2026-09-04",
+            "target": "2026-09-14",
+            "origin_index": 723,
+            "last_training_target_index": 718,
+            "actual_return": -0.08421598300522237,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012594503602157723,
+              "momentum": 0.007144125853529137,
+              "mean_reversion": -0.0588830033504808,
+              "ridge_fixed_alpha_1": -0.0032934288755210542
+            },
+            "training_samples": 694
+          },
+          {
+            "origin": "2026-09-14",
+            "target": "2026-09-21",
+            "origin_index": 728,
+            "last_training_target_index": 723,
+            "actual_return": 0.07783464944242424,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012806131701962565,
+              "momentum": -0.015766562352645536,
+              "mean_reversion": 0.08421598300522237,
+              "ridge_fixed_alpha_1": 0.01265520604302992
+            },
+            "training_samples": 699
+          },
+          {
+            "origin": "2026-09-21",
+            "target": "2026-09-28",
+            "origin_index": 733,
+            "last_training_target_index": 728,
+            "actual_return": 0.006508908856351914,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012566631952902262,
+              "momentum": 0.01474013085662268,
+              "mean_reversion": -0.07783464944242424,
+              "ridge_fixed_alpha_1": 0.010773504816222274
+            },
+            "training_samples": 704
+          },
+          {
+            "origin": "2026-09-28",
+            "target": "2026-10-05",
+            "origin_index": 738,
+            "last_training_target_index": 733,
+            "actual_return": 0.043869585158424096,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012473500711422588,
+              "momentum": 0.012997009193218612,
+              "mean_reversion": -0.006508908856351914,
+              "ridge_fixed_alpha_1": 0.00494844761607794
+            },
+            "training_samples": 709
+          },
+          {
+            "origin": "2026-10-05",
+            "target": "2026-10-12",
+            "origin_index": 743,
+            "last_training_target_index": 738,
+            "actual_return": -0.05265796104505782,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.012632627806329058,
+              "momentum": 0.009268094790225778,
+              "mean_reversion": -0.043869585158424096,
+              "ridge_fixed_alpha_1": -0.008686344174253145
+            },
+            "training_samples": 714
+          }
+        ],
+        "promoted": false,
+        "limitations": [
+          "Single-symbol revised historical data; not survivorship-bias controlled.",
+          "No execution, spread, slippage or portfolio P&L is modeled.",
+          "Evaluation origins spaced one horizon apart; features remain correlated.",
+          "Fixed experimental specification; no model selected for production.",
+          "No fundamental/news features or calibrated price quantiles. Small samples are insufficient validation."
+        ]
+      },
+      "20": {
+        "spec": "daily-return-walkforward-v1",
+        "kind": "historical_walk_forward",
+        "horizon_sessions": 20,
+        "holdout_sessions": 120,
+        "dataset_sha256": "961a775be6aff8e689ab9a9a4c80316b0445e54bc6bbf2fa55f92e59d4ce45e0",
+        "data_start": "2023-10-17",
+        "data_end": "2026-10-16",
+        "metrics": {
+          "no_change": {
+            "samples": 5,
+            "mae_return": 0.04714863992694875,
+            "rmse_return": 0.05373967264154074,
+            "directional_samples": 0,
+            "direction_accuracy": null,
+            "mae_skill_vs_no_change": 0.0
+          },
+          "historical_mean": {
+            "samples": 5,
+            "mae_return": 0.04320483077520534,
+            "rmse_return": 0.0659947618459562,
+            "directional_samples": 5,
+            "direction_accuracy": 0.6,
+            "mae_skill_vs_no_change": 0.08364629728140371
+          },
+          "momentum": {
+            "samples": 5,
+            "mae_return": 0.1090798734600917,
+            "rmse_return": 0.1491095043695228,
+            "directional_samples": 5,
+            "direction_accuracy": 0.6,
+            "mae_skill_vs_no_change": -1.3135317080004443
+          },
+          "mean_reversion": {
+            "samples": 5,
+            "mae_return": 0.16987077721143803,
+            "rmse_return": 0.1807531453792234,
+            "directional_samples": 5,
+            "direction_accuracy": 0.6,
+            "mae_skill_vs_no_change": -2.6028775692073562
+          },
+          "ridge_fixed_alpha_1": {
+            "samples": 5,
+            "mae_return": 0.05333903629147385,
+            "rmse_return": 0.07254156010677675,
+            "directional_samples": 5,
+            "direction_accuracy": 0.6,
+            "mae_skill_vs_no_change": -0.13129533267802396
+          }
+        },
+        "forecasts": [
+          {
+            "origin": "2026-04-28",
+            "target": "2026-05-27",
+            "origin_index": 633,
+            "last_training_target_index": 613,
+            "actual_return": -0.0026738850228724687,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.05451116134382982,
+              "momentum": 0.29060967810209015,
+              "mean_reversion": -0.2659594348904406,
+              "ridge_fixed_alpha_1": 0.09350413375459538
+            },
+            "training_samples": 574
+          },
+          {
+            "origin": "2026-05-27",
+            "target": "2026-06-25",
+            "origin_index": 653,
+            "last_training_target_index": 633,
+            "actual_return": -0.07930385760263048,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.055538343176137595,
+              "momentum": -0.0026738850228724687,
+              "mean_reversion": 0.14523357027650707,
+              "ridge_fixed_alpha_1": 0.048354558517570694
+            },
+            "training_samples": 594
+          },
+          {
+            "origin": "2026-06-25",
+            "target": "2026-07-24",
+            "origin_index": 673,
+            "last_training_target_index": 653,
+            "actual_return": 0.05670782943302921,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.05741196059114713,
+              "momentum": -0.07930385760263048,
+              "mean_reversion": 0.17415076802449647,
+              "ridge_fixed_alpha_1": 0.04669727005483484
+            },
+            "training_samples": 614
+          },
+          {
+            "origin": "2026-07-24",
+            "target": "2026-08-21",
+            "origin_index": 693,
+            "last_training_target_index": 673,
+            "actual_return": 0.038097104149720895,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.054853375451103026,
+              "momentum": 0.05670782943302921,
+              "mean_reversion": -0.07948323707528449,
+              "ridge_fixed_alpha_1": 0.06242038161376543
+            },
+            "training_samples": 634
+          },
+          {
+            "origin": "2026-08-21",
+            "target": "2026-09-21",
+            "origin_index": 713,
+            "last_training_target_index": 693,
+            "actual_return": 0.05896052342649072,
+            "predicted_returns": {
+              "no_change": 0.0,
+              "historical_mean": 0.05242401915543443,
+              "momentum": 0.038097104149720895,
+              "mean_reversion": 0.1854681519205026,
+              "ridge_fixed_alpha_1": 0.050435613709029374
+            },
+            "training_samples": 654
+          }
+        ],
+        "promoted": false,
+        "limitations": [
+          "Single-symbol revised historical data; not survivorship-bias controlled.",
+          "No execution, spread, slippage or portfolio P&L is modeled.",
+          "Evaluation origins spaced one horizon apart; features remain correlated.",
+          "Fixed experimental specification; no model selected for production.",
+          "No fundamental/news features or calibrated price quantiles. Small samples are insufficient validation."
+        ]
+      }
+    }
+  }
+}

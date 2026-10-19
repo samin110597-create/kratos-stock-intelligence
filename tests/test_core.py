@@ -91,7 +91,8 @@ def test_projections_not_probabilities():
           'trends':{'1D':'UP','1W':'UP','1H':'UP'},
           'support20':96.,'resistance60':140.,'volume_ratio':1.1}
     s=propose_setup(tech,{'live_enough':True})
-    assert s['classification']=='BUY SETUP'
+    assert s['classification']=='WAIT'
+    assert 'INSUFFICIENT VALIDATION' in s['grade']
     assert s['ranges']['20']['upper'] == pytest.approx(100+2*math.sqrt(20))
     assert s['targets'][1]>s['targets'][0]>s['entry_zone'][0]
 

@@ -2,90 +2,104 @@ name: Publish KRATOS Web
 on:
   push:
     branches: [main]
-    paths:
-      - site/index.html
-      - scripts/publish_snapshot.py
-      - .github/workflows/pages.yml
+    paths: ['site/**', 'scripts/**', 'kratos/**', 'server.py', 'requirements*.txt', '.github/workflows/pages.yml']
   schedule:
-    # GitHub schedules are best-effort; 30 minutes is NOT a freshness guarantee.
-    - cron: '7,37 * * * *'
+    # Best-effort hourly; exchange-calendar gate below. No latency SLA.
+    - cron: '17 * * * 1-5'
   workflow_dispatch:
-
 permissions:
   contents: write
   pages: write
   id-token: write
-
 concurrency:
   group: kratos-public-pages
   cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
+    outputs:
+      publish: ${{ steps.session.outputs.publish }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
-      - name: Install KRATOS analysis dependencies
-        run: pip install -r requirements.txt
-      - name: Run market snapshot and update forward ledger
+      - run: pip install -r requirements-dev.txt
+      - name: Exchange calendar gate
+        id: session
         env:
-          KRATOS_SYMBOLS: NVDA,AVGO,AMAT,MU,CIFR,IREN,CRWV,NBIS,USAR,AXTI,GOOG,UBER
-        run: python -m scripts.publish_snapshot
-      - name: Validate generated JSON and entry page
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           python - <<'PY'
-          import json
-          from pathlib import Path
-          snapshot=json.loads(Path("site/data/snapshots.json").read_text())
-          ledger=json.loads(Path("site/data/ledger.json").read_text())
-          assert Path("site/index.html").stat().st_size > 2000
-          assert isinstance(snapshot["tickers"], dict) and len(snapshot["tickers"]) > 0
-          assert isinstance(ledger, list)
-          print("Generated valid public site data for", len(snapshot["tickers"]), "symbols; successful fetches:", snapshot["fresh_results"])
+          import os
+          from datetime import datetime, timezone, timedelta
+          from kratos.calendar import schedule, ET
+          now=datetime.now(timezone.utc)
+          today=now.astimezone(__import__('zoneinfo').ZoneInfo(ET)).date()
+          active=False
+          for symbol in ('SPY','RY.TO'):
+              s=schedule(symbol,today,today)
+              if not s.empty:
+                  r=s.iloc[0]
+                  active |= r.market_open <= now <= r.market_close + timedelta(minutes=30)
+          publish=os.environ['EVENT_NAME']!='schedule' or active
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('publish='+str(publish).lower()+'\n')
           PY
-      - name: Save public market snapshots and immutable forecast log
+      - name: Integrity and integration gates
+        if: steps.session.outputs.publish == 'true'
+        env:
+          GRADIO_ANALYTICS_ENABLED: 'False'
+        run: python -m pytest -q
+      - name: Analyze real provider data and append observations
+        if: steps.session.outputs.publish == 'true'
+        env:
+          KRATOS_SYMBOLS: NVDA,AVGO,AMAT,MU,CIFR,IREN,CRWV,NBIS,USAR,AXTI,GOOG,UBER,RY.TO
+          KRATOS_RESEARCH_SYMBOLS: NVDA
+        run: python -m scripts.publish_snapshot
+      - name: Verify append-only history and generated files
+        if: steps.session.outputs.publish == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f site/data/snapshots.json site/data/ledger.json
-          if ! git diff --staged --quiet; then
-            git commit -m "data: publish dated KRATOS snapshots and forecast ledger"
-            # Repository may receive a developer commit during the refresh.
-            # Rebase and retry rather than failing after successful data retrieval.
-            for attempt in 1 2 3; do
-              if git push origin HEAD:main; then
-                echo "Market snapshot saved successfully."
-                break
-              fi
-              echo "Data push diverged; fetching and rebasing (attempt $attempt)."
-              git fetch origin main
-              git rebase -X theirs origin/main
-              if [ "$attempt" = 3 ]; then
-                git push origin HEAD:main
-              fi
-            done
+          python - <<'PY'
+          import json, pathlib, subprocess
+          from kratos.audit import verify_events
+          p=pathlib.Path('site/data/events.jsonl')
+          events=[json.loads(x) for x in p.read_text().splitlines()] if p.exists() else []
+          verify_events(events)
+          try: old=subprocess.check_output(['git','show','HEAD:site/data/events.jsonl'],text=True)
+          except subprocess.CalledProcessError: old=''
+          assert (p.read_text() if p.exists() else '').startswith(old)
+          feed=json.loads(pathlib.Path('site/data/snapshots.json').read_text())
+          assert feed['tickers']
+          print('Fresh results:',feed['fresh_results'],'Events:',len(events))
+          PY
+      - name: Persist only when audit history grows
+        if: steps.session.outputs.publish == 'true'
+        run: |
+          # Publish fresh snapshots as Pages artifacts every run; archive in Git only
+          # when observations/outcomes append. Never rewrite existing audit records.
+          if [ -f site/data/events.jsonl ] && { ! git ls-files --error-unmatch site/data/events.jsonl >/dev/null 2>&1 || ! git diff --quiet -- site/data/events.jsonl; }; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -f site/data/events.jsonl site/data/snapshots.json
+            if [ -f site/data/research.json ]; then git add -f site/data/research.json; fi
+            git commit -m 'audit: append frozen KRATOS observations and independent outcomes'
+            git push origin HEAD:main
           fi
-      - name: Prepare GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Upload public HTML & snapshots
-        uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v5
+        if: steps.session.outputs.publish == 'true'
+      - uses: actions/upload-pages-artifact@v4
+        if: steps.session.outputs.publish == 'true'
         with:
           path: site
-
   deploy:
     needs: build
+    if: needs.build.outputs.publish == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - uses: actions/deploy-pages@v4
         id: deploy
-        uses: actions/deploy-pages@v4

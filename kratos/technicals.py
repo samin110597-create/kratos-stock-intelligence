@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
+from .calendar import closed_bars, aggregate_intraday, weekly_closed, schedule
 
 
 def indicators(raw: pd.DataFrame) -> pd.DataFrame:
@@ -19,7 +20,9 @@ def indicators(raw: pd.DataFrame) -> pd.DataFrame:
     ag = up.ewm(alpha=1/14, adjust=False, min_periods=14).mean()
     al = down.ewm(alpha=1/14, adjust=False, min_periods=14).mean()
     rs = ag / al.replace(0, np.nan)
-    df["RSI14"] = (100 - 100/(1 + rs)).where(al > 0, 100).where(ag > 0, 0)
+    rsi = 100 - 100/(1 + rs)
+    rsi = rsi.mask((al == 0) & (ag > 0), 100).mask((ag == 0) & (al > 0), 0)
+    df["RSI14"] = rsi.mask((ag == 0) & (al == 0), 50)
     tr = pd.concat([h-lo, (h-c.shift()).abs(), (lo-c.shift()).abs()], axis=1).max(axis=1)
     df["ATR14"] = tr.ewm(alpha=1/14, adjust=False, min_periods=14).mean()
     df["VOL20"] = df["Volume"].rolling(20, min_periods=20).mean()
@@ -37,7 +40,7 @@ def resample_ohlcv(df: pd.DataFrame, rule: str, *, four_hour: bool = False) -> p
         groups = df.resample(rule, origin="start_day", offset="9h30min")
     else:
         groups = df.resample(rule)
-    return groups.agg({"Open":"first", "High":"max", "Low":"min", "Close":"last", "Volume":"sum"}).dropna(subset=["Close"])
+    return groups.agg({"Open":"first", "High":"max", "Low":"min", "Close":"last", "Volume":lambda s: s.sum() if s.notna().all() else np.nan}).dropna(subset=["Close"])
 
 
 def normalize_daily_index(df: pd.DataFrame) -> pd.DataFrame:
@@ -47,44 +50,16 @@ def normalize_daily_index(df: pd.DataFrame) -> pd.DataFrame:
     return result
 
 
-def only_closed_daily(raw: pd.DataFrame, *, now: datetime | None = None) -> pd.DataFrame:
-    """Remove current US/Canada daily candle before 16:15 ET; never use it to score.
-
-    Holiday/exchange scheduling is approximate. For 24h/non-North-American tickers,
-    this is conservative rather than exchange-specific.
-    """
-    if raw.empty:
-        return raw.copy()
-    current = (now or datetime.now(ZoneInfo("America/Toronto"))).astimezone(ZoneInfo("America/Toronto"))
-    output = raw.copy()
-    last = output.index[-1]
-    last_et = last.tz_convert("America/Toronto") if last.tzinfo else last
-    if last_et.date() == current.date() and current.time() < time(16, 15):
-        output = output.iloc[:-1]
-    return output
+def only_closed_daily(raw, *, now=None, symbol='SPY'):
+    return closed_bars(raw, '1d', now or datetime.now(ZoneInfo('UTC')), symbol)
 
 
-def only_closed_hourly(raw: pd.DataFrame, *, now: datetime | None = None) -> pd.DataFrame:
-    if raw.empty:
-        return raw.copy()
-    current = now or datetime.now(ZoneInfo("America/Toronto"))
-    last = raw.index[-1]
-    if last.tzinfo is None:
-        return raw.iloc[:-1]
-    if last.tz_convert("America/Toronto") + timedelta(hours=1) > current:
-        return raw.iloc[:-1]
-    return raw.copy()
+def only_closed_hourly(raw, *, now=None, symbol='SPY'):
+    return closed_bars(raw, '60min', now or datetime.now(ZoneInfo('UTC')), symbol)
 
 
-def only_closed_weekly(raw_weekly: pd.DataFrame, *, now: datetime | None = None) -> pd.DataFrame:
-    if raw_weekly.empty:
-        return raw_weekly.copy()
-    current = (now or datetime.now(ZoneInfo("America/Toronto"))).astimezone(ZoneInfo("America/Toronto"))
-    last = raw_weekly.index[-1]
-    # Resampling W-FRI labels a new partial week with this Friday's date.
-    week_end = last.date()
-    week_final = current.date() > week_end or (current.date() == week_end and current.time() >= time(16,15))
-    return raw_weekly if week_final else raw_weekly.iloc[:-1]
+def only_closed_weekly(raw_weekly, *, now=None, symbol='SPY'):
+    return weekly_closed(raw_weekly, now or datetime.now(ZoneInfo('UTC')), symbol)
 
 
 def trend_label(df: pd.DataFrame) -> str:
@@ -100,14 +75,18 @@ def trend_label(df: pd.DataFrame) -> str:
     return "MIXED"
 
 
-def build_technicals(daily: pd.DataFrame, hourly: pd.DataFrame) -> dict:
-    daily = only_closed_daily(daily)
-    hourly = only_closed_hourly(hourly)
+def build_technicals(daily: pd.DataFrame, hourly: pd.DataFrame, *, quarter=None, symbol="SPY", now=None) -> dict:
+    now = now or datetime.now(ZoneInfo("UTC"))
+    daily = only_closed_daily(daily, now=now, symbol=symbol)
+    hourly = only_closed_hourly(hourly, now=now, symbol=symbol)
     if len(daily) < 65:
         raise ValueError("Insufficient completed daily bars for trustworthy analysis.")
     d = indicators(daily)
-    week = only_closed_weekly(resample_ohlcv(normalize_daily_index(daily), "W-FRI"))
-    four = resample_ohlcv(hourly, "4h", four_hour=True) if not hourly.empty else hourly
+    week = only_closed_weekly(resample_ohlcv(normalize_daily_index(daily), "W-FRI"), now=now, symbol=symbol)
+    dates = set(normalize_daily_index(daily).index.normalize())
+    week = week.loc[[all(day in dates for day in schedule(symbol, stamp-pd.Timedelta(days=4), stamp).index) for stamp in week.index]]
+    four = aggregate_intraday(hourly, 240, 60, now, symbol)
+    quarter = closed_bars(quarter, '15min', now, symbol) if quarter is not None else pd.DataFrame()
     last = d.iloc[-1]
     close = float(last["Close"])
     atr = float(last["ATR14"]) if pd.notna(last["ATR14"]) else None
@@ -124,11 +103,13 @@ def build_technicals(daily: pd.DataFrame, hourly: pd.DataFrame) -> dict:
         "ema50": float(last["EMA50"]) if pd.notna(last["EMA50"]) else None,
         "volume_ratio": float(last["VOL_RATIO"]) if pd.notna(last["VOL_RATIO"]) else None,
         "support20": sup, "resistance20": resistance, "resistance60": resistance60,
-        "trends": {"1H": trend_label(hourly), "4H": trend_label(four),
+        "trends": {"15M": trend_label(quarter), "1H": trend_label(hourly), "4H": trend_label(four),
                    "1D": trend_label(daily), "1W": trend_label(week)},
         "high52w": float(d["High"].tail(252).max()),
         "low52w": float(d["Low"].tail(252).min()),
         "bar_count": len(d),
+        "frames": {"15M":quarter, "1H":hourly, "4H":four, "1D":daily, "1W":week},
+        "signal_at_utc": pd.Timestamp(now).isoformat(),
     }
 
 

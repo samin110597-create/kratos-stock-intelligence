@@ -83,7 +83,7 @@ def result_view(r):
                "\n\n" + f"**20-day support:** {money(t['support20'])} · **20-day resistance:** {money(t['resistance20'])} · **60-day high:** {money(t['resistance60'])}\n\n"+
                f"**52-week range:** {money(t['low52w'])} – {money(t['high52w'])} · **EMA20:** {money(t['ema20'])} · **EMA50:** {money(t['ema50'])}\n\n"+
                f"**Relative daily volume:** {money(t['volume_ratio'])}× 20-day average.\n\n"
-               "Missing intraday bars produce UNKNOWN, never fabricated indicators. Weekly bar may be incomplete during trading week and is provisional.")
+               "Missing intraday bars produce UNKNOWN, never fabricated indicators. Only complete exchange weeks are included.")
     structure=causal_structure(t["daily"])
     recent_gaps=structure.get("fvg", [])
     technical += ("\n\n### Price-action and liquidity context — observed closed bars\n\n"
@@ -112,9 +112,9 @@ def result_view(r):
     warnings = "\n".join(f"- {w}" for w in r.snapshot.warnings) or "- None reported (does not guarantee data quality)."
     quality=(f"### Data quality and limitations\n\n**Reported minute-bar age:** {fresh['age_minutes']} min · **Status:** {fresh['status']}\n\n"
              f"**Provider errors:**\n{warnings}\n\n"
-             "No holiday calendar, no options/dark-pool feeds, no institutional flow, no audited intrinsic value, no intraday backtesting, and no trained ML model in this MVP. "
+             "NYSE/TSX holiday calendars enabled. No licensed options/dark-pool feeds, no institutional flow, no audited intrinsic value, no intraday backtesting, and no trained ML model in this MVP. "
              "The original aiappsgbb/kratos-agent requires a substantially different Foundry/Copilot infrastructure; this MVP follows its one-orchestrator/many-skills pattern only.")
-    state={"ticker":r.snapshot.ticker,"tech":{k:v for k,v in t.items() if k!="daily"},
+    state={"ticker":r.snapshot.ticker,"tech":{k:v for k,v in t.items() if k not in ("daily", "frames")},
            "decision":dec,"provider":r.snapshot.provider}
     return header,summary,technical,fundamentals,outlook,quality,plot_price(t),state
 
@@ -170,7 +170,7 @@ def verify_outcomes(ticker):
 
 def build_app():
     with gr.Blocks(title="KRATOS Stock Intelligence") as ui:
-        gr.HTML('<div class="kr-title">KRATOS <span style="color:#19b6bb">/</span> STOCK INTELLIGENCE</div><div class="kr-sub">Independent research engine · Any ticker · Honest data freshness · Prediction audit · v0.1</div>')
+        gr.HTML('<div class="kr-title">KRATOS <span style="color:#19b6bb">/</span> STOCK INTELLIGENCE</div><div class="kr-sub">Independent research engine · Any ticker · Honest data freshness · Prediction audit · v0.2</div>')
         with gr.Row():
             ticker=gr.Textbox(value="NVDA",label="Enter ticker",placeholder="NVDA, CIFR, MU, RY.TO",scale=5)
             analyze_btn=gr.Button("Analyze",variant="primary",scale=1)

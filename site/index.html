@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#09111d">
-<title>KRATOS Stock Intelligence | Live Research Dashboard</title>
+<title>KRATOS Stock Intelligence | Evidence & Research Dashboard</title>
 <style>
 :root{color-scheme:dark;--bg:#070e19;--panel:#101c2c;--panel2:#162438;--line:#29394d;--ink:#eef5ff;--muted:#9eafc4;--cyan:#73d9e5;--green:#67e2a9;--red:#ffa1a1;--gold:#ffc980}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 65% 45% at 85% -10%,#15314d 0,transparent 70%),var(--bg);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
@@ -24,70 +24,22 @@ footer{color:#718aa6;font-size:12px;padding:40px 0 70px}#view{min-height:360px}.
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap top-inner"><div class="brand"><span class="glyph">K</span><div>KRATOS<div class="sub">STOCK INTELLIGENCE</div></div></div><div class="sub">RESEARCH LAB · RULES V1</div><a href="https://github.com/samin110597-create/kratos-stock-intelligence/blob/main/KRATOS_FREE_RESEARCH_LAB.md" target="_blank" rel="noopener">Free Options Lab (local) ↗</a><a href="https://github.com/samin110597-create/kratos-stock-intelligence" target="_blank" rel="noopener">View source ↗</a></div></header>
+<header class="top"><div class="wrap top-inner"><div class="brand"><span class="glyph">K</span><div>KRATOS<div class="sub">STOCK INTELLIGENCE</div></div></div><div class="sub">RESEARCH LAB · V0.2</div><a href="https://github.com/samin110597-create/kratos-stock-intelligence" target="_blank" rel="noopener">Inspect source ↗</a></div></header>
 <main class="wrap">
-<section class="hero"><div class="sub">Data-driven research • Forecast accountability</div><h1>See the setup.<br><span style="color:var(--cyan)">Verify the evidence.</span></h1><p>Independent technical and fundamental stock research. Every price is source-timestamped. Predictions are tracked before outcomes; unverified accuracy is never advertised.</p>
-<form class="searchbar" id="search"><input id="ticker" list="tickers" placeholder="Enter ticker e.g. NVDA" autocomplete="off" maxlength="20" aria-label="Ticker symbol"><datalist id="tickers"></datalist><button type="submit">Analyze →</button></form>
-<div id="chips" class="chips"></div></section>
-<div id="status" class="notice">Loading published analysis snapshots…</div>
-<section id="dashboard" hidden>
-<div id="kpis" class="kpis"></div>
-<div class="tabs" role="tablist" aria-label="Analysis tabs"><button class="tab" data-tab="overview" aria-selected="true">Decision</button><button class="tab" data-tab="technicals" aria-selected="false">Technicals</button><button class="tab" data-tab="fundamentals" aria-selected="false">Fundamentals</button><button class="tab" data-tab="forecast" aria-selected="false">Projection</button><button class="tab" data-tab="accuracy" aria-selected="false">Accuracy Audit</button></div>
-<div id="view"></div></section>
-<div id="intro" class="empty">Enter a supported ticker above. This public HTML reads market snapshots; it does not execute the Python analyzer in your browser.</div>
-<footer>KRATOS v0.1 · Educational market research, not personalized investment advice or execution. Price bars may be delayed; GitHub scheduled refreshes can be late. No fabricated backtest, institutional-flow feeds, calibrated confidence, or guaranteed accuracy.</footer>
-</main>
-<script>
-'use strict';
-const state={feed:null,ticker:null,tab:'overview'};
-const el=id=>document.getElementById(id),esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), n=v=>typeof v==='number'&&Number.isFinite(v);
-const money=(v,currency='USD')=>n(v)?new Intl.NumberFormat('en-US',{style:'currency',currency:currency==='CAD'?'CAD':'USD',maximumFractionDigits:2}).format(v):'Unavailable';
-const val=(v,d=2)=>n(v)?v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}):'Unavailable';
-const when=iso=>{if(!iso)return 'Unavailable';let d=new Date(iso);return isNaN(d)?'Invalid timestamp':new Intl.DateTimeFormat('en-CA',{timeZone:'America/Toronto',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(d)};
-const badge=(s)=>'<span class="badge '+(s==='UP'||s==='BUY SETUP'?'up':s==='DOWN'||s==='AVOID'?'down':'wait')+'">'+esc(s)+'</span>';
-const line=(a,b)=>'<div class="statline"><span class="name">'+esc(a)+'</span><span class="num">'+esc(b)+'</span></div>';
-const card=(t,c)=>'<article class="card"><h2>'+esc(t)+'</h2>'+c+'</article>';
-const fmtAge=iso=>{if(!iso)return null;const t=Date.parse(iso);return Number.isFinite(t)?Math.max(0,Math.round((Date.now()-t)/60000)):null};
-function sessionOpen(){let p={};new Intl.DateTimeFormat('en-CA',{timeZone:'America/Toronto',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).forEach(x=>p[x.type]=x.value);if(['Sat','Sun'].includes(p.weekday))return false;let z=Number(p.hour)*60+Number(p.minute);return z>=570&&z<960}
-function freshness(x){const a=fmtAge(x.minute_bar_utc);const generated=fmtAge(state.feed?.generated_at_utc);const open=sessionOpen();const live=!!(open&&a!==null&&a<=15&&generated!==null&&generated<=15);return {age:a,generated,open,live,stale:open&&!live};}
-function displayDecision(x){let d=x.decision||{};const f=freshness(x);return d.classification==='BUY SETUP'&&!f.live?'WAIT (stale feed)':(d.classification||'UNAVAILABLE')}
-function stat(label,v,extra){return '<div class="kpi"><div class="label">'+esc(label)+'</div><div class="value">'+esc(v)+'</div><div class="hint">'+esc(extra||'')+'</div></div>'}
-function tickerButtons(){let names=Object.keys(state.feed?.tickers||{}).filter(s=>!state.feed.tickers[s].error).sort();el('tickers').innerHTML=names.map(s=>'<option value="'+esc(s)+'"></option>').join('');el('chips').innerHTML=names.slice(0,13).map(s=>'<button type="button" class="chip" data-ticker="'+esc(s)+'">'+esc(s)+'</button>').join('');document.querySelectorAll('[data-ticker]').forEach(b=>b.onclick=()=>selectTicker(b.dataset.ticker))}
-function selectTicker(raw){const t=(raw||'').trim().toUpperCase();if(!/^[A-Z0-9^][A-Z0-9.^=_-]{0,19}$/.test(t)){el('status').className='notice bad';el('status').textContent='Enter a valid ticker, such as NVDA or RY.TO.';return}
-state.ticker=t;el('ticker').value=t;const x=state.feed?.tickers?.[t];if(!x){el('dashboard').hidden=true;el('intro').hidden=false;el('status').className='notice warn';el('status').textContent=t+' is not in the currently published coverage list. GitHub Pages cannot query an arbitrary ticker; the Python/Gradio version supports on-demand analysis. No fabricated result is displayed.';el('intro').textContent='Published coverage: '+Object.keys(state.feed?.tickers||{}).join(', ');return}
-if(x.error){el('dashboard').hidden=true;el('intro').hidden=false;el('status').className='notice bad';el('status').textContent=t+' provider error: '+x.error;el('intro').textContent='No valid data was returned for this symbol. Please try another covered ticker.';return}
-el('intro').hidden=true;el('dashboard').hidden=false;const f=freshness(x);
-const marketStatus=f.open?(f.live?'RECENT MINUTE BAR · not licensed-live proof':'STALE / UNVERIFIED · no live BUY'):'MARKET CLOSED / OUTSIDE REGULAR SESSION';
-el('status').className='notice '+(f.stale?'warn':'');
-el('status').textContent=x.ticker+' · '+marketStatus+' · Last minute bar: '+when(x.minute_bar_utc)+' · Snapshot collected: '+when(x.retrieved_at_utc)+' · Site rebuilt: '+when(state.feed.generated_at_utc)+' · Source: '+(x.provider||'unavailable');
-const cc=x.currency||'USD';
-el('kpis').innerHTML=stat('Latest completed DAILY close',money(x.price,cc),x.last_closed_bar_date||'No completed bar')+stat('Long-side classification',displayDecision(x),'No statistical edge established')+stat('Daily / Weekly trend',(x.technical?.trends?.['1D']||'?')+' / '+(x.technical?.trends?.['1W']||'?'),'Completed bars only')+stat('Reported minute bar age',f.age===null?'Unavailable':f.age+' min',f.open?'Refresh target: ≤15 min':'Market outside regular hours');
-render();
-}
-function render(){const x=state.feed.tickers[state.ticker];const t=x.technical||{},d=x.decision||{},tab=state.tab;
-document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
-const cc=x.currency||'USD',m=v=>money(v,cc);
-let out='';
-if(tab==='overview'){
-const reasons=(d.reasons||[]).map(r=>'<div class="reason">• '+esc(r)+'</div>').join('');
-out='<div class="grid">'+card('Long-side decision','<div style="margin-bottom:12px">'+badge(displayDecision(x))+'</div><p class="muted">Bias: '+esc(d.bias||'UNDETERMINED')+' · '+esc(d.grade||'UNVALIDATED')+'</p><h3>Why this decision?</h3>'+(reasons||'No validated reason available.')+'<p class="hint">A rules-based setup is not a prediction of guaranteed future performance.</p>')+card('Reference trading levels',line('Entry area',d.entry_zone?.length===2?m(d.entry_zone[0])+' – '+m(d.entry_zone[1]):'Unavailable')+line('Stop / invalidation',m(d.stop))+line('Target 1',m(d.targets?.[0]))+line('Target 2',m(d.targets?.[1]))+line('Target 3',m(d.targets?.[2]))+line('Resistance / risk ratio',n(d.rr_to_resistance)?val(d.rr_to_resistance)+'R':'Unavailable')+'<p class="hint">Illustrative rule-derived levels, not calibrated optimal executions.</p>')+'</div>';
-out+='<div class="grid">'+card('Price history — completed daily closes',plot(t.history||[]))+card('What this system does and does not know','<p>Uses actual provider OHLCV bars and selected company fundamentals. Signals are deterministic and conservative.</p><p class="muted">Not yet included: institutional or options flow, machine-learning forecasts, fully verified live feeds, or measured out-of-sample predictive skill.</p>')+'</div>';
-}
-if(tab==='technicals'){out='<div class="grid">'+card('Trend across timeframes',Object.entries(t.trends||{}).map(([k,v])=>'<div class="statline"><span class="name">'+esc(k)+'</span>'+badge(v)+'</div>').join('')+line('Source closed daily bar',t.asof_bar_date||x.last_closed_bar_date))+card('Indicators & levels',line('EMA 20',m(t.ema20))+line('EMA 50',m(t.ema50))+line('RSI 14',val(t.rsi))+line('ATR 14',m(t.atr))+line('Volume vs 20 day average',n(t.volume_ratio)?val(t.volume_ratio)+'×':'Unavailable')+line('20 day support',m(t.support20))+line('20 day resistance',m(t.resistance20))+line('60 day resistance',m(t.resistance60))+line('52 week high',m(t.high52w))+line('52 week low',m(t.low52w)))+'</div>'+card('Historical price series — not intraday live',plot(t.history||[]));}
-if(tab==='technicals' && x.market_structure){
-const ms=x.market_structure;const gaps=(ms.fvg||[]).map(g=>line(g.kind+' '+g.state, (n(g.low)?val(g.low):'—')+' – '+(n(g.high)?val(g.high):'—')+' · '+g.created_on)).join('');
-out+=card('Market structure — closed daily bars',line('Latest structural observation',ms.status||'Unknown')+line('Prior 20-bar high',m(ms.reference_high))+line('Prior 20-bar low',m(ms.reference_low))+line('Volume evidence',ms.participation||'Unknown')+line('Confirmed swing highs/lows',(ms.confirmed_pivot_trend?.highs||'?')+' / '+(ms.confirmed_pivot_trend?.lows||'?'))+'<p class="muted">'+esc(ms.reason||'')+'</p><p class="hint">These are price patterns, not verified institutional orders or predictive probabilities.</p>');
-out+=card('Still-open fair value gap candidates',gaps||'<p class="muted">No unfilled FVG candidates meeting the size threshold.</p>');
-}
-if(tab==='fundamentals'){let facts=(x.fundamentals?.facts||[]).map(z=>line(z.label,z.value)).join('');out='<div class="grid">'+card('Provider-reported financial facts',facts||'<p class="muted">Fundamentals unavailable.</p>')+card('Valuation interpretation','<p>'+esc(x.fundamentals?.valuation_note||'No valuation available')+'</p><p class="hint">Illustrative scenarios are not intrinsic values or recommendations. Do not apply earnings multiples to loss-making firms or financial institutions indiscriminately.</p>')+'</div>'}
-if(tab==='forecast'){const p=d.ranges||{};out='<div class="grid">'+card('Price sensitivity ranges',line('5 future sessions',p['5']?m(p['5'].lower)+' to '+m(p['5'].upper):'Unavailable')+line('20 future sessions',p['20']?m(p['20'].lower)+' to '+m(p['20'].upper):'Unavailable')+line('Directional hypothesis',d.bias||'Unavailable')+'<p class="hint">These are ATR × square-root-of-time heuristics. NOT confidence intervals or calibrated price probabilities.</p>')+card('Interpret the projection','<p>KRATOS currently provides a rule-based directional hypothesis, plus a volatility sensitivity range.</p><p class="muted">A true predictive accuracy percentage will only be shown when forecasts recorded before their outcome have matured and been evaluated. These ranges must not be treated as certain targets.</p>')+'</div>'}
-if(tab==='accuracy'){const a=state.feed.audit||{};let hs=a.by_horizon||{};let tables=Object.entries(hs).map(([h,s])=>'<tr><td>'+esc(h)+' sessions</td><td>'+esc(s.total||0)+'</td><td>'+esc(s.direction_evaluated||0)+'</td><td>'+(s.direction_evaluated?val(100*s.direction_wins/s.direction_evaluated,1)+'%':'Not measurable')+'</td><td>'+(s.range_evaluated?val(100*s.range_hits/s.range_evaluated,1)+'%':'Not measurable')+'</td></tr>').join('');out=card('Forward prediction record','<p class="muted">Only recorded, subsequently completed forecasts count. Historical examples are not retroactively counted as wins.</p><div class="metricgrid"><div class="mini"><div class="sub">Recorded hypotheses</div><div style="font-size:27px;font-weight:750">'+esc(a.total||0)+'</div></div><div class="mini"><div class="sub">Resolved with direction</div><div style="font-size:27px;font-weight:750">'+esc(a.direction_evaluated||0)+'</div></div></div><div style="overflow-x:auto"><table><thead><tr><th>Horizon</th><th>Logged</th><th>Scored</th><th>Direction accuracy</th><th>Range coverage</th></tr></thead><tbody>'+tables+'</tbody></table></div>'+(a.direction_evaluated?'<p class="hint">Unvalidated sample. Win rates do not include costs, slippage, or baseline comparisons.</p>':'<div class="notice warn">No matured, scoreable predictions yet. Accuracy is UNKNOWN—not 0% and not 100%.</div>'));const rec=(a.recent||[]).slice(0,18);out+=card('Recent forecast ledger','<div style="overflow-x:auto"><table><thead><tr><th>Ticker</th><th>Recorded (ET)</th><th>Horizon</th><th>Bias</th><th>Result</th></tr></thead><tbody>'+rec.map(q=>'<tr><td>'+esc(q.ticker)+'</td><td>'+esc(when(q.recorded_at_utc))+'</td><td>'+esc(q.horizon_sessions)+'d</td><td>'+esc(q.bias)+'</td><td>'+esc(q.status==='RESOLVED'?(q.direction_correct===null?'N/A':q.direction_correct?'Correct':'Incorrect'):'Pending')+'</td></tr>').join('')+'</tbody></table></div>'+(rec.length?'':'<p class="muted">No published forecast ledger entries yet.</p>'))}
-const warnings=(x.warnings||[]).map(w=>'<div class="reason">'+esc(w)+'</div>').join('');
-el('view').innerHTML=out+(warnings?card('Data quality warnings',warnings):'');
-}
-function plot(history){const rows=(history||[]).filter(z=>n(z.close)).slice(-110);if(rows.length<2)return '<div class="empty">No closed-price history available.</div>';let low=Math.min(...rows.map(z=>z.close)),high=Math.max(...rows.map(z=>z.close));const range=high-low||1;const points=rows.map((z,i)=>(35+i*650/(rows.length-1)).toFixed(1)+','+(220-(z.close-low)/range*177).toFixed(1)).join(' ');const tick=['0','1','2','3'].map((_,i)=>{let y=43+i*59;let v=high-i*range/3;return '<line x1="35" y1="'+y+'" x2="695" y2="'+y+'" stroke="#29415a" stroke-dasharray="3 5"/><text x="2" y="'+(y-5)+'">'+esc(Math.round(v))+'</text>'}).join('');return '<svg class="chart" viewBox="0 0 710 245" role="img" aria-label="Daily closing price history from provider">'+tick+'<polyline fill="none" stroke="#75dae5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" points="'+points+'"/><text x="35" y="240">'+esc(rows[0].date)+'</text><text x="610" y="240">'+esc(rows[rows.length-1].date)+'</text></svg>'}
-async function boot(){try{const r=await fetch('./data/snapshots.json?'+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('Data file is not published yet (HTTP '+r.status+').');const feed=await r.json();if(!feed||typeof feed.tickers!=='object')throw Error('Malformed published data file');state.feed=feed;tickerButtons();const t=new URLSearchParams(location.search).get('ticker')?.toUpperCase();const first=t||Object.keys(feed.tickers).find(k=>!feed.tickers[k].error);if(first)selectTicker(first);else{el('status').className='notice warn';el('status').textContent='Website is online, but Yahoo returned no validated ticker snapshots on this build. Check the GitHub Actions logs.'}}catch(e){el('status').className='notice bad';el('status').textContent='Site loaded, but published data is not available: '+e.message+'. Check GitHub Actions or retry later.';el('intro').textContent='No simulated quotes or fabricated accuracy results will be displayed.'}}
-document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{state.tab=b.dataset.tab;if(state.ticker)render()}));
-el('search').addEventListener('submit',ev=>{ev.preventDefault();selectTicker(el('ticker').value)});
-boot();
-</script></body></html>
+<section class="hero"><div class="sub">Observed evidence · Honest uncertainty</div><h1>Understand the price.<br><span style="color:var(--cyan)">Check the evidence.</span></h1><p>Closed-bar research for US and Canadian equities. Separate recent prices from completed daily closes, inspect the data, and track frozen hypotheses.</p>
+<form class="searchbar" id="search"><input id="ticker" list="tickers" placeholder="NVDA, RY.TO, TSX:RY" autocomplete="off" maxlength="25" aria-label="Ticker symbol"><datalist id="tickers"></datalist><button id="analyze" type="submit">Analyze →</button></form>
+<div id="connection" class="hint" style="margin-top:10px"></div><div id="chips" class="chips"></div></section>
+<div id="status" role="status" aria-live="polite" class="notice">Loading dated research…</div>
+<section id="dashboard" hidden><div id="kpis" class="kpis"></div>
+<div class="tabs" role="tablist" aria-label="Analysis tabs">
+<button class="tab" data-tab="overview" aria-selected="true">Dashboard</button>
+<button class="tab" data-tab="technicals" aria-selected="false">Technicals</button>
+<button class="tab" data-tab="fundamentals" aria-selected="false">Fundamentals</button>
+<button class="tab" data-tab="institutional" aria-selected="false">Institutional / Options</button>
+<button class="tab" data-tab="catalysts" aria-selected="false">News & Catalysts</button>
+<button class="tab" data-tab="forecast" aria-selected="false">Forecast & Plan</button>
+<button class="tab" data-tab="accuracy" aria-selected="false">Accuracy</button>
+<button class="tab" data-tab="watchlist" aria-selected="false">Watchlist & Alerts</button></div>
+<div id="view"></div></section><div id="intro" class="empty">No result selected.</div>
+<footer>KRATOS v0.2 · Research under validation. No calibrated probabilities, guaranteed price targets, licensed institutional flows, or automatic trades. All displayed times use Toronto EDT/EST. <a href="https://github.com/samin110597-create/kratos-stock-intelligence/blob/main/docs/AUDIT.md">Audit & limitations</a></footer>
+</main><script src="./app.js"></script></body></html>
