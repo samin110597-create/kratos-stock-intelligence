@@ -41,9 +41,24 @@ function render(){const x=state.feed.tickers[state.ticker];if(!x)return;const t=
  el('kpis').innerHTML=stat('Latest reported minute price',m(x.quote?.price),'Minute bar close, potentially developing; not a live quote')+stat('Last completed daily close',m(x.price),x.last_closed_bar_date)+stat('Research decision',classification(x),'NO RELIABLE EDGE established')+stat('Daily / Weekly',String(t.trends?.['1D']||'UNKNOWN')+' / '+String(t.trends?.['1W']||'UNKNOWN'),'Completed exchange bars');
  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===state.tab)));
  if(legacy)out+='<div class="notice warn">Legacy snapshot: generated before the calendar and indicator fixes. Refresh from the upgraded publisher before relying on its technical calculations.</div>';
+ if(!x.truth)out+='<div class="notice warn">Evidence report unavailable; source quality and predicted outcomes are not independently verified. No execution signal is established.</div>';
  if(state.tab==='overview'){
   const summary=d.bias==='DOWN'?'The observed trend is weak. A lower price alone does not confirm a bottom. Wait for a closed-bar reversal and reassess the risk.':d.bias==='UP'?'The observed trend is upward. That does not establish a profitable entry. Check support, confirmation, and data age before considering a setup.':'The timeframes do not provide a clear direction. Wait for a more consistent trend or a confirmed reversal.';
   out+='<div class="grid">'+card(classification(x)+' — '+(d.bias||'UNCLEAR')+' context','<p>'+esc(summary)+'</p>'+((d.reasons||[]).map(r=>'<div class="reason">'+esc(r)+'</div>').join('')))+card('Evidence you can inspect',line('Model',x.analysis_version||'Legacy rules-v1')+line('Source',x.provider)+line('Exchange calendar',x.provenance?.calendar||'Unverified')+line('Currency',x.currency||'Unverified')+line('Minute-bar age',f.age===null?'Unavailable':val(f.age,1)+' minutes')+'<p class="hint">Recent retrieval is not evidence of a recent market trade. A calendar cannot detect a trading halt.</p>')+'</div>';
+ }
+
+ if(state.tab==='overview'){
+   const e=x.truth||{};
+   out+=card('TRUTH CHECK · Evidence versus assumptions',
+     line('Research verification status',e.status||'NOT VERIFIED')+
+     line('Market-data source',e.data_source||x.provider||'Unidentified')+
+     line('Independent vendor cross-check',e.independent_source_crosscheck===true?'YES':'NO')+
+     line('Licensed live-data access',e.verified_live_entitlement===true?'VERIFIED':'UNVERIFIED')+
+     line('Dealer positions',e.verified_dealer_positions===true?'VERIFIED':'UNKNOWN')+
+     line('Calibrated probabilities',e.calibrated_prediction_probabilities===true?'YES':'NOT ESTABLISHED')+
+     line('Profitable edge after costs',e.measured_executable_trading_edge===true?'VERIFIED':'NOT ESTABLISHED')+
+     (e.observations||[]).map(o=>'<div class="reason"><b>'+esc(o.level)+'</b> · '+esc(o.subject)+'<div class="hint">'+esc(o.meaning)+'</div></div>').join('')+
+     '<p class="hint">Vendor-reported data is not independent confirmation. A modeled scenario is not a forecast or trade instruction.</p>');
  }
  if(state.tab==='technicals'){
   const structure=t.structure?.[state.tf]||{};
