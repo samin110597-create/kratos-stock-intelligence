@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-19T16:46:12.533321+00:00",
+  "generated_at_utc": "2026-10-20T17:09:24.904611+00:00",
   "experiments": {
     "NVDA": {
       "5": {
@@ -7,394 +7,394 @@
         "kind": "historical_walk_forward",
         "horizon_sessions": 5,
         "holdout_sessions": 120,
-        "dataset_sha256": "701a97af4a533b0a3acebc1ba8fd3a5c1a80c12b5250dce306197af7f5f87347",
-        "data_start": "2023-10-19",
-        "data_end": "2026-10-16",
+        "dataset_sha256": "ead5fb74c0c4de468cd5741e6b408c3cc4fa3b35cc0955753b1dc2864ac57c1e",
+        "data_start": "2023-10-20",
+        "data_end": "2026-10-19",
         "metrics": {
           "no_change": {
             "samples": 23,
-            "mae_return": 0.04609581812294665,
-            "rmse_return": 0.05759866260780548,
+            "mae_return": 0.04224744225749667,
+            "rmse_return": 0.04920532346725589,
             "directional_samples": 0,
             "direction_accuracy": null,
             "mae_skill_vs_no_change": 0.0
           },
           "historical_mean": {
             "samples": 23,
-            "mae_return": 0.04710119091718526,
-            "rmse_return": 0.05816830899583411,
+            "mae_return": 0.041698920279397804,
+            "rmse_return": 0.04966602541256708,
             "directional_samples": 23,
             "direction_accuracy": 0.5217391304347826,
-            "mae_skill_vs_no_change": -0.021810498981861715
+            "mae_skill_vs_no_change": 0.012983554714523282
           },
           "momentum": {
             "samples": 23,
-            "mae_return": 0.055264337086822456,
-            "rmse_return": 0.06762249712432822,
+            "mae_return": 0.048600261208642075,
+            "rmse_return": 0.05477709468090848,
             "directional_samples": 23,
-            "direction_accuracy": 0.391304347826087,
-            "mae_skill_vs_no_change": -0.19890131767314667
+            "direction_accuracy": 0.4782608695652174,
+            "mae_skill_vs_no_change": -0.1503716819689389
           },
           "mean_reversion": {
             "samples": 23,
-            "mae_return": 0.04762003989211396,
-            "rmse_return": 0.05763218008917565,
+            "mae_return": 0.0485768034548607,
+            "rmse_return": 0.05494989393722698,
             "directional_samples": 23,
             "direction_accuracy": 0.7391304347826086,
-            "mae_skill_vs_no_change": -0.033066378496676485
+            "mae_skill_vs_no_change": -0.1498164352480038
           },
           "ridge_fixed_alpha_1": {
             "samples": 23,
-            "mae_return": 0.04624687700477055,
-            "rmse_return": 0.057409887750093126,
+            "mae_return": 0.039165797723523285,
+            "rmse_return": 0.04710588290913671,
             "directional_samples": 23,
             "direction_accuracy": 0.5652173913043478,
-            "mae_skill_vs_no_change": -0.003277062605136827
+            "mae_skill_vs_no_change": 0.07294274799385181
           }
         },
         "forecasts": [
           {
-            "origin": "2026-04-28",
-            "target": "2026-05-05",
+            "origin": "2026-04-29",
+            "target": "2026-05-06",
             "origin_index": 631,
             "last_training_target_index": 626,
-            "actual_return": -0.07820048933778057,
+            "actual_return": -0.006786132229129382,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.01369769926778048,
-              "momentum": 0.07265241952552254,
-              "mean_reversion": -0.06648985872261015,
-              "ridge_fixed_alpha_1": 0.03269016421798611
+              "historical_mean": 0.013785226316531557,
+              "momentum": 0.04995700591050617,
+              "mean_reversion": -0.03333333333333344,
+              "ridge_fixed_alpha_1": 0.025093635019251926
             },
             "training_samples": 602
           },
           {
-            "origin": "2026-05-05",
-            "target": "2026-05-12",
+            "origin": "2026-05-06",
+            "target": "2026-05-13",
             "origin_index": 636,
             "last_training_target_index": 631,
-            "actual_return": 0.12356233475469147,
+            "actual_return": 0.08660924717997265,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013907653227062187,
-              "momentum": 0.025828176959452054,
-              "mean_reversion": 0.07820048933778057,
-              "ridge_fixed_alpha_1": 0.02829336936303868
+              "historical_mean": 0.014019303081254906,
+              "momentum": 0.03535533795728496,
+              "mean_reversion": 0.006786132229129382,
+              "ridge_fixed_alpha_1": 0.01519125465273235
             },
             "training_samples": 607
           },
           {
-            "origin": "2026-05-12",
-            "target": "2026-05-19",
+            "origin": "2026-05-13",
+            "target": "2026-05-20",
             "origin_index": 641,
             "last_training_target_index": 636,
-            "actual_return": -0.000769988993048476,
+            "actual_return": -0.01045034136835854,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013506337512559597,
-              "momentum": 0.03087629758141469,
-              "mean_reversion": -0.12356233475469147,
-              "ridge_fixed_alpha_1": 0.008543145861936535
+              "historical_mean": 0.013551520512449336,
+              "momentum": 0.033891496173141356,
+              "mean_reversion": -0.08660924717997265,
+              "ridge_fixed_alpha_1": 0.000496476787379227
             },
             "training_samples": 612
           },
           {
-            "origin": "2026-05-19",
-            "target": "2026-05-27",
+            "origin": "2026-05-20",
+            "target": "2026-05-28",
             "origin_index": 646,
             "last_training_target_index": 641,
-            "actual_return": -0.03630839256912677,
+            "actual_return": -0.04125833968917059,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013990988645332485,
-              "momentum": 0.025928050856928953,
-              "mean_reversion": 0.000769988993048476,
-              "ridge_fixed_alpha_1": 0.015733979175885378
+              "historical_mean": 0.014187175639403185,
+              "momentum": 0.025888890395929787,
+              "mean_reversion": 0.01045034136835854,
+              "ridge_fixed_alpha_1": 0.01053764113670508
             },
             "training_samples": 617
           },
           {
-            "origin": "2026-05-27",
-            "target": "2026-06-03",
+            "origin": "2026-05-28",
+            "target": "2026-06-04",
             "origin_index": 651,
             "last_training_target_index": 646,
-            "actual_return": 0.010112859053435397,
+            "actual_return": 0.020583447664454413,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.014297491345887108,
-              "momentum": -0.0006684712557181172,
-              "mean_reversion": 0.03630839256912677,
-              "ridge_fixed_alpha_1": 0.013825867830742399
+              "historical_mean": 0.014336056919509763,
+              "momentum": 0.005973715651135025,
+              "mean_reversion": 0.04125833968917059,
+              "ridge_fixed_alpha_1": 0.01424590819434031
             },
             "training_samples": 622
           },
           {
-            "origin": "2026-06-03",
-            "target": "2026-06-10",
+            "origin": "2026-06-04",
+            "target": "2026-06-11",
             "origin_index": 656,
             "last_training_target_index": 651,
-            "actual_return": -0.06672876289198926,
+            "actual_return": -0.06306598515488582,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.01387486694193548,
-              "momentum": 0.02321882951653942,
-              "mean_reversion": -0.010112859053435397,
-              "ridge_fixed_alpha_1": 0.03456184930877737
+              "historical_mean": 0.013863989411588557,
+              "momentum": 0.013027476465907961,
+              "mean_reversion": -0.020583447664454413,
+              "ridge_fixed_alpha_1": 0.017877298457786277
             },
             "training_samples": 627
           },
           {
-            "origin": "2026-06-10",
-            "target": "2026-06-17",
+            "origin": "2026-06-11",
+            "target": "2026-06-18",
             "origin_index": 661,
             "last_training_target_index": 656,
-            "actual_return": 0.02110565695132549,
+            "actual_return": 0.028408295323527843,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.0137804569152348,
-              "momentum": -0.02305462533169103,
-              "mean_reversion": 0.06672876289198926,
-              "ridge_fixed_alpha_1": 0.01873711600051163
+              "historical_mean": 0.013867516370655853,
+              "momentum": -0.02320330175787222,
+              "mean_reversion": 0.06306598515488582,
+              "ridge_fixed_alpha_1": 0.005710897074222038
             },
             "training_samples": 632
           },
           {
-            "origin": "2026-06-17",
-            "target": "2026-06-25",
+            "origin": "2026-06-18",
+            "target": "2026-06-26",
             "origin_index": 666,
             "last_training_target_index": 661,
-            "actual_return": -0.04353769200612412,
+            "actual_return": -0.08619300133692742,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013341872065636586,
-              "momentum": -0.01808622305166513,
-              "mean_reversion": -0.02110565695132549,
-              "ridge_fixed_alpha_1": 0.0136767820157379
+              "historical_mean": 0.013296930374909371,
+              "momentum": -0.01429721965978234,
+              "mean_reversion": -0.028408295323527843,
+              "ridge_fixed_alpha_1": 0.00257523247297892
             },
             "training_samples": 637
           },
           {
-            "origin": "2026-06-25",
-            "target": "2026-07-02",
+            "origin": "2026-06-26",
+            "target": "2026-07-06",
             "origin_index": 671,
             "last_training_target_index": 666,
-            "actual_return": -0.004649042794377389,
+            "actual_return": 0.015685889428186606,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013195896427290955,
-              "momentum": -0.01982596440065762,
-              "mean_reversion": 0.04353769200612412,
-              "ridge_fixed_alpha_1": 0.020680823647224223
+              "historical_mean": 0.01329378805265727,
+              "momentum": -0.025344225461730596,
+              "mean_reversion": 0.08619300133692742,
+              "ridge_fixed_alpha_1": 0.018046433731060216
             },
             "training_samples": 642
           },
           {
-            "origin": "2026-07-02",
-            "target": "2026-07-10",
+            "origin": "2026-07-06",
+            "target": "2026-07-13",
             "origin_index": 676,
             "last_training_target_index": 671,
-            "actual_return": 0.08279014900795167,
+            "actual_return": 0.04080795501407852,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012943642969277672,
-              "momentum": -0.023189753398073693,
-              "mean_reversion": 0.004649042794377389,
-              "ridge_fixed_alpha_1": 0.012496559983182269
+              "historical_mean": 0.012863650893272604,
+              "momentum": -0.026422299715661485,
+              "mean_reversion": -0.015685889428186606,
+              "ridge_fixed_alpha_1": 0.007497655853002407
             },
             "training_samples": 647
           },
           {
-            "origin": "2026-07-10",
-            "target": "2026-07-17",
+            "origin": "2026-07-13",
+            "target": "2026-07-20",
             "origin_index": 681,
             "last_training_target_index": 676,
-            "actual_return": -0.038632958361285996,
+            "actual_return": -0.0012283201567308,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012593933963282084,
-              "momentum": 0.013147401258876756,
-              "mean_reversion": -0.08279014900795167,
-              "ridge_fixed_alpha_1": 0.0059513630836282895
+              "historical_mean": 0.012670811290873857,
+              "momentum": -0.0016351788571139225,
+              "mean_reversion": -0.04080795501407852,
+              "ridge_fixed_alpha_1": 0.011389592915533413
             },
             "training_samples": 652
           },
           {
-            "origin": "2026-07-17",
-            "target": "2026-07-24",
+            "origin": "2026-07-20",
+            "target": "2026-07-27",
             "origin_index": 686,
             "last_training_target_index": 681,
-            "actual_return": 0.01987080926882112,
+            "actual_return": -0.03330383861233288,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012733992596176745,
-              "momentum": -0.0022477356373894197,
-              "mean_reversion": 0.038632958361285996,
-              "ridge_fixed_alpha_1": 0.011428613909761864
+              "historical_mean": 0.01284852240314132,
+              "momentum": -0.008792543044573414,
+              "mean_reversion": 0.0012283201567308,
+              "ridge_fixed_alpha_1": 0.007152423140896693
             },
             "training_samples": 657
           },
           {
-            "origin": "2026-07-24",
-            "target": "2026-07-31",
+            "origin": "2026-07-27",
+            "target": "2026-08-03",
             "origin_index": 691,
             "last_training_target_index": 686,
-            "actual_return": -0.029443030582644636,
+            "actual_return": 0.05154956575229108,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012851593424006404,
-              "momentum": 0.014176957358257303,
-              "mean_reversion": -0.01987080926882112,
-              "ridge_fixed_alpha_1": 0.02069799744566904
+              "historical_mean": 0.012901759297125618,
+              "momentum": 0.005168020247199812,
+              "mean_reversion": 0.03330383861233288,
+              "ridge_fixed_alpha_1": 0.03320591193568786
             },
             "training_samples": 662
           },
           {
-            "origin": "2026-07-31",
-            "target": "2026-08-07",
+            "origin": "2026-08-03",
+            "target": "2026-08-10",
             "origin_index": 696,
             "last_training_target_index": 691,
-            "actual_return": 0.11561647180008561,
+            "actual_return": 0.05279715299232568,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012758006592484957,
-              "momentum": 0.007596363641774739,
-              "mean_reversion": 0.029443030582644636,
-              "ridge_fixed_alpha_1": 0.01732477869913683
+              "historical_mean": 0.012759707176516913,
+              "momentum": 0.014177954698056605,
+              "mean_reversion": -0.05154956575229108,
+              "ridge_fixed_alpha_1": 0.015318646897778739
             },
             "training_samples": 667
           },
           {
-            "origin": "2026-08-07",
-            "target": "2026-08-14",
+            "origin": "2026-08-10",
+            "target": "2026-08-17",
             "origin_index": 701,
             "last_training_target_index": 696,
-            "actual_return": 0.005358085873677032,
+            "actual_return": 0.034290927834661034,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012243377592786334,
-              "momentum": 0.015405763635607472,
-              "mean_reversion": -0.11561647180008561,
-              "ridge_fixed_alpha_1": -0.006037768068184613
+              "historical_mean": 0.012371335470634456,
+              "momentum": 0.017221053845315304,
+              "mean_reversion": -0.05279715299232568,
+              "ridge_fixed_alpha_1": 0.008843132190884331
             },
             "training_samples": 672
           },
           {
-            "origin": "2026-08-14",
-            "target": "2026-08-21",
+            "origin": "2026-08-17",
+            "target": "2026-08-24",
             "origin_index": 706,
             "last_training_target_index": 701,
-            "actual_return": -0.04636703798012565,
+            "actual_return": -0.0734633979949485,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012920270249955772,
-              "momentum": 0.02755042450145795,
-              "mean_reversion": -0.005358085873677032,
-              "ridge_fixed_alpha_1": 0.006337839060182503
+              "historical_mean": 0.01304912590897198,
+              "momentum": 0.026724217653025906,
+              "mean_reversion": -0.034290927834661034,
+              "ridge_fixed_alpha_1": 0.010661711179078836
             },
             "training_samples": 677
           },
           {
-            "origin": "2026-08-21",
-            "target": "2026-08-28",
+            "origin": "2026-08-24",
+            "target": "2026-08-31",
             "origin_index": 711,
             "last_training_target_index": 706,
-            "actual_return": 0.013179963743320977,
+            "actual_return": 0.05899848092779414,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.013024107359559483,
-              "momentum": 0.009524276037430224,
-              "mean_reversion": 0.04636703798012565,
-              "ridge_fixed_alpha_1": 0.017232840039654973
+              "historical_mean": 0.013124883101489555,
+              "momentum": 0.015228234638578031,
+              "mean_reversion": 0.0734633979949485,
+              "ridge_fixed_alpha_1": 0.03239165435601612
             },
             "training_samples": 682
           },
           {
-            "origin": "2026-08-28",
-            "target": "2026-09-04",
+            "origin": "2026-08-31",
+            "target": "2026-09-08",
             "origin_index": 716,
             "last_training_target_index": 711,
-            "actual_return": 0.0588830033504808,
+            "actual_return": 0.022420495405430563,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012829721074416092,
-              "momentum": 0.020921548009661062,
-              "mean_reversion": -0.013179963743320977,
-              "ridge_fixed_alpha_1": 0.025781436809779498
+              "historical_mean": 0.012772915732591783,
+              "momentum": 0.01710704538256591,
+              "mean_reversion": -0.05899848092779414,
+              "ridge_fixed_alpha_1": 0.019258309638231105
             },
             "training_samples": 687
           },
           {
-            "origin": "2026-09-04",
-            "target": "2026-09-14",
+            "origin": "2026-09-08",
+            "target": "2026-09-15",
             "origin_index": 721,
             "last_training_target_index": 716,
-            "actual_return": -0.08421598300522237,
+            "actual_return": -0.06007175747684401,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012627606675791114,
-              "momentum": 0.007144125853529137,
-              "mean_reversion": -0.0588830033504808,
-              "ridge_fixed_alpha_1": -0.0034095939847498744
+              "historical_mean": 0.012762630677365449,
+              "momentum": 0.009400129350762565,
+              "mean_reversion": -0.022420495405430563,
+              "ridge_fixed_alpha_1": 0.007855888939845073
             },
             "training_samples": 692
           },
           {
-            "origin": "2026-09-14",
-            "target": "2026-09-21",
+            "origin": "2026-09-15",
+            "target": "2026-09-22",
             "origin_index": 726,
             "last_training_target_index": 721,
-            "actual_return": 0.07783464944242424,
+            "actual_return": 0.07871045431665813,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012839604561580809,
-              "momentum": -0.015766562352645536,
-              "mean_reversion": 0.08421598300522237,
-              "ridge_fixed_alpha_1": 0.012556456852476767
+              "historical_mean": 0.01292118077903716,
+              "momentum": -0.01426602890021908,
+              "mean_reversion": 0.06007175747684401,
+              "ridge_fixed_alpha_1": 0.010859062701652282
             },
             "training_samples": 697
           },
           {
-            "origin": "2026-09-21",
-            "target": "2026-09-28",
+            "origin": "2026-09-22",
+            "target": "2026-09-29",
             "origin_index": 731,
             "last_training_target_index": 726,
-            "actual_return": 0.006508908856351914,
+            "actual_return": -0.0072529752205847675,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012599184066372057,
-              "momentum": 0.01474013085662268,
-              "mean_reversion": -0.07783464944242424,
-              "ridge_fixed_alpha_1": 0.010890377552656854
+              "historical_mean": 0.012562668924897416,
+              "momentum": 0.02445078641537385,
+              "mean_reversion": -0.07871045431665813,
+              "ridge_fixed_alpha_1": 0.017520689653408354
             },
             "training_samples": 702
           },
           {
-            "origin": "2026-09-28",
-            "target": "2026-10-05",
+            "origin": "2026-09-29",
+            "target": "2026-10-06",
             "origin_index": 736,
             "last_training_target_index": 731,
-            "actual_return": 0.043869585158424096,
+            "actual_return": 0.05294660632815629,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.01250555915721161,
-              "momentum": 0.012997009193218612,
-              "mean_reversion": -0.006508908856351914,
-              "ridge_fixed_alpha_1": 0.004941666597893173
+              "historical_mean": 0.01266559958504514,
+              "momentum": 0.007281012739063897,
+              "mean_reversion": 0.0072529752205847675,
+              "ridge_fixed_alpha_1": 0.004794405404392059
             },
             "training_samples": 707
           },
           {
-            "origin": "2026-10-05",
-            "target": "2026-10-12",
+            "origin": "2026-10-06",
+            "target": "2026-10-13",
             "origin_index": 741,
             "last_training_target_index": 736,
-            "actual_return": -0.05265796104505782,
+            "actual_return": -0.044808564514973837,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.012664908108804692,
-              "momentum": 0.009268094790225778,
-              "mean_reversion": -0.043869585158424096,
-              "ridge_fixed_alpha_1": -0.008813387519569227
+              "historical_mean": 0.012703089503384835,
+              "momentum": 0.014962576996116028,
+              "mean_reversion": -0.05294660632815629,
+              "ridge_fixed_alpha_1": -0.0013962299599993028
             },
             "training_samples": 712
           }
@@ -413,124 +413,124 @@
         "kind": "historical_walk_forward",
         "horizon_sessions": 20,
         "holdout_sessions": 120,
-        "dataset_sha256": "701a97af4a533b0a3acebc1ba8fd3a5c1a80c12b5250dce306197af7f5f87347",
-        "data_start": "2023-10-19",
-        "data_end": "2026-10-16",
+        "dataset_sha256": "ead5fb74c0c4de468cd5741e6b408c3cc4fa3b35cc0955753b1dc2864ac57c1e",
+        "data_start": "2023-10-20",
+        "data_end": "2026-10-19",
         "metrics": {
           "no_change": {
             "samples": 5,
-            "mae_return": 0.04714863992694875,
-            "rmse_return": 0.05373967264154074,
+            "mae_return": 0.06093198593121385,
+            "rmse_return": 0.07007341436519694,
             "directional_samples": 0,
             "direction_accuracy": null,
             "mae_skill_vs_no_change": 0.0
           },
           "historical_mean": {
             "samples": 5,
-            "mae_return": 0.043364159523970526,
-            "rmse_return": 0.06615534623015039,
+            "mae_return": 0.055299715640854875,
+            "rmse_return": 0.07643424214641983,
             "directional_samples": 5,
-            "direction_accuracy": 0.6,
-            "mae_skill_vs_no_change": 0.08026701107055967
+            "direction_accuracy": 0.8,
+            "mae_skill_vs_no_change": 0.09243536386155615
           },
           "momentum": {
             "samples": 5,
-            "mae_return": 0.1090798734600917,
-            "rmse_return": 0.1491095043695228,
+            "mae_return": 0.10007699459947297,
+            "rmse_return": 0.11359723617296086,
             "directional_samples": 5,
             "direction_accuracy": 0.6,
-            "mae_skill_vs_no_change": -1.3135317080004443
+            "mae_skill_vs_no_change": -0.6424377618751824
           },
           "mean_reversion": {
             "samples": 5,
-            "mae_return": 0.16987077721143803,
-            "rmse_return": 0.1807531453792234,
+            "mae_return": 0.2032182486227414,
+            "rmse_return": 0.2210879057606141,
             "directional_samples": 5,
             "direction_accuracy": 0.6,
-            "mae_skill_vs_no_change": -2.6028775692073562
+            "mae_skill_vs_no_change": -2.3351653571927655
           },
           "ridge_fixed_alpha_1": {
             "samples": 5,
-            "mae_return": 0.053502839098473434,
-            "rmse_return": 0.0727768463544495,
+            "mae_return": 0.05360161408869855,
+            "rmse_return": 0.07457972591098239,
             "directional_samples": 5,
-            "direction_accuracy": 0.6,
-            "mae_skill_vs_no_change": -0.13476951151443095
+            "direction_accuracy": 0.8,
+            "mae_skill_vs_no_change": 0.12030416751540907
           }
         },
         "forecasts": [
           {
-            "origin": "2026-04-28",
-            "target": "2026-05-27",
+            "origin": "2026-04-29",
+            "target": "2026-05-28",
             "origin_index": 631,
             "last_training_target_index": 611,
-            "actual_return": -0.0026738850228724687,
+            "actual_return": 0.0238948626045401,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.05477620382825375,
-              "momentum": 0.29060967810209015,
-              "mean_reversion": -0.2659594348904406,
-              "ridge_fixed_alpha_1": 0.09400573272104204
+              "historical_mean": 0.054742189475813205,
+              "momentum": 0.19982802364202468,
+              "mean_reversion": -0.13333333333333375,
+              "ridge_fixed_alpha_1": 0.07891020280490356
             },
             "training_samples": 572
           },
           {
-            "origin": "2026-05-27",
-            "target": "2026-06-25",
+            "origin": "2026-05-28",
+            "target": "2026-06-26",
             "origin_index": 651,
             "last_training_target_index": 631,
-            "actual_return": -0.07930385760263048,
+            "actual_return": -0.10137690184692238,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.05579790173146717,
-              "momentum": -0.0026738850228724687,
-              "mean_reversion": 0.14523357027650707,
-              "ridge_fixed_alpha_1": 0.04862103163404526
+              "historical_mean": 0.056155590982374354,
+              "momentum": 0.0238948626045401,
+              "mean_reversion": 0.16503335875668235,
+              "ridge_fixed_alpha_1": 0.04991893401705326
             },
             "training_samples": 592
           },
           {
-            "origin": "2026-06-25",
-            "target": "2026-07-24",
+            "origin": "2026-06-26",
+            "target": "2026-07-27",
             "origin_index": 671,
             "last_training_target_index": 651,
-            "actual_return": 0.05670782943302921,
+            "actual_return": 0.020672080988799246,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.05766915977347576,
-              "momentum": -0.07930385760263048,
-              "mean_reversion": 0.17415076802449647,
-              "ridge_fixed_alpha_1": 0.046589100134768704
+              "historical_mean": 0.057727687347821466,
+              "momentum": -0.10137690184692238,
+              "mean_reversion": 0.3447720053477097,
+              "ridge_fixed_alpha_1": 0.03991200303731435
             },
             "training_samples": 612
           },
           {
-            "origin": "2026-07-24",
-            "target": "2026-08-21",
+            "origin": "2026-07-27",
+            "target": "2026-08-24",
             "origin_index": 691,
             "last_training_target_index": 671,
-            "actual_return": 0.038097104149720895,
+            "actual_return": 0.060912938554312124,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.05509433863038315,
-              "momentum": 0.05670782943302921,
-              "mean_reversion": -0.07948323707528449,
-              "ridge_fixed_alpha_1": 0.06257369962892628
+              "historical_mean": 0.05495279924913016,
+              "momentum": 0.020672080988799246,
+              "mean_reversion": 0.13321535444933152,
+              "ridge_fixed_alpha_1": 0.0645049833627383
             },
             "training_samples": 632
           },
           {
-            "origin": "2026-08-21",
-            "target": "2026-09-21",
+            "origin": "2026-08-24",
+            "target": "2026-09-22",
             "origin_index": 711,
             "last_training_target_index": 691,
-            "actual_return": 0.05896052342649072,
+            "actual_return": 0.0978031456614954,
             "predicted_returns": {
               "no_change": 0.0,
-              "historical_mean": 0.05265013881297077,
-              "momentum": 0.038097104149720895,
-              "mean_reversion": 0.1854681519205026,
-              "ridge_fixed_alpha_1": 0.05064615969217974
+              "historical_mean": 0.05270013282199506,
+              "momentum": 0.060912938554312124,
+              "mean_reversion": 0.293853591979794,
+              "ridge_fixed_alpha_1": 0.058938218139283065
             },
             "training_samples": 652
           }
