@@ -157,6 +157,9 @@ def _run_locked(symbols=None, analyzer=analyze):
             print('Fetching',ticker,flush=True)
             try:
                 result=analyzer(ticker)
+                # Validate market evidence before marking the ticker refreshed.
+                # A failed truth check is a per-ticker failure, not a synthetic result.
+                packed=pack(ticker,result)
             except Exception as exc:
                 detail=f'{type(exc).__name__}: {str(exc)[:200]}'
                 if ticker in previous and not previous[ticker].get('error'):
@@ -164,7 +167,7 @@ def _run_locked(symbols=None, analyzer=analyze):
                     old['refresh_failed']=True;tickers[ticker]=old
                 else: tickers[ticker]={'ticker':ticker,'error':detail}
                 print('ERROR',ticker,detail,flush=True);continue
-            tickers[ticker]=pack(ticker,result)
+            tickers[ticker]=packed
             if ticker in research_symbols:
                 from kratos.research import walk_forward
                 research[ticker]={str(h):walk_forward(result.technical['daily'],h) for h in (5,20)}
