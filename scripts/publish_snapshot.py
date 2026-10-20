@@ -17,6 +17,7 @@ from kratos.technicals import only_closed_daily
 from kratos.calendar import schedule
 from kratos.structure import causal_structure
 from kratos import audit as event_audit
+from kratos.truth import build_evidence_report
 import tempfile
 
 ET = ZoneInfo("America/Toronto")
@@ -79,6 +80,7 @@ def pack(ticker, result):
         "provenance": snap.provenance,
         "corporate_actions": snap.actions,
         "analysis_version": event_audit.MODEL_VERSION,
+        "truth": build_evidence_report(snap, tech, decision),
         "signal_at_utc": tech.get("signal_at_utc"),
         "session_schedule": [{"date":str(day.date()),"open_utc":row.market_open.isoformat(),"close_utc":row.market_close.isoformat()} for day,row in schedule(ticker, snap.retrieved_at.date()-timedelta(days=2),snap.retrieved_at.date()+timedelta(days=14)).iterrows()],
         "retrieved_at_utc": snap.retrieved_at.isoformat(),
