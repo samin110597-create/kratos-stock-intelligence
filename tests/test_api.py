@@ -44,3 +44,13 @@ def test_rate_limit_is_enforced():
         for _ in range(12):client.get('/api/analyze?symbol=NVDA')
         assert client.get('/api/analyze?symbol=NVDA').status_code==429
     with server.lock: server.requests.clear()
+
+
+def test_hosted_personal_feed_requires_auth(monkeypatch):
+    monkeypatch.setenv('KRATOS_BIND','0.0.0.0')
+    monkeypatch.delenv('KRATOS_ACCESS_TOKEN',raising=False)
+    assert TestClient(server.app).get('/api/providers').status_code==503
+    monkeypatch.setenv('KRATOS_ACCESS_TOKEN','private-test')
+    c=TestClient(server.app)
+    assert c.get('/api/providers').status_code==401
+    assert c.get('/api/providers',headers={'Authorization':'Bearer private-test'}).status_code==200

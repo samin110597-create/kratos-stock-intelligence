@@ -63,3 +63,19 @@ def test_pivots_do_not_confirm_before_right_bars_exist():
 def test_etf_never_receives_company_pe_valuation():
     from kratos.fundamentals import report
     assert 'Stock-style intrinsic value omitted' in report({'quoteType':'ETF','forwardEps':5})[1]
+
+
+def test_bos_history_is_causal_under_future_append():
+    from kratos.patterns import causal_breaks
+    rng=np.random.default_rng(21);n=120;c=100+np.cumsum(rng.normal(0,2,n))
+    f=pd.DataFrame({'Open':c,'High':c+1,'Low':c-1,'Close':c,'Volume':100},index=pd.date_range('2026-01-01',periods=n))
+    early=causal_breaks(f.iloc[:80]);all_events=causal_breaks(f)
+    assert early==[x for x in all_events if x['bar']<=f.index[79].isoformat()]
+
+
+def test_session_vwap_resets_at_trading_date():
+    from kratos.patterns import session_vwap
+    f=bars(pd.DatetimeIndex(['2026-10-19 15:30','2026-10-20 09:30','2026-10-20 10:30'],tz=ET))
+    expected=float((((f.High+f.Low+f.Close)/3)*f.Volume).iloc[1:].sum()/f.Volume.iloc[1:].sum())
+    # Function detects session spacing from minimum step, not overnight gap.
+    assert session_vwap(f)==expected

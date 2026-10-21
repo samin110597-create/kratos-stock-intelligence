@@ -1,3 +1,8 @@
+> **2026-10-21 update:** [Free-data implementation and limits](docs/FREE_DATA_UPGRADE.md).
+> New public Yahoo snapshots are paused; existing public data is a dated archive.
+> The Python service supports protected personal analysis, private account connectors and target-before-stop experiments.
+> [Free Render deployment configuration](render.yaml) is prepared; hosting is not connected yet.
+
 # KRATOS Stock Intelligence — evidence-first research
 
 [Open the public dashboard](https://samin110597-create.github.io/kratos-stock-intelligence/)

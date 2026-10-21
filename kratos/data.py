@@ -167,5 +167,15 @@ class ProviderRouter:
                     failures.append(f'{provider.name} unavailable ({type(exc).__name__}); fallback attempted.')
             raise MarketDataError('All configured sources unavailable or invalid. No signal generated. '+ ' '.join(failures))
 
-ROUTER=ProviderRouter()
+def configured_providers():
+    import os
+    from .account_provider import AlphaDailyProvider
+    from .connectors import key_for
+    # A compact daily account feed cannot provide intraday coverage. Selection is explicit.
+    order=os.getenv('KRATOS_PROVIDER_ORDER','yahoo').split(',')
+    factories={'yahoo':YahooProvider,'alpha_vantage':AlphaDailyProvider}
+    if any(name.strip() not in factories for name in order): raise ValueError('Unsupported market-history provider')
+    return [factories[name.strip()]() for name in order]
+
+ROUTER=ProviderRouter(configured_providers())
 def fetch_snapshot(ticker): return ROUTER.fetch(ticker)

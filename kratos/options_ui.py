@@ -67,14 +67,24 @@ def fetch_options_ui(ticker: str):
     } for x in sorted(rows,key=lambda x:abs(x["strike"]-r["spot"]))[:45]])
     nearby=sorted(sorted(rows,key=lambda x:abs(x["strike"]-r["spot"]))[:36],
                   key=lambda x:x["strike"])
-    fig=go.Figure()
+    from plotly.subplots import make_subplots
+    fig=make_subplots(rows=3,cols=1,subplot_titles=('Signed gamma scenario','Expiry × strike gross OI','Strike IV curves — no interpolation'))
     fig.add_trace(go.Bar(x=[x["strike"] for x in nearby],
                          y=[x["scenario_net_gex"] for x in nearby],
                          name="Call + / put - GEX scenario",
                          marker_color=["#56d3c3" if x["scenario_net_gex"]>=0 else "#ab7aff" for x in nearby]))
+    surface=pd.DataFrame(r['research_surface']['rows'])
+    if not surface.empty:
+        matrix=surface.pivot_table(index='expiry',columns='strike',values='open_interest',aggfunc='sum')
+        fig.add_trace(go.Heatmap(x=matrix.columns.tolist(),y=matrix.index.tolist(),z=matrix.values.tolist(),colorscale='Viridis',showscale=False),row=2,col=1)
+        for (expiry,kind),group in surface.groupby(['expiry','type']):
+            group=group.sort_values('strike')
+            fig.add_trace(go.Scatter(x=group.strike,y=group.iv,mode='lines+markers',name=f'{expiry} {kind} IV',connectgaps=False),row=3,col=1)
+    details.append('**Alternative GEX assumptions (USD / 1% move):** '+ '; '.join(k+': '+num(v,0) for k,v in r['dealer_scenarios'].items()))
+    details.append('**OI changes:** '+r['research_surface']['oi_change_status'])
     fig.add_vline(x=r["spot"],line_dash="dot",line_color="white",
-                  annotation_text="Last daily close")
-    fig.update_layout(template="plotly_dark",height=420,
+                  annotation_text="Last daily close",row=1,col=1)
+    fig.update_layout(template="plotly_dark",height=1000,
                       title="OI-based modeled gamma by strike — not actual dealer positions",
                       xaxis_title="Strike",yaxis_title="Modeled GEX USD / 1% stock move",
                       paper_bgcolor="#111c2b",plot_bgcolor="#111c2b",

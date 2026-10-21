@@ -3,9 +3,6 @@ on:
   push:
     branches: [main]
     paths: ['site/**', 'scripts/**', 'kratos/**', 'server.py', 'requirements*.txt', '.github/workflows/pages.yml']
-  schedule:
-    # Best-effort hourly; exchange-calendar gate below. No latency SLA.
-    - cron: '17 * * * 1-5'
   workflow_dispatch:
 permissions:
   contents: write
@@ -52,41 +49,9 @@ jobs:
         env:
           GRADIO_ANALYTICS_ENABLED: 'False'
         run: python -m pytest -q
-      - name: Analyze real provider data and append observations
+      - name: Preserve historical archive; do not republish personal-use Yahoo data
         if: steps.session.outputs.publish == 'true'
-        env:
-          KRATOS_SYMBOLS: NVDA,AVGO,AMAT,MU,CIFR,IREN,CRWV,NBIS,USAR,AXTI,GOOG,UBER,RY.TO
-          KRATOS_RESEARCH_SYMBOLS: NVDA
-        run: python -m scripts.publish_snapshot
-      - name: Verify append-only history and generated files
-        if: steps.session.outputs.publish == 'true'
-        run: |
-          python - <<'PY'
-          import json, pathlib, subprocess
-          from kratos.audit import verify_events
-          p=pathlib.Path('site/data/events.jsonl')
-          events=[json.loads(x) for x in p.read_text().splitlines()] if p.exists() else []
-          verify_events(events)
-          try: old=subprocess.check_output(['git','show','HEAD:site/data/events.jsonl'],text=True)
-          except subprocess.CalledProcessError: old=''
-          assert (p.read_text() if p.exists() else '').startswith(old)
-          feed=json.loads(pathlib.Path('site/data/snapshots.json').read_text())
-          assert feed['tickers']
-          print('Fresh results:',feed['fresh_results'],'Events:',len(events))
-          PY
-      - name: Persist only when audit history grows
-        if: steps.session.outputs.publish == 'true'
-        run: |
-          # Publish fresh snapshots as Pages artifacts every run; archive in Git only
-          # when observations/outcomes append. Never rewrite existing audit records.
-          if [ -f site/data/events.jsonl ] && { ! git ls-files --error-unmatch site/data/events.jsonl >/dev/null 2>&1 || ! git diff --quiet -- site/data/events.jsonl; }; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add -f site/data/events.jsonl site/data/snapshots.json
-            if [ -f site/data/research.json ]; then git add -f site/data/research.json; fi
-            git commit -m 'audit: append frozen KRATOS observations and independent outcomes'
-            git push origin HEAD:main
-          fi
+        run: echo 'New market-data publication paused pending verified redistribution rights. Personal analysis runs in the protected backend.'
       - uses: actions/configure-pages@v5
         if: steps.session.outputs.publish == 'true'
       - uses: actions/upload-pages-artifact@v4

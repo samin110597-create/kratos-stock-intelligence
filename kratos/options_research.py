@@ -17,6 +17,16 @@ MULTIPLIER = 100
 YEAR_DAYS = 365.25
 
 
+def expiry_cutoff(expiry):
+    """Conservative equity cash-session cutoff, not contract-specific settlement."""
+    from .calendar import schedule
+    import pandas as pd
+    sessions=schedule('SPY',pd.Timestamp(expiry)-pd.Timedelta(days=7),expiry)
+    if sessions.empty: raise ValueError('No expiration session')
+    return sessions.iloc[-1].market_close.to_pydatetime()
+
+
+
 def cdf(z: float) -> float:
     return 0.5 * (1.0 + erf(z / sqrt(2.0)))
 
@@ -74,6 +84,7 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
     All contracts must have expiry YYYY-MM-DD, strike, type, open_interest, iv.
     We do NOT infer actual dealer exposure directions from open interest.
     """
+    contracts = list(contracts)
     asof = asof or datetime.now(timezone.utc)
     if asof.tzinfo is None:
         raise ValueError("asof must be timezone-aware")
@@ -93,13 +104,12 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
             kind = str(c["type"]).lower()
             strike = float(c["strike"])
             expiry = date.fromisoformat(str(c["expiry"]))
-            oi = int(c["open_interest"])
+            raw_oi = float(c["open_interest"])
+            if not isfinite(raw_oi) or not raw_oi.is_integer(): raise ValueError('Invalid OI')
+            oi = int(raw_oi)
+            if c.get('multiplier',100)!=100: raise ValueError('Adjusted contract unsupported')
             iv = float(c["iv"])
-            # A stock-market cash session ends at 4 PM Eastern, subject to calendar changes.
-            # Using 16:00 UTC here would be incorrect; timezone-aware expiry is required.
-            from zoneinfo import ZoneInfo
-            settle = datetime(expiry.year, expiry.month, expiry.day, 16, 0,
-                              tzinfo=ZoneInfo("America/New_York")).astimezone(timezone.utc)
+            settle = expiry_cutoff(expiry)
             years = max(0, (settle - asof.astimezone(timezone.utc)).total_seconds()) / (YEAR_DAYS * 86400)
             if kind not in ("call", "put") or oi <= 0 or oi > 100_000_000:
                 rejected += 1
@@ -121,7 +131,7 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
         z[f"{kind}_gex"] += gamma_usd
         z["scenario_net_gex"] += sign * gamma_usd
         z["gross_gex"] += abs(gamma_usd)
-        z["scenario_dex"] += dex_usd
+        z["scenario_dex"] += sign * dex_usd
         z["scenario_vex"] += sign * vex_usd_per_iv_point
         z["scenario_charm"] += sign * charm_usd_per_day
         z["contracts"] += 1
@@ -153,10 +163,8 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
         for hypothetical in grid:
             total = 0.0
             for c in accepted:
-                from zoneinfo import ZoneInfo
-                expiry = date.fromisoformat(c["expiry"])
-                settle = datetime(expiry.year, expiry.month, expiry.day, 16,
-                                  tzinfo=ZoneInfo("America/New_York")).astimezone(timezone.utc)
+                expiry = date.fromisoformat(c['expiry'])
+                settle = expiry_cutoff(expiry)
                 yrs = (settle-asof.astimezone(timezone.utc)).total_seconds()/(86400*YEAR_DAYS)
                 g = greeks(hypothetical, c["strike"], c["iv"], yrs, c["type"], risk_free_rate, dividend_yield)
                 if g:
@@ -198,6 +206,14 @@ def exposure_book(spot: float, contracts: Iterable[dict], *, asof: datetime | No
         "call_wall_strike": call_wall, "put_wall_strike": put_wall,
         "scenario_gamma_flip": flip, "atm_straddle": atm_move,
         "strike_exposure": levels, "expiry_exposure": dict(by_expiry),
+        "expiry_cutoff_note":"Conservative NYSE cash close proxy; contract-specific exercise/settlement unverified.",
+        "research_surface": option_surface(contracts),
+        "dealer_scenarios": {
+            "call_long_put_short":sum(x['scenario_net_gex'] for x in levels),
+            "call_short_put_long":-sum(x['scenario_net_gex'] for x in levels),
+            "all_long":sum(x['gross_gex'] for x in levels),
+            "all_short":-sum(x['gross_gex'] for x in levels),
+            "balanced_zero":0.0},
         "interpretation": "OI-based sensitivity scenario. No directional trade recommendation. Dealer positions, gamma hedging trades and price magnetism are not verified."
     }
 
@@ -248,6 +264,7 @@ def fetch_free_options(symbol: str, *, expiries_limit: int = 3,
                 rows.append({
                     "expiry":expiry,"type":typ,"strike":z.get("strike"),
                     "open_interest":z.get("openInterest"),"iv":z.get("impliedVolatility"),
+                    "multiplier":100 if z.get("contractSize")=="REGULAR" else 0,
                     "bid":z.get("bid"),"ask":z.get("ask"),
                     "last_trade_at_utc":t
                 })
@@ -265,3 +282,24 @@ def fetch_free_options(symbol: str, *, expiries_limit: int = 3,
         "license_note":"Check data-source redistribution terms before republishing derived live option-chain values."
     })
     return result
+
+
+def option_surface(contracts, previous=None, *, oi_date=None, previous_date=None):
+    """Observable expiry/strike OI and IV; dated identical contracts only for OI deltas."""
+    prior={(r['expiry'],r['strike'],r['type']):r for r in (previous or [])}
+    dated=bool(oi_date and previous_date and previous_date<oi_date)
+    rows=[]
+    for r in contracts:
+        oi=_as_float(r.get('open_interest'));iv=_as_float(r.get('iv'));strike=_as_float(r.get('strike'))
+        if strike is None or strike<=0 or r.get('type') not in ('call','put'): continue
+        old=prior.get((r['expiry'],r['strike'],r['type']),{})
+        oldoi=_as_float(old.get('open_interest'))
+        rows.append({'expiry':r['expiry'],'strike':strike,'type':r['type'],
+                     'open_interest':oi if oi is not None and oi>=0 else None,
+                     'iv':iv if iv is not None and iv>0 else None,
+                     'oi_change':oi-oldoi if dated and oi is not None and oldoi is not None else None})
+    return {'rows':rows,'oi_date':oi_date,'previous_oi_date':previous_date,
+            'oi_change_status':'Dated matched contracts' if dated else 'Unavailable: two dated OI reports required',
+            'call_oi':sum(r['open_interest'] for r in rows if r['type']=='call' and r['open_interest'] is not None) if any(r['type']=='call' and r['open_interest'] is not None for r in rows) else None,
+            'put_oi':sum(r['open_interest'] for r in rows if r['type']=='put' and r['open_interest'] is not None) if any(r['type']=='put' and r['open_interest'] is not None for r in rows) else None,
+            'interpretation':'Concentrations and strike IV curves only; OI does not identify dealer trades.'}

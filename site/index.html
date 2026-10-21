@@ -24,10 +24,11 @@ footer{color:#718aa6;font-size:12px;padding:40px 0 70px}#view{min-height:360px}.
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap top-inner"><div class="brand"><span class="glyph">K</span><div>KRATOS<div class="sub">STOCK INTELLIGENCE</div></div></div><div class="sub">RESEARCH LAB · V0.2</div><a href="https://github.com/samin110597-create/kratos-stock-intelligence" target="_blank" rel="noopener">Inspect source ↗</a></div></header>
+<header class="top"><div class="wrap top-inner"><div class="brand"><span class="glyph">K</span><div>KRATOS<div class="sub">STOCK INTELLIGENCE</div></div></div><div class="sub">RESEARCH LAB · V0.3</div><a href="https://github.com/samin110597-create/kratos-stock-intelligence" target="_blank" rel="noopener">Inspect source ↗</a></div></header>
 <main class="wrap">
 <section class="hero"><div class="sub">Observed evidence · Honest uncertainty</div><h1>Understand the price.<br><span style="color:var(--cyan)">Check the evidence.</span></h1><p>Closed-bar research for US and Canadian equities. Separate recent prices from completed daily closes, inspect the data, and track frozen hypotheses.</p>
 <form class="searchbar" id="search"><input id="ticker" list="tickers" placeholder="NVDA, RY.TO, TSX:RY" autocomplete="off" maxlength="25" aria-label="Ticker symbol"><datalist id="tickers"></datalist><button id="analyze" type="submit">Analyze →</button></form>
+<div id="personal-access" hidden><label>Personal research access token <input id="access-token" type="password" autocomplete="off" aria-label="Personal research access token"></label><span class="hint"> Held only in this page’s memory. Never enter a data-provider API key here.</span></div>
 <div id="connection" class="hint" style="margin-top:10px"></div><div id="chips" class="chips"></div></section>
 <div id="status" role="status" aria-live="polite" class="notice">Loading dated research…</div>
 <section id="dashboard" hidden><div id="kpis" class="kpis"></div>
@@ -41,5 +42,5 @@ footer{color:#718aa6;font-size:12px;padding:40px 0 70px}#view{min-height:360px}.
 <button class="tab" data-tab="accuracy" aria-selected="false">Accuracy</button>
 <button class="tab" data-tab="watchlist" aria-selected="false">Watchlist & Alerts</button></div>
 <div id="view"></div></section><div id="intro" class="empty">No result selected.</div>
-<footer>KRATOS v0.2 · Research under validation. No calibrated probabilities, guaranteed price targets, licensed institutional flows, or automatic trades. All displayed times use Toronto EDT/EST. <a href="https://github.com/samin110597-create/kratos-stock-intelligence/blob/main/docs/AUDIT.md">Audit & limitations</a></footer>
+<footer>KRATOS v0.3 · Research under validation. No calibrated probabilities, guaranteed price targets, licensed institutional flows, or automatic trades. All displayed times use Toronto EDT/EST. <a href="https://github.com/samin110597-create/kratos-stock-intelligence/blob/main/docs/AUDIT.md">Audit & limitations</a></footer>
 </main><script src="./app.js"></script></body></html>

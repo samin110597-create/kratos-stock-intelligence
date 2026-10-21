@@ -81,3 +81,28 @@ def test_completely_empty_book_has_no_levels():
     b=exposure_book(100,[],asof=NOW)
     assert b["valid_contracts"]==0
     assert b["king_strike_by_gross_gex"] is None
+
+
+def test_half_day_expiry_has_expired_after_actual_close():
+    rows=sample()
+    for r in rows: r['expiry']='2026-11-27'
+    b=exposure_book(100,rows,asof=datetime(2026,11,27,19,tzinfo=timezone.utc))
+    assert b['valid_contracts']==0
+
+
+def test_call_long_put_short_delta_uses_same_position_sign_as_gamma():
+    b=exposure_book(100,sample(),asof=NOW)
+    assert isclose(b['net_scenario_dex_usd'],1000*100*100,rel_tol=1e-10)
+
+
+def test_oi_change_needs_two_dated_reports():
+    from kratos.options_research import option_surface
+    assert all(r['oi_change'] is None for r in option_surface(sample(),sample())['rows'])
+    r=option_surface(sample(call_oi=1100),sample(),oi_date='2026-10-16',previous_date='2026-10-15')
+    assert r['rows'][0]['oi_change']==100
+
+
+def test_four_dealer_assumptions_have_expected_sign_symmetry():
+    r=exposure_book(100,sample(call_oi=2000),asof=NOW)['dealer_scenarios']
+    assert r['all_long']==-r['all_short']
+    assert r['call_long_put_short']==-r['call_short_put_long']

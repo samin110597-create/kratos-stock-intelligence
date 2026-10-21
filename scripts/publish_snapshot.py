@@ -22,7 +22,7 @@ import tempfile
 
 ET = ZoneInfo("America/Toronto")
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "site" / "data"
+DATA = Path(os.getenv('KRATOS_OUTPUT_DIR', str(ROOT / 'data' / 'personal')))
 SNAPSHOTS = DATA / "snapshots.json"
 LEDGER = DATA / "ledger.json"
 DEFAULT = "NVDA,AVGO,AMAT,MU,CIFR,IREN,CRWV,NBIS,USAR,AXTI,GOOG,UBER"

@@ -2,6 +2,7 @@
 from collections import OrderedDict, deque
 from datetime import datetime, timezone
 import os
+import hmac
 from pathlib import Path
 from threading import BoundedSemaphore, Lock
 import time
@@ -14,9 +15,9 @@ from kratos.data import valid_symbol, MarketDataError, ROUTER
 from kratos.calendar import calendar_name
 from scripts.publish_snapshot import pack, audit_summary
 
-app=FastAPI(title='KRATOS Research API',version='0.2.0',docs_url='/api/docs',redoc_url=None)
+app=FastAPI(title='KRATOS Research API',version='0.3.0',docs_url='/api/docs',redoc_url=None)
 origins=[x.strip() for x in os.getenv('KRATOS_ALLOWED_ORIGINS','https://samin110597-create.github.io').split(',') if x.strip()]
-app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET'],allow_headers=['Content-Type'])
+app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET'],allow_headers=['Content-Type','Authorization'])
 lock=Lock();requests=OrderedDict();workers=BoundedSemaphore(2)
 
 def throttle(request):
@@ -39,9 +40,45 @@ async def headers(request,call_next):
         response.headers['Cache-Control']='no-store'
     return response
 
+def personal_access(request):
+    token=os.getenv('KRATOS_ACCESS_TOKEN','')
+    if token:
+        supplied=request.headers.get('authorization','')
+        if not hmac.compare_digest(supplied,'Bearer '+token):
+            raise HTTPException(401,'Personal research access token required')
+    elif os.getenv('KRATOS_BIND','127.0.0.1') not in ('127.0.0.1','localhost','::1'):
+        raise HTTPException(503,'Set a private access token before exposing personal-use data')
+
+@app.get('/api/providers')
+def providers(request:Request):
+    personal_access(request)
+    from kratos.connectors import status
+    return status()
+
+@app.get('/api/source/{provider}')
+def source(provider:str,request:Request,symbol:str='NVDA',vintage:str|None=None):
+    personal_access(request);throttle(request)
+    from kratos.connectors import Connectors,ConnectorError
+    if provider=='twelve_data': raise HTTPException(403,'Basic data is internal non-display; use the private diagnostic, not a dashboard feed')
+    try: return Connectors().fetch(provider,symbol,vintage=vintage)
+    except ConnectorError as exc: raise HTTPException(503,str(exc)) from None
+    except ValueError: raise HTTPException(422,'Invalid request') from None
+
+@app.get('/api/paths')
+def paths(request:Request,symbol:str,horizon:int=5):
+    personal_access(request);throttle(request)
+    if horizon not in (5,20): raise HTTPException(422,'Use 5 or 20 sessions')
+    if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy')
+    try:
+        from kratos.target_paths import walk_forward_paths
+        result=analyze(valid_symbol(symbol))
+        return walk_forward_paths(result.technical['daily'],horizon)
+    except Exception: raise HTTPException(503,'Path research unavailable; no probability issued') from None
+    finally: workers.release()
+
 @app.get('/api/health')
 def health():
-    return {'status':'ok','version':'0.2.0','time_utc':datetime.now(timezone.utc).isoformat(),
+    return {'status':'ok','version':'0.3.0','time_utc':datetime.now(timezone.utc).isoformat(),
             'providers':ROUTER.health,'live_data_guarantee':False,
             'forecast_recording':'disabled on public API; scheduled publisher records observations',
             'storage':'local SQLite; persistence depends on host; public ledger versioned in Git',
@@ -50,6 +87,7 @@ def health():
 @app.get('/api/analyze')
 def analysis(request:Request,symbol:str):
     throttle(request)
+    personal_access(request)
     try: ticker=valid_symbol(symbol);calendar_name(ticker)
     except ValueError as exc: raise HTTPException(422,str(exc)) from exc
     if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy. Try again shortly.',headers={'Retry-After':'15'})
@@ -65,7 +103,7 @@ def analysis(request:Request,symbol:str):
 
 @app.get('/config.json')
 def config():
-    return {'api_url':'','same_origin_api':True,'refresh_minutes':15}
+    return {'api_url':'','same_origin_api':True,'refresh_minutes':15,'personal_access_required':bool(os.getenv('KRATOS_ACCESS_TOKEN'))}
 
 app.mount('/',StaticFiles(directory=Path(__file__).parent/'site',html=True),name='dashboard')
 if __name__=='__main__':
