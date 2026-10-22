@@ -59,3 +59,13 @@ def test_publisher_refuses_concurrent_history_replacement(tmp_path,monkeypatch):
         raise ValueError('fixture')
     with pytest.raises(RuntimeError,match='concurrently'): publisher.run(['NVDA'],analyzer=changing_provider)
     assert (tmp_path/'events.jsonl').read_text()=='concurrent writer\n'
+
+
+def test_new_plan_version_preserves_previous_forecasts(tmp_path):
+    p=str(tmp_path/'db');t,d=sample()
+    record('NVDA',t,d,'fixture',p,now=NOW)
+    original=copy.deepcopy(export_events(p))
+    d['model_version']='structure-plan-v1'
+    assert len(record('NVDA',t,d,'fixture',p,now=NOW))==2
+    assert export_events(p)[:2]==original
+    assert all(x['model_version']=='structure-plan-v1' for x in records(p)[-2:])

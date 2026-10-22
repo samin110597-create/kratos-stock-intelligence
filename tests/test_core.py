@@ -93,8 +93,9 @@ def test_projections_not_probabilities():
     s=propose_setup(tech,{'live_enough':True})
     assert s['classification']=='WAIT'
     assert 'INSUFFICIENT VALIDATION' in s['grade']
-    assert s['ranges']['20']['upper'] == pytest.approx(100+2*math.sqrt(20))
-    assert s['targets'][1]>s['targets'][0]>s['entry_zone'][0]
+    assert s['ranges'] == {}
+    assert s['targets'] == []
+    assert s['entry_zone'] is None  # indicator-only inputs cannot invent chart levels
 
 
 def test_freshness_stale_even_if_regular_session():

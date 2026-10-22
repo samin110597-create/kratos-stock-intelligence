@@ -96,12 +96,12 @@ def record(ticker,t,s,provider,path=None,*,now=None):
     with connect(path) as db:
         db.execute('BEGIN IMMEDIATE')
         for horizon in (5,20):
-            key=digest({'ticker':ticker,'source_date':str(bar_date),'horizon':horizon,'model':MODEL_VERSION})
+            key=digest({'ticker':ticker,'source_date':str(bar_date),'horizon':horizon,'model':s.get('model_version',MODEL_VERSION)})
             future=schedule(ticker,created.tz_convert(ET).date()+pd.Timedelta(days=1),created.tz_convert(ET).date()+pd.Timedelta(days=60))
             maturity=future.index[horizon-1].date().isoformat()
             payload=scrub({'ticker':ticker,'exchange_calendar':t.get('provenance',{}).get('calendar'),
                 'recorded_at_utc':created.isoformat(),'source_bar_date':str(bar_date),'provider':provider,
-                'source_provenance':t.get('provenance',{}),'model_version':MODEL_VERSION,
+                'source_provenance':t.get('provenance',{}),'model_version':s.get('model_version',MODEL_VERSION),
                 'features':features,'horizon_sessions':horizon,'maturity_date':maturity,
                 'outcome_definition':'Unadjusted endpoint close vs frozen reference close on Nth exchange session AFTER recording date. Not executable P&L.',
                 'base_close':base_close,'source_daily_close':t['close'],'reference_type':reference.get('kind','last completed daily close outside regular trading'),'reference_timestamp_utc':ref_stamp,

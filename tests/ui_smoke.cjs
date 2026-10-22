@@ -9,14 +9,14 @@ const research=JSON.parse(fs.readFileSync('site/data/research.json','utf8'));
 const dom=new JSDOM(html,{runScripts:'outside-only',url:'https://example.test/'});
 const w=dom.window; const errors=[];
 w.addEventListener('error',e=>errors.push(e.message));
-w.fetch=async url=>({ok:true,json:async()=>String(url).includes('config.json')?{same_origin_api:false}:String(url).includes('research.json')?research:structuredClone(feed)});
+w.fetch=async url=>({ok:true,json:async()=>String(url).includes('config.json')?{same_origin_api:false}:String(url).includes('research.json')?research:String(url).includes('plans.json')?JSON.parse(fs.readFileSync('site/data/plans.json','utf8')):structuredClone(feed)});
 w.AbortController=AbortController;
 w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness};');
 await new Promise(r=>setTimeout(r,50));
 assert.equal(w.document.getElementById('dashboard').hidden,false);
 let visited=0;
 for(const tab of w.document.querySelectorAll('.tab')){
- tab.click();assert.equal(tab.getAttribute('aria-selected'),'true');assert(w.document.getElementById('view').textContent.length>30);visited++;
+ tab.click();if(tab.dataset.tab==='forecast'){assert.match(w.document.getElementById('view').textContent,/The price plan/);assert.match(w.document.getElementById('view').textContent,/Historical re-analysis/);assert(!w.document.getElementById('view').textContent.includes('ATR ×'));}assert.equal(tab.getAttribute('aria-selected'),'true');assert(w.document.getElementById('view').textContent.length>30);visited++;
 }
 assert.equal(visited,8);assert.deepEqual(errors,[]);
 w.eval("window.__test.selectTicker('../etc/passwd',false)");assert.match(w.document.getElementById('status').textContent,/valid US or Canadian/);

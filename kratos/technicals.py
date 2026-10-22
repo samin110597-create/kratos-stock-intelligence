@@ -25,7 +25,7 @@ def indicators(raw: pd.DataFrame) -> pd.DataFrame:
     df["RSI14"] = rsi.mask((ag == 0) & (al == 0), 50)
     tr = pd.concat([h-lo, (h-c.shift()).abs(), (lo-c.shift()).abs()], axis=1).max(axis=1)
     df["ATR14"] = tr.ewm(alpha=1/14, adjust=False, min_periods=14).mean()
-    df["VOL20"] = df["Volume"].rolling(20, min_periods=20).mean()
+    df["VOL20"] = df["Volume"].shift(1).rolling(20, min_periods=20).mean()
     df["VOL_RATIO"] = df["Volume"] / df["VOL20"].replace(0, np.nan)
     return df
 

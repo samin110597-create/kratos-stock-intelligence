@@ -1,0 +1,3556 @@
+{
+  "NVDA": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 221.09, the next observed hurdles are 224.76, 227.92.",
+      "downside": "If a daily close loses 216.20, the next observed floors are 214.39, 212.85.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-21T14:45:00+00:00",
+        "close": 220.05999755859375,
+        "atr": 1.207736735996466,
+        "support": [
+          {
+            "price": 219.6199951171875,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T16:00:00+00:00",
+            "known_at": "2026-10-19T16:30:00+00:00"
+          },
+          {
+            "price": 218.67599487304688,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T14:30:00+00:00",
+            "known_at": "2026-10-16T15:00:00+00:00"
+          },
+          {
+            "price": 218.3300018310547,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:15:00+00:00",
+            "known_at": "2026-10-19T19:45:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 222.16000366210938,
+            "kind": "swing high",
+            "formed_at": "2026-10-21T13:30:00+00:00",
+            "known_at": "2026-10-21T14:00:00+00:00"
+          }
+        ],
+        "prior_high": 222.16000366210938,
+        "prior_low": 216.02999877929688,
+        "volume_ratio": 10.048014864065815,
+        "swing_high": 222.16000366210938,
+        "swing_low": 217.66000366210938
+      },
+      "1H": {
+        "state": "REJECTED AT RESISTANCE",
+        "explanation": "Traded above the prior high but closed back below it.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 218.7322998046875,
+        "atr": 2.0195504961606745,
+        "support": [
+          {
+            "price": 218.67599487304688,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T14:30:00+00:00",
+            "known_at": "2026-10-16T16:30:00+00:00"
+          },
+          {
+            "price": 216.85000610351562,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T17:30:00+00:00",
+            "known_at": "2026-10-19T19:30:00+00:00"
+          },
+          {
+            "price": 215.07000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T13:30:00+00:00",
+            "known_at": "2026-10-16T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 219.6199951171875,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T15:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 221.67999267578125,
+            "kind": "swing high",
+            "formed_at": "2026-10-14T19:30:00+00:00",
+            "known_at": "2026-10-15T14:30:00+00:00"
+          },
+          {
+            "price": 223.06019592285156,
+            "kind": "swing low",
+            "formed_at": "2026-10-13T13:30:00+00:00",
+            "known_at": "2026-10-13T15:30:00+00:00"
+          }
+        ],
+        "prior_high": 219.6199951171875,
+        "prior_low": 212.77000427246094,
+        "volume_ratio": 4.504719979712473,
+        "swing_high": 218.4600067138672,
+        "swing_low": 212.77000427246094
+      },
+      "4H": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 216.47999572753906,
+        "atr": 3.55134637202713,
+        "support": [
+          {
+            "price": 215.10000610351562,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T13:30:00+00:00",
+            "known_at": "2026-09-02T13:30:00+00:00"
+          },
+          {
+            "price": 213.32000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 208.92999267578125,
+            "kind": "swing low",
+            "formed_at": "2026-09-14T13:30:00+00:00",
+            "known_at": "2026-09-15T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 217.1999969482422,
+            "kind": "swing low",
+            "formed_at": "2026-09-10T13:30:00+00:00",
+            "known_at": "2026-09-11T13:30:00+00:00"
+          },
+          {
+            "price": 219.6199951171875,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          },
+          {
+            "price": 221.09080505371094,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T13:30:00+00:00",
+            "known_at": "2026-09-25T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 240.6199951171875,
+        "prior_low": 212.77000427246094,
+        "volume_ratio": 0.39991922499740284,
+        "swing_high": 219.6199951171875,
+        "swing_low": 213.32000732421875
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 216.47000122070312,
+        "atr": 5.916467336944366,
+        "support": [
+          {
+            "price": 216.1999969482422,
+            "kind": "swing low",
+            "formed_at": "2026-08-11T04:00:00+00:00",
+            "known_at": "2026-08-13T04:00:00+00:00"
+          },
+          {
+            "price": 214.38999938964844,
+            "kind": "swing high",
+            "formed_at": "2026-07-22T04:00:00+00:00",
+            "known_at": "2026-07-24T04:00:00+00:00"
+          },
+          {
+            "price": 212.85000610351562,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 221.08999633789062,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T04:00:00+00:00",
+            "known_at": "2026-09-28T04:00:00+00:00"
+          },
+          {
+            "price": 224.75999450683594,
+            "kind": "swing high",
+            "formed_at": "2026-08-07T04:00:00+00:00",
+            "known_at": "2026-08-11T04:00:00+00:00"
+          },
+          {
+            "price": 227.9199981689453,
+            "kind": "swing high",
+            "formed_at": "2026-08-17T04:00:00+00:00",
+            "known_at": "2026-08-19T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 243.3699951171875,
+        "prior_low": 212.85000610351562,
+        "volume_ratio": 0.7569364280143133,
+        "swing_high": 243.3699951171875,
+        "swing_low": 212.85000610351562
+      },
+      "1W": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 214.1300048828125,
+        "atr": 15.716731717750392,
+        "support": [
+          {
+            "price": 213.99000549316406,
+            "kind": "swing high",
+            "formed_at": "2026-06-26T00:00:00+00:00",
+            "known_at": "2026-07-10T00:00:00+00:00"
+          },
+          {
+            "price": 208.92999267578125,
+            "kind": "swing low",
+            "formed_at": "2026-09-18T00:00:00+00:00",
+            "known_at": "2026-10-02T00:00:00+00:00"
+          },
+          {
+            "price": 197.6300048828125,
+            "kind": "swing high",
+            "formed_at": "2026-02-27T00:00:00+00:00",
+            "known_at": "2026-03-13T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 232.27999877929688,
+            "kind": "swing high",
+            "formed_at": "2026-06-05T00:00:00+00:00",
+            "known_at": "2026-06-19T00:00:00+00:00"
+          },
+          {
+            "price": 236.5399932861328,
+            "kind": "swing high",
+            "formed_at": "2026-05-15T00:00:00+00:00",
+            "known_at": "2026-05-29T00:00:00+00:00"
+          },
+          {
+            "price": 243.3699951171875,
+            "kind": "prior 20-bar high",
+            "formed_at": "2026-10-09T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 243.3699951171875,
+        "prior_low": 189.8000030517578,
+        "volume_ratio": 0.8113412005736726,
+        "swing_high": 234.75999450683594,
+        "swing_low": 208.92999267578125
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Wait for a daily close above 221.09, then a later retest that holds. Alternatively, watch 216.20 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:13:24.589722+00:00"
+  },
+  "AVGO": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "MIXED",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 335.81, the next observed hurdles are 342.33, 346.89.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swings do not establish a consistent direction.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T14:45:00+00:00",
+        "close": 334.9700012207031,
+        "atr": 1.6156553221558285,
+        "support": [
+          {
+            "price": 334.5954895019531,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T15:30:00+00:00",
+            "known_at": "2026-10-20T16:00:00+00:00"
+          },
+          {
+            "price": 334.1700134277344,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T18:30:00+00:00",
+            "known_at": "2026-10-20T19:00:00+00:00"
+          },
+          {
+            "price": 332.2900085449219,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-21T14:30:00+00:00",
+            "known_at": "2026-10-21T14:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 335.8699951171875,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T17:45:00+00:00",
+            "known_at": "2026-10-20T18:15:00+00:00"
+          },
+          {
+            "price": 336.44500732421875,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:15:00+00:00",
+            "known_at": "2026-10-19T19:45:00+00:00"
+          },
+          {
+            "price": 337.3599853515625,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T16:30:00+00:00",
+            "known_at": "2026-10-15T17:00:00+00:00"
+          }
+        ],
+        "prior_high": 338.94000244140625,
+        "prior_low": 332.2900085449219,
+        "volume_ratio": 0.557254679331393,
+        "swing_high": 338.94000244140625,
+        "swing_low": 334.0
+      },
+      "1H": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 333.3500061035156,
+        "atr": 3.5608504680907678,
+        "support": [
+          {
+            "price": 330.80010986328125,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          },
+          {
+            "price": 328.6000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T19:30:00+00:00",
+            "known_at": "2026-10-19T14:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 334.1017150878906,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T16:30:00+00:00",
+            "known_at": "2026-10-20T18:30:00+00:00"
+          },
+          {
+            "price": 337.3599853515625,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T16:30:00+00:00",
+            "known_at": "2026-10-15T18:30:00+00:00"
+          },
+          {
+            "price": 340.20001220703125,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T15:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          }
+        ],
+        "prior_high": 341.0899963378906,
+        "prior_low": 328.6000061035156,
+        "volume_ratio": 1.5515303885721803,
+        "swing_high": 341.0899963378906,
+        "swing_low": 334.1017150878906
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 334.510009765625,
+        "atr": 7.009785817225503,
+        "support": [
+          {
+            "price": 328.6000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 335.814697265625,
+            "kind": "swing low",
+            "formed_at": "2026-09-16T17:30:00+00:00",
+            "known_at": "2026-09-17T17:30:00+00:00"
+          },
+          {
+            "price": 342.33050537109375,
+            "kind": "swing low",
+            "formed_at": "2026-09-03T13:30:00+00:00",
+            "known_at": "2026-09-04T13:30:00+00:00"
+          },
+          {
+            "price": 346.8900146484375,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T13:30:00+00:00",
+            "known_at": "2026-09-25T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 380.8399963378906,
+        "prior_low": 328.6000061035156,
+        "volume_ratio": 0.6364378794828068,
+        "swing_high": 359.239990234375,
+        "swing_low": 328.6000061035156
+      },
+      "1D": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 334.3699951171875,
+        "atr": 11.47320773983022,
+        "support": [
+          {
+            "price": 328.5799865722656,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-19T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 335.80999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-09-16T04:00:00+00:00",
+            "known_at": "2026-09-18T04:00:00+00:00"
+          },
+          {
+            "price": 342.3299865722656,
+            "kind": "swing low",
+            "formed_at": "2026-09-03T04:00:00+00:00",
+            "known_at": "2026-09-08T04:00:00+00:00"
+          },
+          {
+            "price": 346.8900146484375,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T04:00:00+00:00",
+            "known_at": "2026-09-28T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 380.8399963378906,
+        "prior_low": 328.5799865722656,
+        "volume_ratio": 0.7240905798674341,
+        "swing_high": 380.8399963378906,
+        "swing_low": 343.2900085449219
+      },
+      "1W": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 328.75,
+        "atr": 32.631086116378455,
+        "support": [
+          {
+            "price": 324.04998779296875,
+            "kind": "swing low",
+            "formed_at": "2025-10-10T00:00:00+00:00",
+            "known_at": "2025-10-24T00:00:00+00:00"
+          },
+          {
+            "price": 307.20001220703125,
+            "kind": "swing low",
+            "formed_at": "2026-03-06T00:00:00+00:00",
+            "known_at": "2026-03-20T00:00:00+00:00"
+          },
+          {
+            "price": 295.29998779296875,
+            "kind": "swing low",
+            "formed_at": "2026-02-06T00:00:00+00:00",
+            "known_at": "2026-02-20T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 329.05999755859375,
+            "kind": "swing low",
+            "formed_at": "2025-11-14T00:00:00+00:00",
+            "known_at": "2025-11-28T00:00:00+00:00"
+          },
+          {
+            "price": 352.3399963378906,
+            "kind": "swing high",
+            "formed_at": "2026-02-13T00:00:00+00:00",
+            "known_at": "2026-02-27T00:00:00+00:00"
+          },
+          {
+            "price": 374.2300109863281,
+            "kind": "swing high",
+            "formed_at": "2025-09-12T00:00:00+00:00",
+            "known_at": "2025-09-26T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 495.0,
+        "prior_low": 335.80999755859375,
+        "volume_ratio": 0.927040313890167,
+        "swing_high": 432.7300109863281,
+        "swing_low": 335.80999755859375
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swings do not establish a consistent direction.",
+    "next_action": "Wait for a daily close above 335.81, then a later retest that holds. Alternatively, watch 328.58 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:14:15.488692+00:00"
+  },
+  "AMAT": {
+    "model_version": "structure-plan-v1",
+    "classification": "AVOID",
+    "bias": "DOWN",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 407.26, the next observed hurdles are 426.13, 436.33.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Closed below the prior range; the broken floor is the first recovery hurdle.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 410.82000732421875,
+        "atr": 2.664685558492876,
+        "support": [
+          {
+            "price": 407.5199890136719,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T19:45:00+00:00",
+            "known_at": "2026-10-19T13:45:00+00:00"
+          },
+          {
+            "price": 406.6199951171875,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T16:30:00+00:00",
+            "known_at": "2026-10-20T17:00:00+00:00"
+          },
+          {
+            "price": 404.5400085449219,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T19:45:00+00:00",
+            "known_at": "2026-10-21T13:45:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 412.3999938964844,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T15:00:00+00:00"
+          },
+          {
+            "price": 413.7699890136719,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T19:00:00+00:00",
+            "known_at": "2026-10-19T19:30:00+00:00"
+          },
+          {
+            "price": 414.5,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T15:15:00+00:00",
+            "known_at": "2026-10-16T15:45:00+00:00"
+          }
+        ],
+        "prior_high": 414.0,
+        "prior_low": 402.9599914550781,
+        "volume_ratio": 0.8186560234146018,
+        "swing_high": 414.0,
+        "swing_low": 407.2900085449219
+      },
+      "1H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 409.2699890136719,
+        "atr": 6.265765543098897,
+        "support": [
+          {
+            "price": 407.5199890136719,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T19:30:00+00:00",
+            "known_at": "2026-10-19T14:30:00+00:00"
+          },
+          {
+            "price": 399.0249938964844,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 414.5,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T14:30:00+00:00",
+            "known_at": "2026-10-16T16:30:00+00:00"
+          },
+          {
+            "price": 418.239990234375,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T14:30:00+00:00",
+            "known_at": "2026-10-15T16:30:00+00:00"
+          },
+          {
+            "price": 427.6600036621094,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T14:30:00+00:00",
+            "known_at": "2026-10-19T16:30:00+00:00"
+          }
+        ],
+        "prior_high": 427.6600036621094,
+        "prior_low": 399.0249938964844,
+        "volume_ratio": 1.24765589241936,
+        "swing_high": 427.6600036621094,
+        "swing_low": 399.0249938964844
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 404.95001220703125,
+        "atr": 12.684312190535662,
+        "support": [
+          {
+            "price": 399.0249938964844,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 407.5199890136719,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 411.510009765625,
+            "kind": "swing low",
+            "formed_at": "2026-09-16T17:30:00+00:00",
+            "known_at": "2026-09-17T17:30:00+00:00"
+          },
+          {
+            "price": 416.760009765625,
+            "kind": "swing low",
+            "formed_at": "2026-09-15T13:30:00+00:00",
+            "known_at": "2026-09-16T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 534.0726928710938,
+        "prior_low": 399.0249938964844,
+        "volume_ratio": 0.7326613987316979,
+        "swing_high": 427.6600036621094,
+        "swing_low": 407.5199890136719
+      },
+      "1D": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 404.9800109863281,
+        "atr": 20.26309384837808,
+        "support": [],
+        "resistance": [
+          {
+            "price": 407.260009765625,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-19T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          },
+          {
+            "price": 426.1300048828125,
+            "kind": "swing low",
+            "formed_at": "2026-09-03T04:00:00+00:00",
+            "known_at": "2026-09-08T04:00:00+00:00"
+          },
+          {
+            "price": 436.3299865722656,
+            "kind": "swing low",
+            "formed_at": "2026-07-29T04:00:00+00:00",
+            "known_at": "2026-07-31T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 547.25,
+        "prior_low": 407.260009765625,
+        "volume_ratio": 1.0867001868826198,
+        "swing_high": 547.25,
+        "swing_low": 411.510009765625
+      },
+      "1W": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 409.2900085449219,
+        "atr": 59.64513866227644,
+        "support": [
+          {
+            "price": 395.95001220703125,
+            "kind": "swing high",
+            "formed_at": "2026-02-27T00:00:00+00:00",
+            "known_at": "2026-03-13T00:00:00+00:00"
+          },
+          {
+            "price": 377.07000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-05-01T00:00:00+00:00",
+            "known_at": "2026-05-15T00:00:00+00:00"
+          },
+          {
+            "price": 320.69000244140625,
+            "kind": "swing low",
+            "formed_at": "2026-04-03T00:00:00+00:00",
+            "known_at": "2026-04-17T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 411.510009765625,
+            "kind": "swing low",
+            "formed_at": "2026-09-18T00:00:00+00:00",
+            "known_at": "2026-10-02T00:00:00+00:00"
+          },
+          {
+            "price": 436.3299865722656,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 563.760009765625,
+            "kind": "swing high",
+            "formed_at": "2026-08-14T00:00:00+00:00",
+            "known_at": "2026-08-28T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 739.6699829101562,
+        "prior_low": 411.510009765625,
+        "volume_ratio": 1.0989108636753384,
+        "swing_high": 563.760009765625,
+        "swing_low": 411.510009765625
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+    "next_action": "Wait for a daily close above 407.26, then a later retest that holds.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:15:06.171891+00:00"
+  },
+  "MU": {
+    "model_version": "structure-plan-v1",
+    "classification": "AVOID",
+    "bias": "DOWN",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 902.60, the next observed hurdles are 915.18, 928.98.",
+      "downside": "If a daily close loses 891.66, the next observed floors are 858.00, 844.62.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swing highs and lows are falling.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 911.0139770507812,
+        "atr": 8.022451775184555,
+        "support": [
+          {
+            "price": 907.882080078125,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T18:00:00+00:00",
+            "known_at": "2026-10-19T18:30:00+00:00"
+          },
+          {
+            "price": 903.2800903320312,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T18:15:00+00:00",
+            "known_at": "2026-10-15T18:45:00+00:00"
+          },
+          {
+            "price": 900.72998046875,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T14:00:00+00:00",
+            "known_at": "2026-10-19T14:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 912.3800048828125,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T17:15:00+00:00",
+            "known_at": "2026-10-20T17:45:00+00:00"
+          },
+          {
+            "price": 914.52001953125,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          },
+          {
+            "price": 918.8900146484375,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:45:00+00:00",
+            "known_at": "2026-10-20T15:15:00+00:00"
+          }
+        ],
+        "prior_high": 928.4500122070312,
+        "prior_low": 889.4500122070312,
+        "volume_ratio": 0.4430167839294354,
+        "swing_high": 928.4500122070312,
+        "swing_low": 889.4500122070312
+      },
+      "1H": {
+        "state": "REJECTED AT RESISTANCE",
+        "explanation": "Traded above the prior high but closed back below it.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 909.2349853515625,
+        "atr": 15.566849661930014,
+        "support": [
+          {
+            "price": 903.2800903320312,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T17:30:00+00:00",
+            "known_at": "2026-10-15T19:30:00+00:00"
+          },
+          {
+            "price": 890.1168212890625,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T13:30:00+00:00",
+            "known_at": "2026-10-16T15:30:00+00:00"
+          },
+          {
+            "price": 881.52001953125,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 918.8900146484375,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T16:30:00+00:00"
+          },
+          {
+            "price": 926.8099975585938,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T14:30:00+00:00",
+            "known_at": "2026-10-19T16:30:00+00:00"
+          },
+          {
+            "price": 931.6500244140625,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T19:30:00+00:00",
+            "known_at": "2026-10-16T14:30:00+00:00"
+          }
+        ],
+        "prior_high": 926.8099975585938,
+        "prior_low": 875.0,
+        "volume_ratio": 5.11027829455669,
+        "swing_high": 918.8900146484375,
+        "swing_low": 881.52001953125
+      },
+      "4H": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 895.8499755859375,
+        "atr": 30.463146335346995,
+        "support": [
+          {
+            "price": 887.60498046875,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T13:30:00+00:00",
+            "known_at": "2026-08-25T13:30:00+00:00"
+          },
+          {
+            "price": 875.0,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 858.0,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 902.5999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-09-14T13:30:00+00:00",
+            "known_at": "2026-09-15T13:30:00+00:00"
+          },
+          {
+            "price": 915.1799926757812,
+            "kind": "swing low",
+            "formed_at": "2026-08-19T13:30:00+00:00",
+            "known_at": "2026-08-20T13:30:00+00:00"
+          },
+          {
+            "price": 926.8099975585938,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 1089.199951171875,
+        "prior_low": 858.0,
+        "volume_ratio": 0.3605772683506818,
+        "swing_high": 926.8099975585938,
+        "swing_low": 875.0
+      },
+      "1D": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 896.0700073242188,
+        "atr": 48.25480029868222,
+        "support": [
+          {
+            "price": 891.6599731445312,
+            "kind": "swing low",
+            "formed_at": "2026-07-07T04:00:00+00:00",
+            "known_at": "2026-07-09T04:00:00+00:00"
+          },
+          {
+            "price": 858.0,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          },
+          {
+            "price": 844.6199951171875,
+            "kind": "swing low",
+            "formed_at": "2026-08-11T04:00:00+00:00",
+            "known_at": "2026-08-13T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 902.5999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-09-14T04:00:00+00:00",
+            "known_at": "2026-09-16T04:00:00+00:00"
+          },
+          {
+            "price": 915.1799926757812,
+            "kind": "swing low",
+            "formed_at": "2026-08-19T04:00:00+00:00",
+            "known_at": "2026-08-21T04:00:00+00:00"
+          },
+          {
+            "price": 928.97998046875,
+            "kind": "swing high",
+            "formed_at": "2026-08-05T04:00:00+00:00",
+            "known_at": "2026-08-07T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 1108.719970703125,
+        "prior_low": 858.0,
+        "volume_ratio": 0.7473657632266728,
+        "swing_high": 1089.219970703125,
+        "swing_low": 858.0
+      },
+      "1W": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 878.8400268554688,
+        "atr": 120.51833031975565,
+        "support": [
+          {
+            "price": 737.8800048828125,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 471.3399963378906,
+            "kind": "swing high",
+            "formed_at": "2026-03-20T00:00:00+00:00",
+            "known_at": "2026-04-03T00:00:00+00:00"
+          },
+          {
+            "price": 311.489990234375,
+            "kind": "swing low",
+            "formed_at": "2026-04-03T00:00:00+00:00",
+            "known_at": "2026-04-17T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 902.5999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-09-18T00:00:00+00:00",
+            "known_at": "2026-10-02T00:00:00+00:00"
+          },
+          {
+            "price": 1036.1300048828125,
+            "kind": "swing high",
+            "formed_at": "2026-08-21T00:00:00+00:00",
+            "known_at": "2026-09-04T00:00:00+00:00"
+          },
+          {
+            "price": 1108.719970703125,
+            "kind": "swing high",
+            "formed_at": "2026-09-25T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 1255.0,
+        "prior_low": 737.8800048828125,
+        "volume_ratio": 0.7803905081055738,
+        "swing_high": 1108.719970703125,
+        "swing_low": 902.5999755859375
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swing highs and lows are falling.",
+    "next_action": "Wait for a daily close above 902.60, then a later retest that holds. Alternatively, watch 891.66 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:15:56.734502+00:00"
+  },
+  "CIFR": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 12.88, the next observed hurdles are 14.18, 14.85.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 9.015000343322754,
+        "atr": 0.16847009740208993,
+        "support": [
+          {
+            "price": 9.010000228881836,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T17:00:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 8.9350004196167,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:15:00+00:00",
+            "known_at": "2026-10-16T17:45:00+00:00"
+          },
+          {
+            "price": 8.859999656677246,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T18:15:00+00:00",
+            "known_at": "2026-10-19T18:45:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 9.069999694824219,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T19:15:00+00:00",
+            "known_at": "2026-10-16T19:45:00+00:00"
+          },
+          {
+            "price": 9.12399959564209,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T16:00:00+00:00",
+            "known_at": "2026-10-16T16:30:00+00:00"
+          },
+          {
+            "price": 9.229999542236328,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T15:00:00+00:00",
+            "known_at": "2026-10-16T15:30:00+00:00"
+          }
+        ],
+        "prior_high": 9.419899940490723,
+        "prior_low": 8.680000305175781,
+        "volume_ratio": 0.5617342313910503,
+        "swing_high": 9.419899940490723,
+        "swing_low": 8.744999885559082
+      },
+      "1H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 8.864999771118164,
+        "atr": 0.3644144248543466,
+        "support": [
+          {
+            "price": 8.859999656677246,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T17:30:00+00:00",
+            "known_at": "2026-10-19T19:30:00+00:00"
+          },
+          {
+            "price": 8.234999656677246,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 9.25,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T16:30:00+00:00"
+          },
+          {
+            "price": 9.505999565124512,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T15:30:00+00:00"
+          },
+          {
+            "price": 9.800100326538086,
+            "kind": "swing low",
+            "formed_at": "2026-10-14T17:30:00+00:00",
+            "known_at": "2026-10-14T19:30:00+00:00"
+          }
+        ],
+        "prior_high": 9.859000205993652,
+        "prior_low": 8.234999656677246,
+        "volume_ratio": 1.638907072545692,
+        "swing_high": 9.25,
+        "swing_low": 8.234999656677246
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 8.880000114440918,
+        "atr": 0.7692614271092386,
+        "support": [
+          {
+            "price": 8.790200233459473,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          },
+          {
+            "price": 8.234999656677246,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 12.881999969482422,
+            "kind": "swing low",
+            "formed_at": "2026-10-08T13:30:00+00:00",
+            "known_at": "2026-10-09T13:30:00+00:00"
+          },
+          {
+            "price": 14.180000305175781,
+            "kind": "swing low",
+            "formed_at": "2026-09-02T13:30:00+00:00",
+            "known_at": "2026-09-03T13:30:00+00:00"
+          },
+          {
+            "price": 14.850000381469727,
+            "kind": "swing low",
+            "formed_at": "2026-09-15T17:30:00+00:00",
+            "known_at": "2026-09-16T17:30:00+00:00"
+          }
+        ],
+        "prior_high": 15.720000267028809,
+        "prior_low": 8.234999656677246,
+        "volume_ratio": 0.6701247598532626,
+        "swing_high": 16.417999267578125,
+        "swing_low": 8.779999732971191
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 8.880000114440918,
+        "atr": 1.253137732250831,
+        "support": [
+          {
+            "price": 8.779999732971191,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-19T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 12.881999969482422,
+            "kind": "swing low",
+            "formed_at": "2026-10-08T04:00:00+00:00",
+            "known_at": "2026-10-12T04:00:00+00:00"
+          },
+          {
+            "price": 14.180000305175781,
+            "kind": "swing low",
+            "formed_at": "2026-09-02T04:00:00+00:00",
+            "known_at": "2026-09-04T04:00:00+00:00"
+          },
+          {
+            "price": 14.850000381469727,
+            "kind": "swing low",
+            "formed_at": "2026-09-15T04:00:00+00:00",
+            "known_at": "2026-09-17T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 19.7450008392334,
+        "prior_low": 8.779999732971191,
+        "volume_ratio": 1.4035770577378417,
+        "swing_high": 19.7450008392334,
+        "swing_low": 12.881999969482422
+      },
+      "1W": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 8.979999542236328,
+        "atr": 4.293731051012481,
+        "support": [
+          {
+            "price": 7.670000076293945,
+            "kind": "swing high",
+            "formed_at": "2024-12-20T00:00:00+00:00",
+            "known_at": "2025-01-03T00:00:00+00:00"
+          },
+          {
+            "price": 6.449999809265137,
+            "kind": "swing high",
+            "formed_at": "2025-02-07T00:00:00+00:00",
+            "known_at": "2025-02-21T00:00:00+00:00"
+          },
+          {
+            "price": 4.550000190734863,
+            "kind": "swing low",
+            "formed_at": "2025-08-08T00:00:00+00:00",
+            "known_at": "2025-08-22T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 11.720000267028809,
+            "kind": "swing low",
+            "formed_at": "2026-04-03T00:00:00+00:00",
+            "known_at": "2026-04-17T00:00:00+00:00"
+          },
+          {
+            "price": 12.881999969482422,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-09T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          },
+          {
+            "price": 14.180000305175781,
+            "kind": "swing low",
+            "formed_at": "2026-09-04T00:00:00+00:00",
+            "known_at": "2026-09-18T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 30.139999389648438,
+        "prior_low": 12.881999969482422,
+        "volume_ratio": 2.50209245802373,
+        "swing_high": 19.7450008392334,
+        "swing_low": 14.180000305175781
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Wait for a daily close above 12.88, then a later retest that holds. Alternatively, watch 8.78 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:16:47.311151+00:00"
+  },
+  "IREN": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 28.93, the next observed hurdles are 32.22, 34.81.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 27.709999084472656,
+        "atr": 0.4307237214086462,
+        "support": [
+          {
+            "price": 27.635000228881836,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T14:00:00+00:00",
+            "known_at": "2026-10-19T14:30:00+00:00"
+          },
+          {
+            "price": 27.520000457763672,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T16:00:00+00:00",
+            "known_at": "2026-10-16T16:30:00+00:00"
+          },
+          {
+            "price": 27.3700008392334,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T18:30:00+00:00",
+            "known_at": "2026-10-19T19:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 27.770000457763672,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T17:45:00+00:00",
+            "known_at": "2026-10-16T18:15:00+00:00"
+          },
+          {
+            "price": 27.885000228881836,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:45:00+00:00",
+            "known_at": "2026-10-20T15:15:00+00:00"
+          },
+          {
+            "price": 28.209999084472656,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T15:45:00+00:00",
+            "known_at": "2026-10-16T16:15:00+00:00"
+          }
+        ],
+        "prior_high": 28.219999313354492,
+        "prior_low": 26.280000686645508,
+        "volume_ratio": 0.45295959775047295,
+        "swing_high": 28.219999313354492,
+        "swing_low": 26.399999618530273
+      },
+      "1H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 27.045000076293945,
+        "atr": 0.8838623124071812,
+        "support": [
+          {
+            "price": 26.600000381469727,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-15T15:30:00+00:00"
+          },
+          {
+            "price": 25.59000015258789,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 28.770000457763672,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T15:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 29.155000686645508,
+            "kind": "prior 20-bar high",
+            "formed_at": "2026-10-20T19:30:00+00:00",
+            "known_at": "2026-10-20T19:30:00+00:00"
+          },
+          {
+            "price": 30.459999084472656,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T19:30:00+00:00",
+            "known_at": "2026-10-16T14:30:00+00:00"
+          }
+        ],
+        "prior_high": 29.155000686645508,
+        "prior_low": 25.59000015258789,
+        "volume_ratio": 3.9561062777011164,
+        "swing_high": 28.770000457763672,
+        "swing_low": 25.59000015258789
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 26.610000610351562,
+        "atr": 1.6634265860929167,
+        "support": [
+          {
+            "price": 26.600000381469727,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          },
+          {
+            "price": 25.59000015258789,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 34.63999938964844,
+            "kind": "swing low",
+            "formed_at": "2026-10-09T17:30:00+00:00",
+            "known_at": "2026-10-12T17:30:00+00:00"
+          },
+          {
+            "price": 35.13999938964844,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T13:30:00+00:00",
+            "known_at": "2026-09-02T13:30:00+00:00"
+          },
+          {
+            "price": 36.69409942626953,
+            "kind": "swing high",
+            "formed_at": "2026-10-12T13:30:00+00:00",
+            "known_at": "2026-10-13T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 42.17770004272461,
+        "prior_low": 25.59000015258789,
+        "volume_ratio": 0.5363139957706342,
+        "swing_high": 36.69409942626953,
+        "swing_low": 26.550100326538086
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 26.6200008392334,
+        "atr": 2.746330076350781,
+        "support": [
+          {
+            "price": 26.549999237060547,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-19T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 28.93000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-07-29T04:00:00+00:00",
+            "known_at": "2026-07-31T04:00:00+00:00"
+          },
+          {
+            "price": 32.220001220703125,
+            "kind": "swing low",
+            "formed_at": "2026-07-17T04:00:00+00:00",
+            "known_at": "2026-07-21T04:00:00+00:00"
+          },
+          {
+            "price": 34.810001373291016,
+            "kind": "swing low",
+            "formed_at": "2026-08-28T04:00:00+00:00",
+            "known_at": "2026-09-01T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 49.369998931884766,
+        "prior_low": 26.549999237060547,
+        "volume_ratio": 1.5620455654972416,
+        "swing_high": 43.90999984741211,
+        "swing_low": 39.33000183105469
+      },
+      "1W": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 26.989999771118164,
+        "atr": 8.777889063307423,
+        "support": [
+          {
+            "price": 21.540000915527344,
+            "kind": "swing high",
+            "formed_at": "2025-07-25T00:00:00+00:00",
+            "known_at": "2025-08-08T00:00:00+00:00"
+          },
+          {
+            "price": 15.920000076293945,
+            "kind": "swing high",
+            "formed_at": "2024-12-06T00:00:00+00:00",
+            "known_at": "2024-12-20T00:00:00+00:00"
+          },
+          {
+            "price": 13.625,
+            "kind": "swing high",
+            "formed_at": "2025-01-24T00:00:00+00:00",
+            "known_at": "2025-02-07T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 28.93000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 33.34000015258789,
+            "kind": "swing low",
+            "formed_at": "2025-12-19T00:00:00+00:00",
+            "known_at": "2026-01-02T00:00:00+00:00"
+          },
+          {
+            "price": 36.52000045776367,
+            "kind": "swing low",
+            "formed_at": "2026-02-06T00:00:00+00:00",
+            "known_at": "2026-02-20T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 70.70700073242188,
+        "prior_low": 28.93000030517578,
+        "volume_ratio": 1.6990659062153026,
+        "swing_high": 49.369998931884766,
+        "swing_low": 34.810001373291016
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Wait for a daily close above 28.93, then a later retest that holds. Alternatively, watch 26.55 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:17:38.024099+00:00"
+  },
+  "CRWV": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": [
+      60.58111428695138,
+      62.74955578058078
+    ],
+    "stop": 56.30566854165325,
+    "targets": [
+      68.51000213623047,
+      78.2699966430664,
+      83.2300033569336
+    ],
+    "rr_to_resistance": 0.8577585399082747,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 68.51, the next observed hurdles are 78.27, 83.23.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "The first resistance offers less than 1.5 times the risk after assumed costs.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 61.834999084472656,
+        "atr": 1.0894567773373574,
+        "support": [
+          {
+            "price": 61.650001525878906,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T18:30:00+00:00",
+            "known_at": "2026-10-20T19:00:00+00:00"
+          },
+          {
+            "price": 61.29999923706055,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T17:15:00+00:00",
+            "known_at": "2026-10-16T17:45:00+00:00"
+          },
+          {
+            "price": 60.15999984741211,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T19:45:00+00:00",
+            "known_at": "2026-10-19T13:45:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 61.869998931884766,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T15:45:00+00:00",
+            "known_at": "2026-10-20T16:15:00+00:00"
+          },
+          {
+            "price": 62.20000076293945,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-16T18:00:00+00:00"
+          },
+          {
+            "price": 62.619998931884766,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:15:00+00:00",
+            "known_at": "2026-10-19T19:45:00+00:00"
+          }
+        ],
+        "prior_high": 64.58000183105469,
+        "prior_low": 59.310001373291016,
+        "volume_ratio": 0.7788260482502882,
+        "swing_high": 64.58000183105469,
+        "swing_low": 59.310001373291016
+      },
+      "1H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 61.27000045776367,
+        "atr": 2.210207965388655,
+        "support": [
+          {
+            "price": 59.900001525878906,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T18:30:00+00:00",
+            "known_at": "2026-10-19T13:30:00+00:00"
+          },
+          {
+            "price": 57.23500061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 64.38999938964844,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T16:30:00+00:00"
+          },
+          {
+            "price": 65.87000274658203,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T15:30:00+00:00"
+          },
+          {
+            "price": 69.76000213623047,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T19:30:00+00:00",
+            "known_at": "2026-10-16T14:30:00+00:00"
+          }
+        ],
+        "prior_high": 65.87000274658203,
+        "prior_low": 57.23500061035156,
+        "volume_ratio": 2.214608869891125,
+        "swing_high": 64.38999938964844,
+        "swing_low": 57.23500061035156
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 62.125,
+        "atr": 4.0164988358816895,
+        "support": [
+          {
+            "price": 59.5099983215332,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          },
+          {
+            "price": 57.23500061035156,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 65.87000274658203,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          },
+          {
+            "price": 69.76000213623047,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T17:30:00+00:00",
+            "known_at": "2026-10-16T17:30:00+00:00"
+          },
+          {
+            "price": 78.2699966430664,
+            "kind": "swing low",
+            "formed_at": "2026-09-17T13:30:00+00:00",
+            "known_at": "2026-09-18T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 93.20500183105469,
+        "prior_low": 57.23500061035156,
+        "volume_ratio": 0.5469673580224345,
+        "swing_high": 65.87000274658203,
+        "swing_low": 59.5099983215332
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 62.130001068115234,
+        "atr": 6.195547124655415,
+        "support": [
+          {
+            "price": 60.54999923706055,
+            "kind": "swing low",
+            "formed_at": "2026-07-29T04:00:00+00:00",
+            "known_at": "2026-07-31T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 68.51000213623047,
+            "kind": "swing low",
+            "formed_at": "2026-07-17T04:00:00+00:00",
+            "known_at": "2026-07-21T04:00:00+00:00"
+          },
+          {
+            "price": 78.2699966430664,
+            "kind": "swing low",
+            "formed_at": "2026-09-17T04:00:00+00:00",
+            "known_at": "2026-09-21T04:00:00+00:00"
+          },
+          {
+            "price": 83.2300033569336,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T04:00:00+00:00",
+            "known_at": "2026-08-26T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 93.20999908447266,
+        "prior_low": 59.25,
+        "volume_ratio": 2.2025399319500916,
+        "swing_high": 93.20999908447266,
+        "swing_low": 84.5
+      },
+      "1W": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 61.38999938964844,
+        "atr": 17.096582059456836,
+        "support": [
+          {
+            "price": 60.54999923706055,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 33.51499938964844,
+            "kind": "swing low",
+            "formed_at": "2025-04-25T00:00:00+00:00",
+            "known_at": "2025-05-09T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 63.79999923706055,
+            "kind": "swing low",
+            "formed_at": "2025-12-19T00:00:00+00:00",
+            "known_at": "2026-01-02T00:00:00+00:00"
+          },
+          {
+            "price": 70.37000274658203,
+            "kind": "swing low",
+            "formed_at": "2026-03-06T00:00:00+00:00",
+            "known_at": "2026-03-20T00:00:00+00:00"
+          },
+          {
+            "price": 78.2699966430664,
+            "kind": "swing low",
+            "formed_at": "2026-09-18T00:00:00+00:00",
+            "known_at": "2026-10-02T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 132.14999389648438,
+        "prior_low": 60.54999923706055,
+        "volume_ratio": 2.8367862095742047,
+        "swing_high": 104.58999633789062,
+        "swing_low": 78.2699966430664
+      }
+    },
+    "setup_status": "SUPPORT REJECTION \u2014 FILTERS NOT MET",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Only reassess inside 60.58\u201362.75. Above 62.75, do not chase this plan. Below 56.31, this long thesis fails.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:18:28.553690+00:00"
+  },
+  "NBIS": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": [
+      167.25218480685677,
+      173.12912180479634
+    ],
+    "stop": 157.73131271516877,
+    "targets": [
+      180.63099670410156,
+      192.6699981689453,
+      200.3000030517578
+    ],
+    "rr_to_resistance": 0.4544960653585029,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 180.63, the next observed hurdles are 192.67, 200.30.",
+      "downside": "If a daily close loses 164.31, the next observed floors are 145.80.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "The first resistance offers less than 1.5 times the risk after assumed costs.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 172.9698944091797,
+        "atr": 2.722827750735124,
+        "support": [
+          {
+            "price": 171.05099487304688,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T15:15:00+00:00",
+            "known_at": "2026-10-16T15:45:00+00:00"
+          },
+          {
+            "price": 169.60000610351562,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T17:30:00+00:00",
+            "known_at": "2026-10-16T18:00:00+00:00"
+          },
+          {
+            "price": 168.8000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T16:15:00+00:00",
+            "known_at": "2026-10-20T16:45:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 173.44000244140625,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          },
+          {
+            "price": 174.74000549316406,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:45:00+00:00",
+            "known_at": "2026-10-20T15:15:00+00:00"
+          },
+          {
+            "price": 176.64700317382812,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T14:00:00+00:00"
+          }
+        ],
+        "prior_high": 178.85000610351562,
+        "prior_low": 164.0,
+        "volume_ratio": 0.4381013858950385,
+        "swing_high": 178.85000610351562,
+        "swing_low": 164.0
+      },
+      "1H": {
+        "state": "REJECTED AT RESISTANCE",
+        "explanation": "Traded above the prior high but closed back below it.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 171.20030212402344,
+        "atr": 5.245237282440721,
+        "support": [
+          {
+            "price": 163.36000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-15T15:30:00+00:00"
+          },
+          {
+            "price": 160.27999877929688,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 174.74000549316406,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T16:30:00+00:00"
+          },
+          {
+            "price": 176.64700317382812,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T15:30:00+00:00"
+          },
+          {
+            "price": 178.0500030517578,
+            "kind": "prior 20-bar high",
+            "formed_at": "2026-10-20T19:30:00+00:00",
+            "known_at": "2026-10-20T19:30:00+00:00"
+          }
+        ],
+        "prior_high": 178.0500030517578,
+        "prior_low": 160.27999877929688,
+        "volume_ratio": 2.538012415959305,
+        "swing_high": 174.74000549316406,
+        "swing_low": 160.27999877929688
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 171.50999450683594,
+        "atr": 10.25627301256646,
+        "support": [
+          {
+            "price": 163.36000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          },
+          {
+            "price": 160.27999877929688,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 189.3300018310547,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T17:30:00+00:00",
+            "known_at": "2026-10-16T17:30:00+00:00"
+          },
+          {
+            "price": 194.8000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T13:30:00+00:00",
+            "known_at": "2026-09-02T13:30:00+00:00"
+          },
+          {
+            "price": 201.89059448242188,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T13:30:00+00:00",
+            "known_at": "2026-08-25T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 255.08200073242188,
+        "prior_low": 160.27999877929688,
+        "volume_ratio": 0.400749731669995,
+        "swing_high": 189.3300018310547,
+        "swing_low": 163.27000427246094
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 171.4499969482422,
+        "atr": 16.791248565541608,
+        "support": [
+          {
+            "price": 164.30999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-07-17T04:00:00+00:00",
+            "known_at": "2026-07-21T04:00:00+00:00"
+          },
+          {
+            "price": 145.8000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-07-29T04:00:00+00:00",
+            "known_at": "2026-07-31T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 180.63099670410156,
+            "kind": "swing low",
+            "formed_at": "2026-08-07T04:00:00+00:00",
+            "known_at": "2026-08-11T04:00:00+00:00"
+          },
+          {
+            "price": 192.6699981689453,
+            "kind": "swing low",
+            "formed_at": "2026-07-08T04:00:00+00:00",
+            "known_at": "2026-07-10T04:00:00+00:00"
+          },
+          {
+            "price": 200.3000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-06-09T04:00:00+00:00",
+            "known_at": "2026-06-11T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 255.10000610351562,
+        "prior_low": 163.27000427246094,
+        "volume_ratio": 1.1394995385922664,
+        "swing_high": 255.10000610351562,
+        "swing_low": 228.47000122070312
+      },
+      "1W": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 165.47000122070312,
+        "atr": 41.92430025205128,
+        "support": [
+          {
+            "price": 145.8000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 134.92999267578125,
+            "kind": "swing high",
+            "formed_at": "2025-11-07T00:00:00+00:00",
+            "known_at": "2025-11-21T00:00:00+00:00"
+          },
+          {
+            "price": 110.5,
+            "kind": "swing high",
+            "formed_at": "2026-01-16T00:00:00+00:00",
+            "known_at": "2026-01-30T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 168.7100067138672,
+            "kind": "swing high",
+            "formed_at": "2026-04-17T00:00:00+00:00",
+            "known_at": "2026-05-01T00:00:00+00:00"
+          },
+          {
+            "price": 194.8000030517578,
+            "kind": "swing low",
+            "formed_at": "2026-09-04T00:00:00+00:00",
+            "known_at": "2026-09-18T00:00:00+00:00"
+          },
+          {
+            "price": 230.3000030517578,
+            "kind": "swing high",
+            "formed_at": "2026-07-24T00:00:00+00:00",
+            "known_at": "2026-08-07T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 299.8599853515625,
+        "prior_low": 145.8000030517578,
+        "volume_ratio": 1.599618568973041,
+        "swing_high": 254.74000549316406,
+        "swing_low": 194.8000030517578
+      }
+    },
+    "setup_status": "SUPPORT REJECTION \u2014 FILTERS NOT MET",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Only reassess inside 167.25\u2013173.13. Above 173.13, do not chase this plan. Below 157.73, this long thesis fails.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:18:31.595519+00:00"
+  },
+  "USAR": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": [
+      9.852386232365292,
+      10.143046094517262
+    ],
+    "stop": 9.595431754677964,
+    "targets": [
+      12.930000305175781,
+      14.8149995803833,
+      16.450000762939453
+    ],
+    "rr_to_resistance": 4.8717485714669415,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 12.93, the next observed hurdles are 14.81, 16.45.",
+      "downside": "No lower confirmed swing floor is available in this lookback.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+      "Confirmation volume is missing or below its prior 20-bar average.",
+      "The weekly structure is falling; this bounce conflicts with it.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 10.145000457763672,
+        "atr": 0.09503488173811772,
+        "support": [
+          {
+            "price": 10.09000015258789,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T15:30:00+00:00",
+            "known_at": "2026-10-20T16:00:00+00:00"
+          },
+          {
+            "price": 10.050000190734863,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T16:15:00+00:00",
+            "known_at": "2026-10-20T16:45:00+00:00"
+          },
+          {
+            "price": 10.020000457763672,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T19:30:00+00:00",
+            "known_at": "2026-10-21T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 10.149999618530273,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T18:00:00+00:00",
+            "known_at": "2026-10-20T18:30:00+00:00"
+          },
+          {
+            "price": 10.1899995803833,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T16:30:00+00:00",
+            "known_at": "2026-10-20T17:00:00+00:00"
+          },
+          {
+            "price": 10.234999656677246,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T19:15:00+00:00",
+            "known_at": "2026-10-19T19:45:00+00:00"
+          }
+        ],
+        "prior_high": 10.350000381469727,
+        "prior_low": 10.010100364685059,
+        "volume_ratio": 0.990786183856593,
+        "swing_high": 10.350000381469727,
+        "swing_low": 10.020000457763672
+      },
+      "1H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 10.181400299072266,
+        "atr": 0.21157478145523398,
+        "support": [
+          {
+            "price": 10.079999923706055,
+            "kind": "swing low",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T15:30:00+00:00"
+          },
+          {
+            "price": 9.819999694824219,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-15T15:30:00+00:00"
+          },
+          {
+            "price": 9.720000267028809,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 10.789999961853027,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T13:30:00+00:00",
+            "known_at": "2026-10-19T15:30:00+00:00"
+          },
+          {
+            "price": 10.90999984741211,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T14:30:00+00:00",
+            "known_at": "2026-10-15T16:30:00+00:00"
+          },
+          {
+            "price": 11.220000267028809,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T14:30:00+00:00",
+            "known_at": "2026-10-16T16:30:00+00:00"
+          }
+        ],
+        "prior_high": 11.220000267028809,
+        "prior_low": 9.720000267028809,
+        "volume_ratio": 1.8605400100191183,
+        "swing_high": 10.789999961853027,
+        "swing_low": 9.720000267028809
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 10.050000190734863,
+        "atr": 0.4705025901301196,
+        "support": [
+          {
+            "price": 9.819999694824219,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-16T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 11.220000267028809,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T13:30:00+00:00",
+            "known_at": "2026-10-19T13:30:00+00:00"
+          },
+          {
+            "price": 12.789999961853027,
+            "kind": "swing high",
+            "formed_at": "2026-10-09T17:30:00+00:00",
+            "known_at": "2026-10-12T17:30:00+00:00"
+          },
+          {
+            "price": 13.279999732971191,
+            "kind": "swing low",
+            "formed_at": "2026-10-05T13:30:00+00:00",
+            "known_at": "2026-10-06T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 14.010000228881836,
+        "prior_low": 9.720000267028809,
+        "volume_ratio": 0.30573303168014315,
+        "swing_high": 11.220000267028809,
+        "swing_low": 9.819999694824219
+      },
+      "1D": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 10.0600004196167,
+        "atr": 0.8304567490056296,
+        "support": [
+          {
+            "price": 9.819999694824219,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 12.930000305175781,
+            "kind": "swing low",
+            "formed_at": "2026-07-29T04:00:00+00:00",
+            "known_at": "2026-07-31T04:00:00+00:00"
+          },
+          {
+            "price": 14.8149995803833,
+            "kind": "swing low",
+            "formed_at": "2026-07-20T04:00:00+00:00",
+            "known_at": "2026-07-22T04:00:00+00:00"
+          },
+          {
+            "price": 16.450000762939453,
+            "kind": "swing high",
+            "formed_at": "2026-07-22T04:00:00+00:00",
+            "known_at": "2026-07-24T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 17.100000381469727,
+        "prior_low": 9.819999694824219,
+        "volume_ratio": 0.7022885205953657,
+        "swing_high": 17.100000381469727,
+        "swing_low": 9.819999694824219
+      },
+      "1W": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 10.539999961853027,
+        "atr": 3.257847634587736,
+        "support": [
+          {
+            "price": 9.319999694824219,
+            "kind": "swing low",
+            "formed_at": "2025-07-11T00:00:00+00:00",
+            "known_at": "2025-07-25T00:00:00+00:00"
+          },
+          {
+            "price": 8.0,
+            "kind": "swing low",
+            "formed_at": "2025-05-30T00:00:00+00:00",
+            "known_at": "2025-06-13T00:00:00+00:00"
+          },
+          {
+            "price": 5.559999942779541,
+            "kind": "swing low",
+            "formed_at": "2025-03-28T00:00:00+00:00",
+            "known_at": "2025-04-11T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 11.449999809265137,
+            "kind": "swing low",
+            "formed_at": "2025-11-28T00:00:00+00:00",
+            "known_at": "2025-12-12T00:00:00+00:00"
+          },
+          {
+            "price": 12.399999618530273,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-09T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          },
+          {
+            "price": 13.329999923706055,
+            "kind": "swing low",
+            "formed_at": "2025-09-12T00:00:00+00:00",
+            "known_at": "2025-09-26T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 32.79999923706055,
+        "prior_low": 12.399999618530273,
+        "volume_ratio": 1.291026187700569,
+        "swing_high": 20.520000457763672,
+        "swing_low": 12.930000305175781
+      }
+    },
+    "setup_status": "SUPPORT REJECTION \u2014 FILTERS NOT MET",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+    "next_action": "Only reassess inside 9.85\u201310.14. Above 10.14, do not chase this plan. Below 9.60, this long thesis fails.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:18:34.377048+00:00"
+  },
+  "AXTI": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "MIXED",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 57.62, the next observed hurdles are 61.86, 64.00.",
+      "downside": "If a daily close loses 56.90, the next observed floors are 53.36, 50.57.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swings do not establish a consistent direction.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 58.5,
+        "atr": 0.9589831275527534,
+        "support": [
+          {
+            "price": 58.416500091552734,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T19:45:00+00:00",
+            "known_at": "2026-10-16T13:45:00+00:00"
+          },
+          {
+            "price": 58.09000015258789,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:45:00+00:00",
+            "known_at": "2026-10-20T15:15:00+00:00"
+          },
+          {
+            "price": 57.70000076293945,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T16:30:00+00:00",
+            "known_at": "2026-10-20T17:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 59.43000030517578,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T16:15:00+00:00",
+            "known_at": "2026-10-19T16:45:00+00:00"
+          },
+          {
+            "price": 61.19990158081055,
+            "kind": "swing high",
+            "formed_at": "2026-10-21T13:30:00+00:00",
+            "known_at": "2026-10-21T14:00:00+00:00"
+          }
+        ],
+        "prior_high": 61.19990158081055,
+        "prior_low": 56.779998779296875,
+        "volume_ratio": 0.8143712371407441,
+        "swing_high": 61.19990158081055,
+        "swing_low": 56.93000030517578
+      },
+      "1H": {
+        "state": "REJECTED AT RESISTANCE",
+        "explanation": "Traded above the prior high but closed back below it.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 58.26539993286133,
+        "atr": 1.9969871276757531,
+        "support": [
+          {
+            "price": 58.09000015258789,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T14:30:00+00:00",
+            "known_at": "2026-10-20T16:30:00+00:00"
+          },
+          {
+            "price": 54.59000015258789,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T16:30:00+00:00",
+            "known_at": "2026-10-15T18:30:00+00:00"
+          },
+          {
+            "price": 53.310001373291016,
+            "kind": "swing low",
+            "formed_at": "2026-10-15T13:30:00+00:00",
+            "known_at": "2026-10-15T15:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 58.416500091552734,
+            "kind": "swing high",
+            "formed_at": "2026-10-15T19:30:00+00:00",
+            "known_at": "2026-10-16T14:30:00+00:00"
+          },
+          {
+            "price": 59.43000030517578,
+            "kind": "swing high",
+            "formed_at": "2026-10-19T15:30:00+00:00",
+            "known_at": "2026-10-19T17:30:00+00:00"
+          },
+          {
+            "price": 60.099998474121094,
+            "kind": "swing low",
+            "formed_at": "2026-10-13T13:30:00+00:00",
+            "known_at": "2026-10-13T15:30:00+00:00"
+          }
+        ],
+        "prior_high": 59.43000030517578,
+        "prior_low": 50.56999969482422,
+        "volume_ratio": 1.9446715482569565,
+        "swing_high": 58.09000015258789,
+        "swing_low": 51.5099983215332
+      },
+      "4H": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 57.09000015258789,
+        "atr": 4.042257758460638,
+        "support": [
+          {
+            "price": 56.900001525878906,
+            "kind": "swing low",
+            "formed_at": "2026-09-14T17:30:00+00:00",
+            "known_at": "2026-09-15T17:30:00+00:00"
+          },
+          {
+            "price": 54.79999923706055,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T13:30:00+00:00",
+            "known_at": "2026-09-02T13:30:00+00:00"
+          },
+          {
+            "price": 52.7599983215332,
+            "kind": "swing low",
+            "formed_at": "2026-09-03T13:30:00+00:00",
+            "known_at": "2026-09-04T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 58.5,
+            "kind": "swing low",
+            "formed_at": "2026-08-28T17:30:00+00:00",
+            "known_at": "2026-08-31T17:30:00+00:00"
+          },
+          {
+            "price": 59.900001525878906,
+            "kind": "swing high",
+            "formed_at": "2026-09-02T13:30:00+00:00",
+            "known_at": "2026-09-03T13:30:00+00:00"
+          },
+          {
+            "price": 61.86000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T13:30:00+00:00",
+            "known_at": "2026-08-25T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 86.75,
+        "prior_low": 50.56999969482422,
+        "volume_ratio": 0.2964568565971766,
+        "swing_high": 59.43000030517578,
+        "swing_low": 50.56999969482422
+      },
+      "1D": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 57.09000015258789,
+        "atr": 6.797013313969288,
+        "support": [
+          {
+            "price": 56.900001525878906,
+            "kind": "swing low",
+            "formed_at": "2026-09-14T04:00:00+00:00",
+            "known_at": "2026-09-16T04:00:00+00:00"
+          },
+          {
+            "price": 53.36000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-07-02T04:00:00+00:00",
+            "known_at": "2026-07-07T04:00:00+00:00"
+          },
+          {
+            "price": 50.56999969482422,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-19T04:00:00+00:00",
+            "known_at": "2026-10-19T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 57.619998931884766,
+            "kind": "swing high",
+            "formed_at": "2026-07-23T04:00:00+00:00",
+            "known_at": "2026-07-27T04:00:00+00:00"
+          },
+          {
+            "price": 61.86000061035156,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T04:00:00+00:00",
+            "known_at": "2026-08-26T04:00:00+00:00"
+          },
+          {
+            "price": 64.0,
+            "kind": "swing low",
+            "formed_at": "2026-06-25T04:00:00+00:00",
+            "known_at": "2026-06-29T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 88.36000061035156,
+        "prior_low": 50.56999969482422,
+        "volume_ratio": 1.0093561380413052,
+        "swing_high": 88.36000061035156,
+        "swing_low": 69.5999984741211
+      },
+      "1W": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 51.470001220703125,
+        "atr": 19.440066347948047,
+        "support": [
+          {
+            "price": 39.70000076293945,
+            "kind": "swing low",
+            "formed_at": "2026-04-10T00:00:00+00:00",
+            "known_at": "2026-04-24T00:00:00+00:00"
+          },
+          {
+            "price": 26.65999984741211,
+            "kind": "swing high",
+            "formed_at": "2026-01-16T00:00:00+00:00",
+            "known_at": "2026-01-30T00:00:00+00:00"
+          },
+          {
+            "price": 15.850000381469727,
+            "kind": "swing low",
+            "formed_at": "2026-01-30T00:00:00+00:00",
+            "known_at": "2026-02-13T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 52.7599983215332,
+            "kind": "swing low",
+            "formed_at": "2026-09-04T00:00:00+00:00",
+            "known_at": "2026-09-18T00:00:00+00:00"
+          },
+          {
+            "price": 97.79000091552734,
+            "kind": "swing high",
+            "formed_at": "2026-08-21T00:00:00+00:00",
+            "known_at": "2026-09-04T00:00:00+00:00"
+          },
+          {
+            "price": 143.16000366210938,
+            "kind": "swing high",
+            "formed_at": "2026-05-29T00:00:00+00:00",
+            "known_at": "2026-06-12T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 143.16000366210938,
+        "prior_low": 36.72999954223633,
+        "volume_ratio": 1.1880948963511717,
+        "swing_high": 97.79000091552734,
+        "swing_low": 52.7599983215332
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swings do not establish a consistent direction.",
+    "next_action": "Wait for a daily close above 57.62, then a later retest that holds. Alternatively, watch 56.90 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:19:25.235180+00:00"
+  },
+  "GOOG": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "MIXED",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 337.45, the next observed hurdles are 339.82, 343.63.",
+      "downside": "If a daily close loses 336.17, the next observed floors are 333.69, 329.29.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swings do not establish a consistent direction.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 328.67498779296875,
+        "atr": 1.4975471250955457,
+        "support": [
+          {
+            "price": 326.260009765625,
+            "kind": "swing low",
+            "formed_at": "2026-10-21T14:00:00+00:00",
+            "known_at": "2026-10-21T14:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 335.5,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T19:00:00+00:00",
+            "known_at": "2026-10-16T19:30:00+00:00"
+          },
+          {
+            "price": 336.3999938964844,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T19:45:00+00:00",
+            "known_at": "2026-10-21T13:45:00+00:00"
+          },
+          {
+            "price": 336.9317932128906,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T16:45:00+00:00",
+            "known_at": "2026-10-20T17:15:00+00:00"
+          }
+        ],
+        "prior_high": 338.0,
+        "prior_low": 326.260009765625,
+        "volume_ratio": 0.5825555967240474,
+        "swing_high": 336.3999938964844,
+        "swing_low": 326.260009765625
+      },
+      "1H": {
+        "state": "BREAKDOWN",
+        "explanation": "Closed below the prior range; the broken floor is the first recovery hurdle.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 327.54998779296875,
+        "atr": 2.859211242386696,
+        "support": [],
+        "resistance": [
+          {
+            "price": 332.6499938964844,
+            "kind": "swing low",
+            "formed_at": "2026-10-01T16:30:00+00:00",
+            "known_at": "2026-10-01T18:30:00+00:00"
+          },
+          {
+            "price": 334.55999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-10-01T19:30:00+00:00",
+            "known_at": "2026-10-02T14:30:00+00:00"
+          },
+          {
+            "price": 335.5,
+            "kind": "swing low",
+            "formed_at": "2026-10-16T18:30:00+00:00",
+            "known_at": "2026-10-19T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 343.3299865722656,
+        "prior_low": 334.6000061035156,
+        "volume_ratio": 6.997305251382007,
+        "swing_high": 341.9200134277344,
+        "swing_low": 337.1199951171875
+      },
+      "4H": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 336.3699951171875,
+        "atr": 5.023994010114891,
+        "support": [
+          {
+            "price": 336.1700134277344,
+            "kind": "swing low",
+            "formed_at": "2026-08-20T13:30:00+00:00",
+            "known_at": "2026-08-21T13:30:00+00:00"
+          },
+          {
+            "price": 332.80999755859375,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T13:30:00+00:00",
+            "known_at": "2026-09-25T13:30:00+00:00"
+          },
+          {
+            "price": 329.2900085449219,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T13:30:00+00:00",
+            "known_at": "2026-09-02T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 336.4700012207031,
+            "kind": "swing high",
+            "formed_at": "2026-09-08T17:30:00+00:00",
+            "known_at": "2026-09-09T17:30:00+00:00"
+          },
+          {
+            "price": 339.82000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-08-12T13:30:00+00:00",
+            "known_at": "2026-08-13T13:30:00+00:00"
+          },
+          {
+            "price": 343.510009765625,
+            "kind": "swing low",
+            "formed_at": "2026-10-08T17:30:00+00:00",
+            "known_at": "2026-10-09T17:30:00+00:00"
+          }
+        ],
+        "prior_high": 355.25,
+        "prior_low": 335.5,
+        "volume_ratio": 0.7510820528272215,
+        "swing_high": 355.25,
+        "swing_low": 335.5
+      },
+      "1D": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 336.3999938964844,
+        "atr": 8.31549729177521,
+        "support": [
+          {
+            "price": 336.1700134277344,
+            "kind": "swing low",
+            "formed_at": "2026-08-20T04:00:00+00:00",
+            "known_at": "2026-08-24T04:00:00+00:00"
+          },
+          {
+            "price": 333.69000244140625,
+            "kind": "swing low",
+            "formed_at": "2026-06-26T04:00:00+00:00",
+            "known_at": "2026-06-30T04:00:00+00:00"
+          },
+          {
+            "price": 329.2900085449219,
+            "kind": "swing low",
+            "formed_at": "2026-09-01T04:00:00+00:00",
+            "known_at": "2026-09-03T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 337.45001220703125,
+            "kind": "swing low",
+            "formed_at": "2026-09-16T04:00:00+00:00",
+            "known_at": "2026-09-18T04:00:00+00:00"
+          },
+          {
+            "price": 339.82000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-08-12T04:00:00+00:00",
+            "known_at": "2026-08-14T04:00:00+00:00"
+          },
+          {
+            "price": 343.6300048828125,
+            "kind": "swing low",
+            "formed_at": "2026-06-11T04:00:00+00:00",
+            "known_at": "2026-06-15T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 359.9800109863281,
+        "prior_low": 332.6499938964844,
+        "volume_ratio": 0.9221794564894528,
+        "swing_high": 355.25,
+        "swing_low": 332.6499938964844
+      },
+      "1W": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 336.9100036621094,
+        "atr": 21.26554473450038,
+        "support": [
+          {
+            "price": 333.69000244140625,
+            "kind": "swing low",
+            "formed_at": "2026-06-26T00:00:00+00:00",
+            "known_at": "2026-07-10T00:00:00+00:00"
+          },
+          {
+            "price": 325.6300048828125,
+            "kind": "swing low",
+            "formed_at": "2026-09-11T00:00:00+00:00",
+            "known_at": "2026-09-25T00:00:00+00:00"
+          },
+          {
+            "price": 314.8900146484375,
+            "kind": "swing low",
+            "formed_at": "2026-07-24T00:00:00+00:00",
+            "known_at": "2026-08-07T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 350.1499938964844,
+            "kind": "swing high",
+            "formed_at": "2026-02-06T00:00:00+00:00",
+            "known_at": "2026-02-20T00:00:00+00:00"
+          },
+          {
+            "price": 359.9800109863281,
+            "kind": "swing high",
+            "formed_at": "2026-09-25T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          },
+          {
+            "price": 374.3500061035156,
+            "kind": "swing high",
+            "formed_at": "2026-07-17T00:00:00+00:00",
+            "known_at": "2026-07-31T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 390.0,
+        "prior_low": 314.8900146484375,
+        "volume_ratio": 0.8250214475703935,
+        "swing_high": 359.9800109863281,
+        "swing_low": 325.6300048828125
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swings do not establish a consistent direction.",
+    "next_action": "Wait for a daily close above 337.45, then a later retest that holds. Alternatively, watch 336.17 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:20:15.779386+00:00"
+  },
+  "UBER": {
+    "model_version": "structure-plan-v1",
+    "classification": "WAIT",
+    "bias": "UP",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 69.24, the next observed hurdles are 69.97, 71.24.",
+      "downside": "If a daily close loses 68.69, the next observed floors are 68.00, 67.22.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swing highs and lows are rising.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 68.44000244140625,
+        "atr": 0.2889305219258385,
+        "support": [
+          {
+            "price": 68.4000015258789,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T13:30:00+00:00",
+            "known_at": "2026-10-20T14:00:00+00:00"
+          },
+          {
+            "price": 68.21299743652344,
+            "kind": "swing low",
+            "formed_at": "2026-10-21T14:00:00+00:00",
+            "known_at": "2026-10-21T14:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 68.62000274658203,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T16:30:00+00:00",
+            "known_at": "2026-10-20T17:00:00+00:00"
+          },
+          {
+            "price": 68.76000213623047,
+            "kind": "swing low",
+            "formed_at": "2026-10-20T18:30:00+00:00",
+            "known_at": "2026-10-20T19:00:00+00:00"
+          },
+          {
+            "price": 69.17829895019531,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T18:00:00+00:00",
+            "known_at": "2026-10-20T18:30:00+00:00"
+          }
+        ],
+        "prior_high": 69.2300033569336,
+        "prior_low": 68.21299743652344,
+        "volume_ratio": 0.8531410766200112,
+        "swing_high": 69.2300033569336,
+        "swing_low": 68.21299743652344
+      },
+      "1H": {
+        "state": "RECOVERY ATTEMPT",
+        "explanation": "Undercut the prior low and recovered it by the close; a bottom is not yet confirmed.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 68.58000183105469,
+        "atr": 0.5416383721637821,
+        "support": [
+          {
+            "price": 68.47000122070312,
+            "kind": "swing high",
+            "formed_at": "2026-10-02T13:30:00+00:00",
+            "known_at": "2026-10-02T15:30:00+00:00"
+          },
+          {
+            "price": 68.26499938964844,
+            "kind": "swing low",
+            "formed_at": "2026-10-07T14:30:00+00:00",
+            "known_at": "2026-10-07T16:30:00+00:00"
+          },
+          {
+            "price": 68.1050033569336,
+            "kind": "swing high",
+            "formed_at": "2026-10-01T17:30:00+00:00",
+            "known_at": "2026-10-01T19:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 68.62000274658203,
+            "kind": "swing low",
+            "formed_at": "2026-10-14T14:30:00+00:00",
+            "known_at": "2026-10-14T16:30:00+00:00"
+          },
+          {
+            "price": 68.76000213623047,
+            "kind": "swing low",
+            "formed_at": "2026-10-06T17:30:00+00:00",
+            "known_at": "2026-10-06T19:30:00+00:00"
+          },
+          {
+            "price": 69.17829895019531,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T17:30:00+00:00",
+            "known_at": "2026-10-20T19:30:00+00:00"
+          }
+        ],
+        "prior_high": 71.29000091552734,
+        "prior_low": 68.4000015258789,
+        "volume_ratio": 2.020735182039899,
+        "swing_high": 69.17829895019531,
+        "swing_low": 68.62000274658203
+      },
+      "4H": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 68.927001953125,
+        "atr": 1.1046828009538918,
+        "support": [
+          {
+            "price": 68.62000274658203,
+            "kind": "swing low",
+            "formed_at": "2026-10-14T13:30:00+00:00",
+            "known_at": "2026-10-15T13:30:00+00:00"
+          },
+          {
+            "price": 68.0,
+            "kind": "swing low",
+            "formed_at": "2026-10-08T13:30:00+00:00",
+            "known_at": "2026-10-09T13:30:00+00:00"
+          },
+          {
+            "price": 67.22000122070312,
+            "kind": "swing low",
+            "formed_at": "2026-10-02T13:30:00+00:00",
+            "known_at": "2026-10-05T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 69.23999786376953,
+            "kind": "swing low",
+            "formed_at": "2026-09-10T13:30:00+00:00",
+            "known_at": "2026-09-11T13:30:00+00:00"
+          },
+          {
+            "price": 69.66999816894531,
+            "kind": "swing high",
+            "formed_at": "2026-09-25T17:30:00+00:00",
+            "known_at": "2026-09-28T17:30:00+00:00"
+          },
+          {
+            "price": 69.97000122070312,
+            "kind": "swing high",
+            "formed_at": "2026-09-30T13:30:00+00:00",
+            "known_at": "2026-10-01T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 72.08000183105469,
+        "prior_low": 68.0,
+        "volume_ratio": 0.851658396228514,
+        "swing_high": 71.86000061035156,
+        "swing_low": 69.7249984741211
+      },
+      "1D": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 68.94000244140625,
+        "atr": 1.799701599928348,
+        "support": [
+          {
+            "price": 68.69000244140625,
+            "kind": "swing low",
+            "formed_at": "2026-07-30T04:00:00+00:00",
+            "known_at": "2026-08-03T04:00:00+00:00"
+          },
+          {
+            "price": 68.0,
+            "kind": "swing low",
+            "formed_at": "2026-10-08T04:00:00+00:00",
+            "known_at": "2026-10-12T04:00:00+00:00"
+          },
+          {
+            "price": 67.22000122070312,
+            "kind": "swing low",
+            "formed_at": "2026-10-02T04:00:00+00:00",
+            "known_at": "2026-10-06T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 69.23999786376953,
+            "kind": "swing low",
+            "formed_at": "2026-09-10T04:00:00+00:00",
+            "known_at": "2026-09-14T04:00:00+00:00"
+          },
+          {
+            "price": 69.97000122070312,
+            "kind": "swing high",
+            "formed_at": "2026-09-30T04:00:00+00:00",
+            "known_at": "2026-10-02T04:00:00+00:00"
+          },
+          {
+            "price": 71.23999786376953,
+            "kind": "swing low",
+            "formed_at": "2026-07-14T04:00:00+00:00",
+            "known_at": "2026-07-16T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 72.08000183105469,
+        "prior_low": 67.22000122070312,
+        "volume_ratio": 1.0175804341047014,
+        "swing_high": 72.08000183105469,
+        "swing_low": 68.62000274658203
+      },
+      "1W": {
+        "state": "RANGE / TRANSITION",
+        "explanation": "Confirmed swings do not establish a consistent direction.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 70.3499984741211,
+        "atr": 4.996042698729615,
+        "support": [
+          {
+            "price": 69.36000061035156,
+            "kind": "swing low",
+            "formed_at": "2025-03-14T00:00:00+00:00",
+            "known_at": "2025-03-28T00:00:00+00:00"
+          },
+          {
+            "price": 67.19000244140625,
+            "kind": "swing low",
+            "formed_at": "2026-06-12T00:00:00+00:00",
+            "known_at": "2026-06-26T00:00:00+00:00"
+          },
+          {
+            "price": 65.41000366210938,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 77.58399963378906,
+            "kind": "swing high",
+            "formed_at": "2025-03-28T00:00:00+00:00",
+            "known_at": "2025-04-11T00:00:00+00:00"
+          },
+          {
+            "price": 79.2300033569336,
+            "kind": "swing high",
+            "formed_at": "2026-03-20T00:00:00+00:00",
+            "known_at": "2026-04-03T00:00:00+00:00"
+          },
+          {
+            "price": 80.83000183105469,
+            "kind": "swing high",
+            "formed_at": "2026-05-08T00:00:00+00:00",
+            "known_at": "2026-05-22T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 82.36499786376953,
+        "prior_low": 65.41000366210938,
+        "volume_ratio": 0.743709149717134,
+        "swing_high": 82.36499786376953,
+        "swing_low": 65.41000366210938
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swing highs and lows are rising.",
+    "next_action": "Wait for a daily close above 69.24, then a later retest that holds. Alternatively, watch 68.69 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:21:06.265978+00:00"
+  },
+  "RY.TO": {
+    "model_version": "structure-plan-v1",
+    "classification": "AVOID",
+    "bias": "DOWN",
+    "grade": "INSUFFICIENT VALIDATION",
+    "entry_zone": null,
+    "stop": null,
+    "targets": [],
+    "rr_to_resistance": null,
+    "ranges": {},
+    "scenarios": {
+      "upside": "If price clears and holds 280.30, the next observed hurdles are 286.16, 288.40.",
+      "downside": "If a daily close loses 280.16, the next observed floors are 277.51, 272.85.",
+      "timing": "These are conditional paths, not arrival-date forecasts. Review the next daily close and cancel any untriggered plan after 5 sessions."
+    },
+    "reasons": [
+      "Confirmed swing highs and lows are falling.",
+      "Use as a closed-bar plan; a recent executable price has not been verified."
+    ],
+    "timeframes": {
+      "15M": {
+        "state": "BREAKOUT ATTEMPT",
+        "explanation": "Closed above the prior range. A later hold or retest is still needed.",
+        "asof": "2026-10-21T15:00:00+00:00",
+        "close": 283.20001220703125,
+        "atr": 0.7837428514044639,
+        "support": [
+          {
+            "price": 283.0799865722656,
+            "kind": "swing high",
+            "formed_at": "2026-10-21T13:45:00+00:00",
+            "known_at": "2026-10-21T14:15:00+00:00"
+          },
+          {
+            "price": 281.7900085449219,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T13:45:00+00:00",
+            "known_at": "2026-10-16T14:15:00+00:00"
+          },
+          {
+            "price": 280.79998779296875,
+            "kind": "swing high",
+            "formed_at": "2026-10-20T18:45:00+00:00",
+            "known_at": "2026-10-20T19:15:00+00:00"
+          }
+        ],
+        "resistance": [],
+        "prior_high": 283.0799865722656,
+        "prior_low": 278.92999267578125,
+        "volume_ratio": 1.0173710676141794,
+        "swing_high": 283.0799865722656,
+        "swing_low": 281.6499938964844
+      },
+      "1H": {
+        "state": "BREAKOUT ATTEMPT",
+        "explanation": "Closed above the prior range. A later hold or retest is still needed.",
+        "asof": "2026-10-21T13:30:00+00:00",
+        "close": 282.1499938964844,
+        "atr": 1.4524950257586788,
+        "support": [
+          {
+            "price": 281.7900085449219,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T13:30:00+00:00",
+            "known_at": "2026-10-16T15:30:00+00:00"
+          },
+          {
+            "price": 280.29998779296875,
+            "kind": "swing high",
+            "formed_at": "2026-10-06T15:30:00+00:00",
+            "known_at": "2026-10-06T17:30:00+00:00"
+          },
+          {
+            "price": 279.6300048828125,
+            "kind": "swing high",
+            "formed_at": "2026-10-06T18:30:00+00:00",
+            "known_at": "2026-10-07T13:30:00+00:00"
+          }
+        ],
+        "resistance": [],
+        "prior_high": 281.70001220703125,
+        "prior_low": 276.04998779296875,
+        "volume_ratio": 1.2009892542660527,
+        "swing_high": 280.0799865722656,
+        "swing_low": 276.04998779296875
+      },
+      "4H": {
+        "state": "RISING",
+        "explanation": "Confirmed swing highs and lows are rising.",
+        "asof": "2026-10-20T17:30:00+00:00",
+        "close": 280.0199890136719,
+        "atr": 2.5645297371854436,
+        "support": [
+          {
+            "price": 279.7099914550781,
+            "kind": "swing low",
+            "formed_at": "2026-08-27T13:30:00+00:00",
+            "known_at": "2026-08-28T13:30:00+00:00"
+          },
+          {
+            "price": 277.9700012207031,
+            "kind": "swing high",
+            "formed_at": "2026-10-13T17:30:00+00:00",
+            "known_at": "2026-10-14T17:30:00+00:00"
+          },
+          {
+            "price": 276.9200134277344,
+            "kind": "swing low",
+            "formed_at": "2026-10-05T13:30:00+00:00",
+            "known_at": "2026-10-06T13:30:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 280.1600036621094,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T13:30:00+00:00",
+            "known_at": "2026-09-25T13:30:00+00:00"
+          },
+          {
+            "price": 280.82000732421875,
+            "kind": "swing low",
+            "formed_at": "2026-09-16T17:30:00+00:00",
+            "known_at": "2026-09-17T17:30:00+00:00"
+          },
+          {
+            "price": 281.7900085449219,
+            "kind": "swing high",
+            "formed_at": "2026-10-16T13:30:00+00:00",
+            "known_at": "2026-10-19T13:30:00+00:00"
+          }
+        ],
+        "prior_high": 281.7900085449219,
+        "prior_low": 268.9599914550781,
+        "volume_ratio": 1.2503027406236875,
+        "swing_high": 281.7900085449219,
+        "swing_low": 273.8500061035156
+      },
+      "1D": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-20T04:00:00+00:00",
+        "close": 280.1700134277344,
+        "atr": 4.100321232092784,
+        "support": [
+          {
+            "price": 280.1600036621094,
+            "kind": "swing low",
+            "formed_at": "2026-09-24T04:00:00+00:00",
+            "known_at": "2026-09-28T04:00:00+00:00"
+          },
+          {
+            "price": 277.510009765625,
+            "kind": "swing low",
+            "formed_at": "2026-08-24T04:00:00+00:00",
+            "known_at": "2026-08-26T04:00:00+00:00"
+          },
+          {
+            "price": 272.8500061035156,
+            "kind": "swing low",
+            "formed_at": "2026-10-01T04:00:00+00:00",
+            "known_at": "2026-10-05T04:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 280.29998779296875,
+            "kind": "swing high",
+            "formed_at": "2026-10-06T04:00:00+00:00",
+            "known_at": "2026-10-08T04:00:00+00:00"
+          },
+          {
+            "price": 286.1600036621094,
+            "kind": "swing low",
+            "formed_at": "2026-06-26T04:00:00+00:00",
+            "known_at": "2026-06-30T04:00:00+00:00"
+          },
+          {
+            "price": 288.3999938964844,
+            "kind": "swing high",
+            "formed_at": "2026-09-11T04:00:00+00:00",
+            "known_at": "2026-09-15T04:00:00+00:00"
+          }
+        ],
+        "prior_high": 290.55999755859375,
+        "prior_low": 268.9599914550781,
+        "volume_ratio": 1.4647959340529537,
+        "swing_high": 280.29998779296875,
+        "swing_low": 268.9599914550781
+      },
+      "1W": {
+        "state": "FALLING",
+        "explanation": "Confirmed swing highs and lows are falling.",
+        "asof": "2026-10-16T00:00:00+00:00",
+        "close": 280.010009765625,
+        "atr": 10.040240443149655,
+        "support": [
+          {
+            "price": 277.510009765625,
+            "kind": "swing low",
+            "formed_at": "2026-08-28T00:00:00+00:00",
+            "known_at": "2026-09-11T00:00:00+00:00"
+          },
+          {
+            "price": 257.6000061035156,
+            "kind": "prior 20-bar low",
+            "formed_at": "2026-10-09T00:00:00+00:00",
+            "known_at": "2026-10-09T00:00:00+00:00"
+          },
+          {
+            "price": 240.33999633789062,
+            "kind": "swing high",
+            "formed_at": "2026-01-09T00:00:00+00:00",
+            "known_at": "2026-01-23T00:00:00+00:00"
+          }
+        ],
+        "resistance": [
+          {
+            "price": 289.1700134277344,
+            "kind": "swing low",
+            "formed_at": "2026-07-31T00:00:00+00:00",
+            "known_at": "2026-08-14T00:00:00+00:00"
+          },
+          {
+            "price": 302.3500061035156,
+            "kind": "swing high",
+            "formed_at": "2026-08-21T00:00:00+00:00",
+            "known_at": "2026-09-04T00:00:00+00:00"
+          },
+          {
+            "price": 306.3800048828125,
+            "kind": "swing high",
+            "formed_at": "2026-07-17T00:00:00+00:00",
+            "known_at": "2026-07-31T00:00:00+00:00"
+          }
+        ],
+        "prior_high": 306.3800048828125,
+        "prior_low": 257.6000061035156,
+        "volume_ratio": 1.060054959824355,
+        "swing_high": 290.55999755859375,
+        "swing_low": 277.510009765625
+      }
+    },
+    "setup_status": "NO CONFIRMED SETUP",
+    "candidate": false,
+    "probability": null,
+    "review_horizon": "Review after the next daily close; reassess after 5 sessions.",
+    "validation": "Fixed chart rules; independent forecasting accuracy is not established.",
+    "summary": "Confirmed swing highs and lows are falling.",
+    "next_action": "Wait for a daily close above 280.30, then a later retest that holds. Alternatively, watch 280.16 for a bullish rejection confirmed by a daily close.",
+    "archive_reanalysis": true,
+    "based_on_date": "2026-10-20",
+    "history_scope": "Re-analysis of at most 100 already-published completed candles per timeframe; not a frozen forward forecast.",
+    "source_retrieved_at": "2026-10-21T15:21:56.794097+00:00"
+  }
+}

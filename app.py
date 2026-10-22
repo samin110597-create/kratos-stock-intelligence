@@ -63,7 +63,7 @@ def result_view(r):
     source_time = r.snapshot.retrieved_at.astimezone(ET).strftime("%Y-%m-%d %I:%M:%S %p %Z")
     cards=[("RULE RESULT",dec["classification"]),("LAST DAILY CLOSE",money(t["close"])),
            ("DAILY RSI",money(t["rsi"])), ("ATR / DAY",money(t["atr"])),
-           ("D / W TREND",f"{t['trends']['1D']} / {t['trends']['1W']}"),
+           ("D / W MOVING AVERAGES",f"{t['trends']['1D']} / {t['trends']['1W']}"),
            ("DATA FRESHNESS",fresh["status"].split(" — ")[0])]
     blocks = "".join(f'<div class="kpi"><div class="k">{esc(k)}</div><div class="v">{esc(v)}</div></div>' for k,v in cards)
     header = f'<div class="kr-title">KRATOS / {esc(r.snapshot.ticker)}</div><div class="kr-sub">{esc(r.snapshot.provider)} · Fetch: {esc(source_time)} · Last closed/available daily bar: {esc(t["asof_bar_date"])} · Minute bar: {esc(fresh["last_bar"] or "unavailable")}</div><div class="kpi-grid">{blocks}</div>'
@@ -73,13 +73,13 @@ def result_view(r):
     ts = ", ".join(money(x) for x in dec["targets"]) if dec["targets"] else "Unavailable"
     rr = f"{dec['rr_to_resistance']:.2f}R" if finite(dec["rr_to_resistance"]) else "n/a"
     summary=(f"### {dec['classification']} — {dec['bias']} context\n"
-             f"**Provisional rule grade:** {dec['grade']}\n\n"
-             f"**Illustrative entry zone:** {zone} · **Invalidation reference:** {money(dec['stop'])} · **1.5R / 2.5R / 4R targets:** {ts}\n\n"
-             f"**Room to 60-day supply:** {rr}\n\n"
+             f"{dec.get('summary','')}\n\n{dec.get('next_action','')}\n\n"
+             f"**Illustrative entry zone:** {zone} · **Invalidation reference:** {money(dec['stop'])} · **Observed chart targets:** {ts}\n\n"
+             f"**Room to first resistance after assumed costs:** {rr}\n\n"
              f"{reasons}\n\n"
              f"> The price levels are computed from daily bars, not executable limit orders. No entry recommendation when data is stale or market closed. No probabilities or proven edge are claimed.")
     technical=("### Confirmed-bar technical report\n\n"
-               "| Timeframe | Trend |\n|---|---|\n" + "\n".join(f"| {key} | {label} |" for key,label in t["trends"].items())+
+               "| Timeframe | Price structure | What it means |\n|---|---|---|\n" + "\n".join(f"| {key} | {item['state']} | {item['explanation']} |" for key,item in dec["timeframes"].items())+
                "\n\n" + f"**20-day support:** {money(t['support20'])} · **20-day resistance:** {money(t['resistance20'])} · **60-day high:** {money(t['resistance60'])}\n\n"+
                f"**52-week range:** {money(t['low52w'])} – {money(t['high52w'])} · **EMA20:** {money(t['ema20'])} · **EMA50:** {money(t['ema50'])}\n\n"+
                f"**Relative daily volume:** {money(t['volume_ratio'])}× 20-day average.\n\n"
@@ -102,13 +102,8 @@ def result_view(r):
     facts = "| Fundamental fact | Reported value |\n|---|---|\n" + "\n".join(f"| {k} | {v} |" for k,v in r.facts)
     fundamentals = ("### Fundamentals — from data provider\n\n" + facts + "\n\n**Valuation:** " + r.valuation_note +
                     "\n\nAmounts and currency follow the provider and must be independently verified against filings. Data may be delayed or missing.")
-    ranges = dec["ranges"]
-    bands = "\n".join(f"| {h} trading sessions | {money(v['lower'])} – {money(v['upper'])} |" for h,v in ranges.items())
-    outlook=("### Conditional projection (not a probability forecast)\n\n"
-             "| Horizon | ATR-based sensitivity envelope |\n|---|---|\n"+bands+"\n\n"
-             "Formula: last daily close ± ATR(14) × √(trading sessions). These are **heuristic sensitivity ranges, not 68%, 95%, or statistically calibrated prediction intervals.**\n\n"
-             "The directional hypothesis is **"+dec['bias']+"**, based only on explicit daily/weekly rules; no price trajectory or timing certainty is implied.\n\n"
-             "Click **Record forecast** to store fixed 5- and 20-session predictions before the outcome.")
+    outlook="### Conditional price paths\n\n"+"\n\n".join(f"**{name.title()}:** {text}" for name,text in dec.get('scenarios',{}).items())
+    outlook+="\n\n"+dec.get('review_horizon','')+" No calibrated arrival date or probability is claimed."
     warnings = "\n".join(f"- {w}" for w in r.snapshot.warnings) or "- None reported (does not guarantee data quality)."
     quality=(f"### Data quality and limitations\n\n**Reported minute-bar age:** {fresh['age_minutes']} min · **Status:** {fresh['status']}\n\n"
              f"**Provider errors:**\n{warnings}\n\n"
