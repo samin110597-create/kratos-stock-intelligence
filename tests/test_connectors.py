@@ -64,3 +64,18 @@ def test_daily_account_adapter_preserves_missing_intraday(monkeypatch):
     monkeypatch.setattr('kratos.account_provider.Connectors.fetch',lambda *a,**k:{'payload':{'Time Series (Daily)':history},'retrieved_at_utc':'2026-10-21T16:00:00+00:00'})
     r=AlphaDailyProvider().fetch('NVDA')
     assert len(r.daily)==100 and r.minute.empty and r.hourly.empty and r.quote=={}
+
+
+@pytest.mark.parametrize("failure,expected", [
+    (httpx.ReadTimeout("SECRET_VALUE in request URL"), "request timed out"),
+    (httpx.ConnectError("SECRET_VALUE in request URL"), "network transport failure"),
+    (ValueError("SECRET_VALUE in response"), "invalid JSON response"),
+])
+def test_transport_diagnostics_redact_details(tmp_path,monkeypatch,failure,expected):
+    def handler(request):
+        raise failure
+    c=client(tmp_path,monkeypatch,handler)
+    with pytest.raises(ConnectorError) as error:
+        c.fetch('finnhub')
+    assert expected in str(error.value)
+    assert 'SECRET_VALUE' not in str(error.value)

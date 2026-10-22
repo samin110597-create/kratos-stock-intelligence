@@ -77,7 +77,14 @@ class Connectors:
             if response.status_code!=200: raise ConnectorError(f'{name}: HTTP {response.status_code}; no data substituted')
             payload=response.json()
         except ConnectorError: raise
-        except Exception: raise ConnectorError(name+': transport/response failure') from None
+        except httpx.TimeoutException:
+            raise ConnectorError(name+': request timed out; no data substituted') from None
+        except httpx.RequestError:
+            raise ConnectorError(name+': network transport failure; no data substituted') from None
+        except (ValueError, UnicodeError):
+            raise ConnectorError(name+': invalid JSON response; no data substituted') from None
+        except Exception:
+            raise ConnectorError(name+': unexpected response failure; no data substituted') from None
         if not payload or (isinstance(payload,dict) and any(k in payload for k in ('Error Message','Information','Note','error','error_message'))):
             raise ConnectorError(name+': unavailable, rate-limited or not entitled')
         validate_payload(name,payload)
