@@ -21,13 +21,14 @@ function freshness(x,now=Date.now()){
 function classification(x){return (x.technical_plan||x.decision)?.classification==='AVOID'?'AVOID':'WAIT'}
 function tickerButtons(){const symbols=Object.keys(state.feed.tickers).filter(k=>!state.feed.tickers[k].error);el('tickers').innerHTML=symbols.map(s=>'<option value="'+esc(s)+'"></option>').join('');el('chips').innerHTML=symbols.map(s=>'<button class="chip" data-symbol="'+esc(s)+'">'+esc(s)+'</button>').join('');document.querySelectorAll('[data-symbol]').forEach(b=>b.onclick=()=>selectTicker(b.dataset.symbol));}
 function notify(message,bad=false){el('status').className='notice '+(bad?'warn':'');el('status').textContent=message;}
-async function fetchJSON(url,timeout=120000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok)throw Error(data.detail||'HTTP '+r.status);return data}finally{clearTimeout(timer)}}
+async function fetchJSON(url,timeout=180000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok)throw Error(data.detail||'HTTP '+r.status);return data}finally{clearTimeout(timer)}}
 function apiBase(){return state.config.same_origin_api?'':state.config.api_url?.replace(/\/$/,'')}
 async function selectTicker(raw,fetchNew=true){
  const id=++state.request;let t=String(raw||'').trim().toUpperCase();if(t.startsWith('TSX:'))t=t.slice(4)+'.TO';t=t.replace(/^(NYSE|NASDAQ):/,'');
  if(!/^[A-Z0-9^][A-Z0-9.^=_-]{0,19}$/.test(t)){notify('Enter a valid US or Canadian symbol, such as NVDA or RY.TO.',true);return}
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
- if(enabled&&fetchNew){el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Fetching '+t+' from the Python analysis service…');
+ if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. It is stored in your Render service under Environment → KRATOS_ACCESS_TOKEN.',true);el('access-token')?.focus();return;}
+ if(enabled&&fetchNew){el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
   try{const response=await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t));if(id!==state.request)return;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}

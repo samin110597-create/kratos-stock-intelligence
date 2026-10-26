@@ -84,7 +84,9 @@ def build_technicals(daily: pd.DataFrame, hourly: pd.DataFrame, *, quarter=None,
     d = indicators(daily)
     week = only_closed_weekly(resample_ohlcv(normalize_daily_index(daily), "W-FRI"), now=now, symbol=symbol)
     dates = set(normalize_daily_index(daily).index.normalize())
-    week = week.loc[[all(day in dates for day in schedule(symbol, stamp-pd.Timedelta(days=4), stamp).index) for stamp in week.index]]
+    if not week.empty:
+        sessions = schedule(symbol, week.index.min()-pd.Timedelta(days=4), week.index.max())
+        week = week.loc[[all(day in dates for day in sessions.loc[stamp-pd.Timedelta(days=4):stamp].index) for stamp in week.index]]
     four = aggregate_intraday(hourly, 240, 60, now, symbol)
     quarter = closed_bars(quarter, '15min', now, symbol) if quarter is not None else pd.DataFrame()
     last = d.iloc[-1]

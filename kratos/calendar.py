@@ -98,9 +98,10 @@ def aggregate_intraday(frame, minutes, source_minutes, now, symbol='SPY'):
 def weekly_closed(frame, now, symbol='SPY'):
     if frame.empty: return frame.copy()
     cutoff=utc(now); keep=[]
-    for stamp in frame.index:
-        label=stamp.tz_convert(ET) if stamp.tzinfo else stamp
-        friday=pd.Timestamp(label.date())
-        sched=schedule(symbol,friday-pd.Timedelta(days=4),friday)
+    local=frame.index.tz_convert(ET) if frame.index.tz is not None else frame.index
+    fridays=pd.DatetimeIndex([pd.Timestamp(stamp.date()) for stamp in local])
+    sessions=schedule(symbol,fridays.min()-pd.Timedelta(days=4),fridays.max())
+    for friday in fridays:
+        sched=sessions.loc[friday-pd.Timedelta(days=4):friday]
         keep.append(not sched.empty and sched.iloc[-1].market_close <= cutoff)
     return frame.loc[keep].copy()
