@@ -6,12 +6,18 @@ disk, worker or scheduled task was created. This service was created directly;
 `render.yaml` remains a reproducible template, not an attached Blueprint.
 
 The GitHub Pages interface calls `https://kratos-personal-research.onrender.com`.
-The same interface is also served directly at that address. A service-specific
-access token protects personal-use data. The token is stored in Render's
-Environment settings as `KRATOS_ACCESS_TOKEN`; copy it into the password field
-in the interface. It is sent as an Authorization header, kept only in page
-memory, and never embedded in a public link, source file or GitHub Pages config.
-Provider API keys never belong in this field.
+The same interface is also served directly at that address. At the owner's
+request, `KRATOS_PUBLIC_ANALYSIS=true` permits on-demand ticker analysis without
+a visitor token. This setting opens only `/api/analyze`; it does not grant
+access to raw provider endpoints, provider diagnostics, or private historical
+research. Those endpoints still require `KRATOS_ACCESS_TOKEN`.
+
+Provider keys stay on the server. Requests remain rate-limited, analysis
+concurrency is bounded, and API responses use `Cache-Control: no-store`.
+This configuration does not confer redistribution or commercial data rights;
+the application remains for personal research and retains source limitations.
+Set `KRATOS_PUBLIC_ANALYSIS=false` and restore the Pages config's
+`personal_access_required` flag to require a visitor token again.
 
 The free server can sleep. Allow up to three minutes for a cold start plus an
 analysis. Unsupported tickers and provider failures remain explicit errors.

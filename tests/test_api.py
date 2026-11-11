@@ -54,3 +54,20 @@ def test_hosted_personal_feed_requires_auth(monkeypatch):
     c=TestClient(server.app)
     assert c.get('/api/providers').status_code==401
     assert c.get('/api/providers',headers={'Authorization':'Bearer private-test'}).status_code==200
+
+
+def test_explicit_public_analysis_does_not_unlock_private_endpoints(monkeypatch):
+    monkeypatch.setenv('KRATOS_BIND','0.0.0.0')
+    monkeypatch.setenv('KRATOS_ACCESS_TOKEN','private-test')
+    monkeypatch.setenv('KRATOS_PUBLIC_ANALYSIS','true')
+    with server.lock: server.requests.clear()
+    c=TestClient(server.app)
+    with patch('server.analyze',return_value=object()), patch('server.pack',return_value={'ticker':'AAPL'}):
+        assert c.get('/api/analyze?symbol=AAPL').status_code==200
+    assert not c.get('/config.json').json()['personal_access_required']
+    for path in ['/api/providers','/api/source/fmp?symbol=AAPL','/api/paths?symbol=AAPL']:
+        assert c.get(path).status_code==401
+    monkeypatch.setenv('KRATOS_PUBLIC_ANALYSIS','false')
+    assert c.get('/api/analyze?symbol=AAPL').status_code==401
+    assert c.get('/config.json').json()['personal_access_required']
+    with server.lock: server.requests.clear()

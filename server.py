@@ -40,6 +40,9 @@ async def headers(request,call_next):
         response.headers['Cache-Control']='no-store'
     return response
 
+def public_analysis_enabled():
+    return os.getenv('KRATOS_PUBLIC_ANALYSIS','false').strip().lower() == 'true'
+
 def personal_access(request):
     token=os.getenv('KRATOS_ACCESS_TOKEN','')
     if token:
@@ -87,7 +90,8 @@ def health():
 @app.get('/api/analyze')
 def analysis(request:Request,symbol:str):
     throttle(request)
-    personal_access(request)
+    if not public_analysis_enabled():
+        personal_access(request)
     try: ticker=valid_symbol(symbol);calendar_name(ticker)
     except ValueError as exc: raise HTTPException(422,str(exc)) from exc
     if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy. Try again shortly.',headers={'Retry-After':'15'})
@@ -103,7 +107,7 @@ def analysis(request:Request,symbol:str):
 
 @app.get('/config.json')
 def config():
-    return {'api_url':'','same_origin_api':True,'refresh_minutes':15,'personal_access_required':bool(os.getenv('KRATOS_ACCESS_TOKEN'))}
+    return {'api_url':'','same_origin_api':True,'refresh_minutes':15,'personal_access_required':not public_analysis_enabled() and bool(os.getenv('KRATOS_ACCESS_TOKEN')), 'private_research_available':not public_analysis_enabled()}
 
 app.mount('/',StaticFiles(directory=Path(__file__).parent/'site',html=True),name='dashboard')
 if __name__=='__main__':
