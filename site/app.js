@@ -140,7 +140,7 @@ function frameworkView(x){
  const record=state.frameworks?.tickers?.[state.ticker];
  const engine=record?.engines?.[state.tab];
  const reasons={openbb:'OpenBB is not integrated. Existing provider facts below are from Kratos, not OpenBB. Statement history and intrinsic value are unavailable.',tradingagents:'No actual AI committee is running. An authenticated AI model with verified cost and upstream TradingAgents integration is required.',lean:'The QuantConnect LEAN runtime and compatible data have not been installed or tested. No LEAN simulation is claimed.'};
- let out=card(names[state.tab]+' · Integration status',line('Upstream engine',engine?.status==='operational_historical'?'RUN COMPLETED · historical research':'NOT OPERATIONAL')+'<p>'+esc(engine?.reason||reasons[state.tab]||'No completed upstream run is available for this ticker.')+'</p>');
+ let out=card(names[state.tab]+' · Integration status',line('Upstream engine',engine?.status==='operational_historical'?'RUN COMPLETED · historical research':'NOT OPERATIONAL')+'<p>'+esc(engine?.status==='operational_historical'?'Executed with the actual upstream package on the archived dataset.':(engine?.reason||reasons[state.tab]||'No completed upstream run is available for this ticker.'))+'</p>');
  if(engine?.status==='operational_historical'){
   // Never silently attach an archived backtest to a newer live ticker response.
   if(record.source_retrieved_at_utc!==x.retrieved_at_utc||record.data_last_session!==x.last_closed_bar_date)return out+card('Different data version','<p>The saved experiment uses an older input dataset. It is not shown as a result of this new analysis.</p>');
