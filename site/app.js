@@ -1,5 +1,5 @@
 'use strict';
-const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,paths:{},request:0};
+const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,frameworks:null,paths:{},request:0};
 const el=id=>document.getElementById(id),esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>typeof v==='number'&&Number.isFinite(v);
 const val=(v,d=2)=>num(v)?v.toLocaleString('en-CA',{maximumFractionDigits:d}):'Unavailable';
@@ -21,22 +21,31 @@ function freshness(x,now=Date.now()){
 function classification(x){return (x.technical_plan||x.decision)?.classification==='AVOID'?'AVOID':'WAIT'}
 function tickerButtons(){const symbols=Object.keys(state.feed.tickers).filter(k=>!state.feed.tickers[k].error);el('tickers').innerHTML=symbols.map(s=>'<option value="'+esc(s)+'"></option>').join('');el('chips').innerHTML=symbols.map(s=>'<button class="chip" data-symbol="'+esc(s)+'">'+esc(s)+'</button>').join('');document.querySelectorAll('[data-symbol]').forEach(b=>b.onclick=()=>selectTicker(b.dataset.symbol));}
 function notify(message,bad=false){el('status').className='notice '+(bad?'warn':'');el('status').textContent=message;}
-async function fetchJSON(url,timeout=180000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok)throw Error(data.detail||'HTTP '+r.status);return data}finally{clearTimeout(timer)}}
+async function fetchJSON(url,timeout=180000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok){const e=Error(data.detail||'HTTP '+r.status);e.status=r.status;throw e}return data}finally{clearTimeout(timer)}}
+async function analyzeWithRetry(t,id){
+ for(let attempt=0;attempt<3;attempt++){
+  try{return await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t),60000)}
+  catch(e){if(id!==state.request||attempt===2||![undefined,502,503,504].includes(e.status))throw e;
+   notify('Backend or provider unavailable. Retrying '+t+' ('+(attempt+1)+'/2)…');
+   await new Promise(r=>setTimeout(r,3000*(attempt+1)));}
+ }
+}
 function apiBase(){return state.config.same_origin_api?'':state.config.api_url?.replace(/\/$/,'')}
 async function selectTicker(raw,fetchNew=true){
  const id=++state.request;let t=String(raw||'').trim().toUpperCase();if(t.startsWith('TSX:'))t=t.slice(4)+'.TO';t=t.replace(/^(NYSE|NASDAQ):/,'');
  if(!/^[A-Z0-9^][A-Z0-9.^=_-]{0,19}$/.test(t)){notify('Enter a valid US or Canadian symbol, such as NVDA or RY.TO.',true);return}
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
- if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. It is stored in your Render service under Environment → KRATOS_ACCESS_TOKEN.',true);el('access-token')?.focus();return;}
+ if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
  if(enabled&&fetchNew){el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
-  try{const response=await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t));if(id!==state.request)return;state.feed.tickers[t]=response.ticker;}
+  try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
  }
- const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':'This public site currently serves saved snapshots. The tested Python backend must be deployed to enable any-ticker requests here.';notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
+ const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':(state.config.hosting_reason||'On-demand backend unavailable. Only explicitly dated archived research is available.');notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
  state.ticker=t;el('dashboard').hidden=false;el('intro').hidden=true;render();
 }
 function render(){const x=state.feed.tickers[state.ticker];if(!x)return;const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
+ if(['openbb','qlib','tradingagents','vectorbt','lean'].includes(state.tab))out+=frameworkView(x);
  const legacy=x.analysis_version!=='rules-v2.0.0';
  notify(x.ticker+' · '+f.status+' · Minute bar opened: '+when(x.minute_bar_utc)+' · Retrieved: '+when(x.retrieved_at_utc)+' · '+x.provider, !f.live);
  el('kpis').innerHTML=stat('Latest reported minute price',m(x.quote?.price),'Minute bar close, potentially developing; not a live quote')+stat('Last completed daily close',m(x.price),x.last_closed_bar_date)+stat('Research decision',classification(x),'NO RELIABLE EDGE established')+stat('Daily price structure',d.timeframes?.['1D']?.state||'Unavailable','Weekly: '+(d.timeframes?.['1W']?.state||'Unavailable'));
@@ -115,13 +124,39 @@ function candles(data,zones,plan){const rows=data.filter(r=>['open','high','low'
  return '<svg class="chart" viewBox="0 0 710 260" role="img" aria-label="Closed '+esc(state.tf)+' OHLC candles">'+ticks+overlay+bars+levels+'<text x="40" y="255">'+esc(rows[0].time.slice(0,10))+'</text><text x="590" y="255">'+esc(rows.at(-1).time.slice(0,10))+'</text></svg>';
 }
 async function loadFeed(){const feed=await fetchJSON('./data/snapshots.json',20000);if(!feed?.tickers)throw Error('Invalid snapshot file');try{const plans=await fetchJSON('./data/plans.json',10000);for(const [symbol,p] of Object.entries(plans)){const x=feed.tickers[symbol];if(x&&p.based_on_date===x.last_closed_bar_date&&p.source_retrieved_at===x.retrieved_at_utc)x.technical_plan=p;}}catch{}for(const [symbol,current] of Object.entries(state.feed.tickers)){const incoming=feed.tickers[symbol];if(!incoming||Date.parse(current.retrieved_at_utc)>Date.parse(incoming.retrieved_at_utc))feed.tickers[symbol]=current;}state.feed=feed;tickerButtons();}
-async function boot(){fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
+async function boot(){fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.ticker)render()}).catch(()=>{});fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
  if(el('personal-access'))el('personal-access').hidden=!state.config.personal_access_required;
- el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':'Historical archive · Personal-data publication paused · Python hosting not connected';
+ el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':(state.config.hosting_reason||'Historical archive · Python hosting not connected');
  try{await loadFeed();const first=new URLSearchParams(location.search).get('ticker')||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error);if(first)await selectTicker(first,false);else notify('No valid published data available.',true)}catch(e){notify('Published data unavailable: '+e.message,true)}
 }
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;if(state.ticker)render()});
 el('search').onsubmit=e=>{e.preventDefault();selectTicker(el('ticker').value)};
-setInterval(async()=>{if(document.hidden)return;try{await loadFeed();if(state.ticker)render()}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
+setInterval(async()=>{if(document.hidden)return;try{if(state.ticker&&(state.config.same_origin_api||state.config.api_url))await selectTicker(state.ticker);else{await loadFeed();if(state.ticker)render()}}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
 setInterval(()=>{if(state.ticker&&!document.hidden)render()},60000);
 boot();
+
+function frameworkView(x){
+ const names={openbb:'OpenBB',qlib:'Microsoft Qlib',tradingagents:'TradingAgents',vectorbt:'VectorBT',lean:'QuantConnect LEAN'};
+ const record=state.frameworks?.tickers?.[state.ticker];
+ const engine=record?.engines?.[state.tab];
+ const reasons={openbb:'OpenBB is not integrated. Existing provider facts below are from Kratos, not OpenBB. Statement history and intrinsic value are unavailable.',tradingagents:'No actual AI committee is running. An authenticated AI model with verified cost and upstream TradingAgents integration is required.',lean:'The QuantConnect LEAN runtime and compatible data have not been installed or tested. No LEAN simulation is claimed.'};
+ let out=card(names[state.tab]+' · Integration status',line('Upstream engine',engine?.status==='operational_historical'?'RUN COMPLETED · historical research':'NOT OPERATIONAL')+'<p>'+esc(engine?.reason||reasons[state.tab]||'No completed upstream run is available for this ticker.')+'</p>');
+ if(engine?.status==='operational_historical'){
+  // Never silently attach an archived backtest to a newer live ticker response.
+  if(record.source_retrieved_at_utc!==x.retrieved_at_utc||record.data_last_session!==x.last_closed_bar_date)return out+card('Different data version','<p>The saved experiment uses an older input dataset. It is not shown as a result of this new analysis.</p>');
+  out+=card('Historical dataset · not today’s forecast',line('Data through',record.data_last_session)+line('Source',record.source)+line('Data retrieved',when(record.source_retrieved_at_utc))+line('Calculated',when(record.calculated_at_utc))+line('Framework version',engine.version)+'<p>'+esc(engine.method)+'</p><p class="hint">Input SHA-256: '+esc(record.input_sha256)+'</p>');
+  if(state.tab==='qlib')out+=card('Out-of-sample model comparison',line('Held-out sessions',engine.test_samples)+line('Qlib mean absolute return error',val(engine.return_mae*100,3)+' percentage points')+line('No-change baseline error',val(engine.no_change_mae*100,3)+' percentage points')+line('Improvement over no-change',val(engine.skill_vs_no_change*100,2)+'%')+line('Historical direction accuracy',val(engine.direction_accuracy*100,1)+'%')+'<p class="hint">Negative improvement means the model was worse than predicting no change. This small test does not establish a reliable trading edge.</p>');
+  if(state.tab==='vectorbt')out+=card('Measured historical strategy results',line('Net total return',val(engine.total_return*100,2)+'%')+line('Maximum drawdown',val(engine.max_drawdown*100,2)+'%')+line('Closed trades',engine.closed_trades)+line('Closed-trade win rate',num(engine.win_rate)?val(engine.win_rate*100,1)+'%':'No closed trades')+line('Costs per fill','0.10% fee + 0.05% slippage')+equityChart(engine.equity));
+  out+=card('Limits & reproducibility',(engine.limitations||[]).map(v=>'<p>'+esc(v)+'</p>').join('')+'<a href="./data/frameworks.json">Inspect predictions and calculation inputs</a> · <a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/framework-runs">Immutable run files</a>');
+ }
+ if(state.tab==='openbb')out+=card('Preserved Kratos financial facts',(x.fundamentals?.facts||[]).map(z=>line(z.label,z.value)).join('')||'<p>No financial facts available.</p>');
+ if(state.tab==='tradingagents')out+=card('Existing deterministic context · not AI debate','<p>'+esc((x.technical_plan||x.decision||{}).summary||'No summary available.')+'</p><p>News catalysts and bullish/bearish AI debate are unavailable.</p>');
+ if(state.tab==='vectorbt')out+=card('Kratos price structure · custom calculations',candles(x.technical?.candles?.['1D']||[],[],null)+'<p>Use Technicals for FVGs, RSI, volume and liquidity diagnostics. These custom calculations are separate from the upstream VectorBT backtest.</p>');
+ return out;
+}
+function equityChart(points){
+ if(!points?.length)return '';
+ const values=points.map(p=>p.value);const lo=Math.min(...values),hi=Math.max(...values),range=hi-lo||1;
+ const xy=points.map((p,i)=>(40+i*630/Math.max(1,points.length-1))+','+(215-(p.value-lo)/range*170)).join(' ');
+ return '<svg class="chart" viewBox="0 0 710 260" role="img" aria-label="Historical simulated portfolio value"><text x="20" y="22">Portfolio value · starting capital 10,000</text><polyline points="'+xy+'" fill="none" stroke="#73d9e5" stroke-width="2"/><text x="40" y="245">'+esc(points[0].time.slice(0,10))+'</text><text x="560" y="245">'+esc(points.at(-1).time.slice(0,10))+'</text></svg>';
+}

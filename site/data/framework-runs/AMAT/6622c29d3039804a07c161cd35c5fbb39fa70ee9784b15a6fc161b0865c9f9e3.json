@@ -1,0 +1,703 @@
+{
+  "symbol": "AMAT",
+  "source": "Yahoo Finance (unofficial yfinance feed)",
+  "source_retrieved_at_utc": "2026-10-21T15:15:06.171891+00:00",
+  "data_last_session": "2026-10-20",
+  "input_sha256": "d40c5812b3c02628472a767ce2d910b4178324d68519db6d3513bca9586d43a1",
+  "calculated_at_utc": "2026-11-12T21:19:55.781553+00:00",
+  "engines": {
+    "vectorbt": {
+      "status": "operational_historical",
+      "version": "0.28.2",
+      "method": "Fixed 10/30-day moving-average crossover; next-session open execution",
+      "total_return": -0.21737129323168528,
+      "max_drawdown": -0.25324216555177437,
+      "closed_trades": 1,
+      "win_rate": 0.0,
+      "equity": [
+        {
+          "time": "2026-05-29 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-01 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-02 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-03 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-04 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-05 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-08 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-09 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-10 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-11 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-12 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-15 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-16 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-17 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-18 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-22 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-23 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-24 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-25 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-26 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-29 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-06-30 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-01 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-02 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-06 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-07 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-08 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-09 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-10 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-13 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-14 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-15 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-16 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-17 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-20 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-21 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-22 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-23 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-24 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-27 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-28 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-29 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-30 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-07-31 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-03 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-04 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-05 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-06 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-07 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-10 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-11 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-12 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-13 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-14 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-17 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-18 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-19 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-20 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-21 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-24 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-25 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-26 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-27 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-28 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-08-31 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-01 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-02 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-03 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-04 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-08 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-09 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-10 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-11 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-14 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-15 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-16 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-17 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-18 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-21 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-22 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-23 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-24 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-25 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-28 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-29 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-09-30 04:00:00+00:00",
+          "value": 10000.0
+        },
+        {
+          "time": "2026-10-01 04:00:00+00:00",
+          "value": 10229.496528026482
+        },
+        {
+          "time": "2026-10-02 04:00:00+00:00",
+          "value": 10437.062549842734
+        },
+        {
+          "time": "2026-10-05 04:00:00+00:00",
+          "value": 10480.354817389949
+        },
+        {
+          "time": "2026-10-06 04:00:00+00:00",
+          "value": 10248.24381033835
+        },
+        {
+          "time": "2026-10-07 04:00:00+00:00",
+          "value": 10062.323332498867
+        },
+        {
+          "time": "2026-10-08 04:00:00+00:00",
+          "value": 9848.185794306888
+        },
+        {
+          "time": "2026-10-09 04:00:00+00:00",
+          "value": 9799.096413633033
+        },
+        {
+          "time": "2026-10-12 04:00:00+00:00",
+          "value": 9615.495016962941
+        },
+        {
+          "time": "2026-10-13 04:00:00+00:00",
+          "value": 8972.116904962211
+        },
+        {
+          "time": "2026-10-14 04:00:00+00:00",
+          "value": 8631.778178026765
+        },
+        {
+          "time": "2026-10-15 04:00:00+00:00",
+          "value": 8310.572460535635
+        },
+        {
+          "time": "2026-10-16 04:00:00+00:00",
+          "value": 7910.128127574889
+        },
+        {
+          "time": "2026-10-19 04:00:00+00:00",
+          "value": 7983.954767253475
+        },
+        {
+          "time": "2026-10-20 04:00:00+00:00",
+          "value": 7826.287067683147
+        }
+      ],
+      "assumptions": {
+        "initial_cash": 10000,
+        "fee_per_fill": 0.001,
+        "slippage_per_fill": 0.0005
+      },
+      "limitations": [
+        "Historical illustration, not an independently validated strategy.",
+        "Open positions marked to last close; hypothetical final exit cost not charged.",
+        "Raw vendor prices; dividends excluded, revisions and corporate actions can distort results.",
+        "Existing OB/FVG and liquidity diagnostics are custom Kratos code, not VectorBT features."
+      ]
+    },
+    "qlib": {
+      "status": "operational_historical",
+      "version": "0.9.7",
+      "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+      "test_samples": 40,
+      "return_mae": 0.025798948479970864,
+      "no_change_mae": 0.02284447949319005,
+      "skill_vs_no_change": -0.1293296696762798,
+      "direction_accuracy": 0.5,
+      "predictions": [
+        {
+          "asof": "2026-08-24T04:00:00",
+          "predicted_return": -0.00030992799761481345,
+          "actual_return": -0.00857100286160195,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-08-25T04:00:00",
+          "predicted_return": -0.0017268630140412468,
+          "actual_return": -0.0005832821729705451,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-08-26T04:00:00",
+          "predicted_return": -0.0034859518138701264,
+          "actual_return": 0.005419325356458282,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-08-27T04:00:00",
+          "predicted_return": -0.0038879604934302183,
+          "actual_return": -0.04289321782931166,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-08-28T04:00:00",
+          "predicted_return": -0.001357523215400832,
+          "actual_return": -0.007104638992998624,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-08-31T04:00:00",
+          "predicted_return": -0.00191743803344717,
+          "actual_return": -0.036082829067747624,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-09-01T04:00:00",
+          "predicted_return": -6.406462379754656e-05,
+          "actual_return": -0.0076723200217480025,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-09-02T04:00:00",
+          "predicted_return": 0.00021081274700368927,
+          "actual_return": -0.005815782152680193,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-09-03T04:00:00",
+          "predicted_return": 0.0007036279851932543,
+          "actual_return": 0.043128140292787,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-09-04T04:00:00",
+          "predicted_return": -0.004483884708322526,
+          "actual_return": 0.03976164462977261,
+          "training_last_feature_date": "2026-08-20T04:00:00"
+        },
+        {
+          "asof": "2026-09-08T04:00:00",
+          "predicted_return": -0.008969140672168505,
+          "actual_return": -0.008333514605209591,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-09T04:00:00",
+          "predicted_return": -0.010476585934089948,
+          "actual_return": -0.03165190603541157,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-10T04:00:00",
+          "predicted_return": -0.008695060775268292,
+          "actual_return": 0.005462391611211981,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-11T04:00:00",
+          "predicted_return": -0.009595404175065315,
+          "actual_return": -0.07071348653827747,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-14T04:00:00",
+          "predicted_return": -0.002279581178604497,
+          "actual_return": -0.007166210340582402,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-15T04:00:00",
+          "predicted_return": -0.00015220081171429378,
+          "actual_return": -0.013747437757496761,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-16T04:00:00",
+          "predicted_return": 0.00016046210933124555,
+          "actual_return": 0.004862990490458907,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-17T04:00:00",
+          "predicted_return": -0.0018778961006840362,
+          "actual_return": 0.06509346867521182,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-18T04:00:00",
+          "predicted_return": -0.0059436414296173724,
+          "actual_return": 0.04424496161706015,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-21T04:00:00",
+          "predicted_return": -0.013215079385612328,
+          "actual_return": 0.017706361781873126,
+          "training_last_feature_date": "2026-09-03T04:00:00"
+        },
+        {
+          "asof": "2026-09-22T04:00:00",
+          "predicted_return": -0.014368352996856803,
+          "actual_return": 0.004063864586334898,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-23T04:00:00",
+          "predicted_return": -0.01571733812293997,
+          "actual_return": -0.00027405219755127774,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-24T04:00:00",
+          "predicted_return": -0.015402244361256479,
+          "actual_return": 0.022667369530838144,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-25T04:00:00",
+          "predicted_return": -0.013028111312537897,
+          "actual_return": 0.003628886114690699,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-28T04:00:00",
+          "predicted_return": -0.010651161871119474,
+          "actual_return": 0.05187361223893028,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-29T04:00:00",
+          "predicted_return": -0.013407090883631092,
+          "actual_return": -0.0012304542309649058,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-09-30T04:00:00",
+          "predicted_return": -0.013119572798155996,
+          "actual_return": 0.0350424004439962,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-10-01T04:00:00",
+          "predicted_return": -0.01572673625253437,
+          "actual_return": 0.02029093232961854,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-10-02T04:00:00",
+          "predicted_return": -0.015835549770131577,
+          "actual_return": 0.004147936005985509,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-10-05T04:00:00",
+          "predicted_return": -0.0158389346544041,
+          "actual_return": -0.022147247025115946,
+          "training_last_feature_date": "2026-09-18T04:00:00"
+        },
+        {
+          "asof": "2026-10-06T04:00:00",
+          "predicted_return": -0.0034022967740599992,
+          "actual_return": -0.018141691521031955,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-07T04:00:00",
+          "predicted_return": -0.0025689195498334065,
+          "actual_return": -0.021281122770162475,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-08T04:00:00",
+          "predicted_return": -8.917669054248089e-05,
+          "actual_return": -0.004984611551726914,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-09T04:00:00",
+          "predicted_return": 0.0010873334922591954,
+          "actual_return": -0.018736563956515018,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-12T04:00:00",
+          "predicted_return": 0.001983429617356653,
+          "actual_return": -0.06691055539686008,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-13T04:00:00",
+          "predicted_return": 0.0036298465415014903,
+          "actual_return": -0.037932934951751984,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-14T04:00:00",
+          "predicted_return": 0.004638351808720722,
+          "actual_return": -0.03721199860172464,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-15T04:00:00",
+          "predicted_return": 0.005304690339881193,
+          "actual_return": -0.04818492767644289,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-16T04:00:00",
+          "predicted_return": 0.006912154875794488,
+          "actual_return": 0.00933317874096451,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        },
+        {
+          "asof": "2026-10-19T04:00:00",
+          "predicted_return": 0.0062294841714776025,
+          "actual_return": -0.01967992702552479,
+          "training_last_feature_date": "2026-10-02T04:00:00"
+        }
+      ],
+      "limitations": [
+        "Small single-symbol revised-data experiment, not production forecasting.",
+        "Features use completed bars only. No hyperparameter search or random split.",
+        "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
+        "No current forecast is issued from archived data."
+      ]
+    },
+    "openbb": {
+      "status": "unavailable",
+      "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+    },
+    "tradingagents": {
+      "status": "unavailable",
+      "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+    },
+    "lean": {
+      "status": "unavailable",
+      "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+    }
+  },
+  "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+}

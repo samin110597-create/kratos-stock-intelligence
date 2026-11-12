@@ -1,0 +1,3 @@
+-r requirements.txt
+vectorbt==0.28.2
+pyqlib==0.9.7

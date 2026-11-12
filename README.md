@@ -1,7 +1,8 @@
-> **2026-10-21 update:** [Free-data implementation and limits](docs/FREE_DATA_UPGRADE.md).
-> New public Yahoo snapshots are paused; existing public data is a dated archive.
-> The Python service supports protected personal analysis, private account connectors and target-before-stop experiments.
-> [Free Render deployment configuration](render.yaml) is prepared; hosting is not connected yet.
+> **2026-11-12 architecture update:** [Verified framework status and hosting blocker](docs/ARCHITECTURE_2026_11.md).
+> GitHub Pages remains the dated research fallback. Genuine Qlib and VectorBT historical
+> experiments are available in separate tabs. OpenBB, TradingAgents and LEAN are explicitly
+> unavailable. No live any-ticker backend has been deployed: the connected non-Pro Hugging
+> Face account cannot create a Docker Space without a paid plan. No paid service activated.
 
 # KRATOS Stock Intelligence — evidence-first research
 
@@ -100,7 +101,7 @@ refresh is 15 minutes, never every 30 seconds. Neither is a live-data guarantee.
 
 ## Honest limits
 
-Yahoo is the only operational data adapter. No licensed second source, verified
+Yahoo and the opt-in daily-only Alpha Vantage account adapter are implemented. No licensed second source, verified
 order flow, licensed options, filings/news engine, bank valuation, ETF holdings analysis,
 portfolio sizing or notifications is implemented. Short-history IPOs fail closed.
 The historical experiment uses revised single-symbol data, not a point-in-time
