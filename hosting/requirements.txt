@@ -1,0 +1,2 @@
+spaces>=0.40,<1
+transformers>=4.45,<5

@@ -18,6 +18,7 @@ with tempfile.TemporaryDirectory() as folder:
         shutil.copytree(ROOT/directory,dest/directory,ignore=shutil.ignore_patterns('__pycache__','*.pyc','.env','*.sqlite*'))
     for name in ('server.py','requirements.txt'):
         shutil.copy2(ROOT/name,dest/name)
+    (dest/'requirements.txt').write_text((ROOT/'requirements.txt').read_text()+'\n'+(ROOT/'hosting/requirements.txt').read_text())
     shutil.copy2(ROOT/'hosting/space_app.py',dest/'space_app.py')
     shutil.copy2(ROOT/'hosting/README.md',dest/'README.md')
     (dest/'SOURCE_REVISION').write_text(os.environ['GITHUB_SHA']+'\n')
