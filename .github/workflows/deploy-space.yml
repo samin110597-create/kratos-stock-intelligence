@@ -23,3 +23,5 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python scripts/deploy_space.py
+      - name: Test live service and on-demand tickers
+        run: python scripts/validate_space.py
