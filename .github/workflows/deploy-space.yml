@@ -1,0 +1,25 @@
+name: Deploy Hugging Face backend
+on:
+  push:
+    branches: [main]
+    paths: ['hosting/**', 'kratos/**', 'scripts/**', 'server.py', 'requirements.txt', '.github/workflows/deploy-space.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kratos-space-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install 'huggingface_hub>=0.34,<2'
+      - name: Publish to existing ZeroGPU Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/deploy_space.py
