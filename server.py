@@ -88,7 +88,7 @@ def health():
             'institutional_feeds':'unavailable'}
 
 @app.get('/api/analyze')
-def analysis(request:Request,symbol:str):
+def analysis(request:Request,symbol:str,require_fresh:bool=False):
     throttle(request)
     if not public_analysis_enabled():
         personal_access(request)
@@ -97,7 +97,18 @@ def analysis(request:Request,symbol:str):
     if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy. Try again shortly.',headers={'Retry-After':'15'})
     try:
         result=analyze(ticker)
-        return {'generated_at_utc':datetime.now(timezone.utc).isoformat(),'ticker':pack(ticker,result)}
+        payload=pack(ticker,result)
+        if require_fresh:
+            from kratos.calendar import session_state
+            current=datetime.now(timezone.utc)
+            session=session_state(ticker,current)
+            rows=payload['timeframe_report']['timeframes']
+            incomplete=any(z['freshness']!='LATEST_COMPLETED' for z in rows.values())
+            quote=result.snapshot.freshness(at=current)
+            if incomplete or (session['market_open'] and not quote.get('live_enough')):
+                return JSONResponse(status_code=409,content={'detail':'Fresh analysis unavailable: a required candle is missing or the market-hours price exceeds 15 minutes. No current levels issued.',
+                    'ticker_symbol':ticker,'timeframe_status':{k:{f:v.get(f) for f in ('freshness','bar_closed_at_utc','expected_close_utc')} for k,v in rows.items()}})
+        return {'generated_at_utc':datetime.now(timezone.utc).isoformat(),'ticker':payload}
     except (MarketDataError,ValueError) as exc:
         raise HTTPException(503,str(exc)[:240]) from exc
     except Exception as exc:

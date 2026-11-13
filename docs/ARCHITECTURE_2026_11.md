@@ -57,3 +57,21 @@ Financial API credentials remain server/Actions secrets; no values are published
 Remaining live acceptance checks require an eligible backend: NVDA, GOOG, RY.TO and
 an absent ticker such as AAPL must succeed against the deployed service. Local provider
 probes or mocked route tests are not substitutes for that acceptance check.
+
+## Fresh-only analysis revision
+
+- `/api/analyze?symbol=...&require_fresh=true` rejects with HTTP 409 when the
+  expected completed 1H, 4H, daily or weekly candle is missing, or the market-hours
+  minute price is older than 15 minutes. The default legacy API remains compatible;
+  the website explicitly requests strict freshness.
+- The main website withholds archived prices/levels by default. Users may explicitly
+  open the labeled archive. Four timeframe cards distinguish moving-average trend,
+  confirmed price structure, RSI, relative volume, support/resistance and close time.
+- Data-version hashes exclude retrieval timestamps. An unchanged provider response
+  is not presented as new market observations.
+- Free Gradio ZeroGPU Spaces are a potential alternative for eligible accounts
+  (verified email, account older than 30 days):
+  https://huggingface.co/docs/hub/spaces-zerogpu
+  This account's eligibility is not verified. Browser access to creation requires
+  sign-in; the connector has read-repos, not write-repos. Docker's paid-plan blocker
+  must not be generalized to every possible Hugging Face hosting mode.

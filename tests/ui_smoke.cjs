@@ -11,9 +11,13 @@ const w=dom.window; const errors=[];
 w.addEventListener('error',e=>errors.push(e.message));
 w.fetch=async url=>({ok:true,json:async()=>String(url).includes('config.json')?{same_origin_api:false}:String(url).includes('frameworks.json')?JSON.parse(fs.readFileSync('site/data/frameworks.json','utf8')):String(url).includes('research.json')?research:String(url).includes('plans.json')?JSON.parse(fs.readFileSync('site/data/plans.json','utf8')):structuredClone(feed)});
 w.AbortController=AbortController;
-w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state};');
+w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state,currentResult};');
 await new Promise(r=>setTimeout(r,50));
 assert.equal(w.document.getElementById('dashboard').hidden,false);
+assert(!w.document.getElementById('kpis').textContent.includes('220.17'));
+assert.match(w.document.getElementById('view').textContent,/No current analysis issued/);
+w.document.getElementById('archive-mode').checked=true;
+await w.__test.selectTicker('NVDA',false);
 let visited=0;
 for(const tab of w.document.querySelectorAll('.tab')){
  tab.click();if(['qlib','vectorbt'].includes(tab.dataset.tab)){assert.match(w.document.getElementById('view').textContent,/RUN COMPLETED/);assert(!w.document.getElementById('view').textContent.includes('No completed upstream run'));}if(['openbb','tradingagents','lean'].includes(tab.dataset.tab))assert.match(w.document.getElementById('view').textContent,/NOT OPERATIONAL/);if(tab.dataset.tab==='forecast'){assert.match(w.document.getElementById('view').textContent,/The price plan/);assert.match(w.document.getElementById('view').textContent,/Historical re-analysis/);assert(!w.document.getElementById('view').textContent.includes('ATR ×'));}assert.equal(tab.getAttribute('aria-selected'),'true');assert(w.document.getElementById('view').textContent.length>30);visited++;
@@ -29,10 +33,11 @@ assert.equal(future.live,false);
 // Hosted path: an arbitrary ticker must call the backend with the service token.
 w.__test.state.config={api_url:'https://backend.example.test',personal_access_required:true};
 let requested=0;
-w.fetch=async (url,options)=>{requested++;assert.equal(url,'https://backend.example.test/api/analyze?symbol=AAPL');assert.equal(options.headers.Authorization,'Bearer fixture-token');const x=structuredClone(feed.tickers.NVDA);x.ticker='AAPL';return {ok:true,json:async()=>({ticker:x})};};
+w.fetch=async (url,options)=>{requested++;assert.equal(url,'https://backend.example.test/api/analyze?symbol=AAPL&require_fresh=true');assert.equal(options.headers.Authorization,'Bearer fixture-token');const x=structuredClone(feed.tickers.NVDA);x.ticker='AAPL';return {ok:true,json:async()=>({ticker:x})};};
 await w.__test.selectTicker('AAPL');assert.equal(requested,0);assert.match(w.document.getElementById('status').textContent,/access token/);
 w.document.getElementById('access-token').value='fixture-token';
 await w.__test.selectTicker('AAPL');assert.equal(requested,1);assert.equal(w.document.getElementById('dashboard').hidden,false);assert.match(w.document.getElementById('status').textContent,/AAPL/);
+assert.equal(w.__test.currentResult(feed.tickers.NVDA),false);
 console.log(JSON.stringify({tabs:visited,uncaughtErrors:errors.length,invalidSymbols:'pass',unknownTicker:'pass',holiday:'pass',futureTimestamp:'pass'}));
 dom.window.close();
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -64,6 +64,7 @@ def iso_timestamp(idx):
 
 
 def pack(ticker, result):
+    from kratos.timeframe_report import build_timeframe_report, data_version
     snap, tech, decision = result.snapshot, result.technical, result.decision
     df = tech["daily"]
     currency = snap.fundamentals.get("currency")
@@ -74,6 +75,8 @@ def pack(ticker, result):
             history.append({"date": str(index.date()), "close": round(c, 5)})
     return clean({
         "ticker": ticker,
+        "data_version": data_version(snap),
+        "timeframe_report": build_timeframe_report(snap, tech.get("frames",{})),
         "provider": snap.provider,
         "currency": currency,
         "quote": snap.quote,

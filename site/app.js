@@ -24,7 +24,7 @@ function notify(message,bad=false){el('status').className='notice '+(bad?'warn':
 async function fetchJSON(url,timeout=180000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok){const e=Error(data.detail||'HTTP '+r.status);e.status=r.status;throw e}return data}finally{clearTimeout(timer)}}
 async function analyzeWithRetry(t,id){
  for(let attempt=0;attempt<3;attempt++){
-  try{return await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t),60000)}
+  try{return await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t)+'&require_fresh=true',60000)}
   catch(e){if(id!==state.request||attempt===2||![undefined,502,503,504].includes(e.status))throw e;
    notify('Backend or provider unavailable. Retrying '+t+' ('+(attempt+1)+'/2)…');
    await new Promise(r=>setTimeout(r,3000*(attempt+1)));}
@@ -35,24 +35,27 @@ async function selectTicker(raw,fetchNew=true){
  const id=++state.request;let t=String(raw||'').trim().toUpperCase();if(t.startsWith('TSX:'))t=t.slice(4)+'.TO';t=t.replace(/^(NYSE|NASDAQ):/,'');
  if(!/^[A-Z0-9^][A-Z0-9.^=_-]{0,19}$/.test(t)){notify('Enter a valid US or Canadian symbol, such as NVDA or RY.TO.',true);return}
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
+ if(!enabled&&fetchNew&&!el('archive-mode')?.checked){state.ticker=t;renderUnavailable('The live Python backend is not connected. No current price, trend or trading levels can be verified for '+t+'.');return;}
  if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
  if(enabled&&fetchNew){el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
-  try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;state.feed.tickers[t]=response.ticker;}
+  try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
  }
  const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':(state.config.hosting_reason||'On-demand backend unavailable. Only explicitly dated archived research is available.');notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
  state.ticker=t;el('dashboard').hidden=false;el('intro').hidden=true;render();
 }
-function render(){const x=state.feed.tickers[state.ticker];if(!x)return;const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
+function render(){const x=state.feed.tickers[state.ticker];if(!x)return;
+ if(!el('archive-mode')?.checked&&!currentResult(x)){renderUnavailable('Fresh analysis unavailable. Archived prices and trading levels are hidden.');return;}const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
  if(['openbb','qlib','tradingagents','vectorbt','lean'].includes(state.tab))out+=frameworkView(x);
  const legacy=x.analysis_version!=='rules-v2.0.0';
- notify(x.ticker+' · '+f.status+' · Minute bar opened: '+when(x.minute_bar_utc)+' · Retrieved: '+when(x.retrieved_at_utc)+' · '+x.provider, !f.live);
- el('kpis').innerHTML=stat('Latest reported minute price',m(x.quote?.price),'Minute bar close, potentially developing; not a live quote')+stat('Last completed daily close',m(x.price),x.last_closed_bar_date)+stat('Research decision',classification(x),'NO RELIABLE EDGE established')+stat('Daily price structure',d.timeframes?.['1D']?.state||'Unavailable','Weekly: '+(d.timeframes?.['1W']?.state||'Unavailable'));
+ notify(x.ticker+' · '+(el('archive-mode')?.checked?'ARCHIVE VIEW · ':'')+f.status+' · Minute bar opened: '+when(x.minute_bar_utc)+' · Retrieved: '+when(x.retrieved_at_utc)+' · '+x.provider, !f.live);
+ el('kpis').innerHTML=stat(el('archive-mode')?.checked?'Archived minute price':'Latest reported minute price',m(el('archive-mode')?.checked||f.live?x.quote?.price:null),'Regular-session minute bar; completed daily close shown separately')+stat('Last completed daily close',m(x.price),x.last_closed_bar_date)+stat(el('archive-mode')?.checked?'Historical rule classification':'Research decision',classification(x),'NO RELIABLE EDGE established')+stat('Daily price structure',d.timeframes?.['1D']?.state||'Unavailable','Weekly: '+(d.timeframes?.['1W']?.state||'Unavailable'));
  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===state.tab)));
  if(legacy)out+='<div class="notice warn">Legacy snapshot: generated before the calendar and indicator fixes. Refresh from the upgraded publisher before relying on its technical calculations.</div>';
  if(!x.truth)out+='<div class="notice warn">Evidence report unavailable; source quality and predicted outcomes are not independently verified. No execution signal is established.</div>';
  if(state.tab==='overview'){
+  out+=timeframeCards(x);
   const summary=d.bias==='DOWN'?'The observed trend is weak. A lower price alone does not confirm a bottom. Wait for a closed-bar reversal and reassess the risk.':d.bias==='UP'?'The observed trend is upward. That does not establish a profitable entry. Check support, confirmation, and data age before considering a setup.':'The timeframes do not provide a clear direction. Wait for a more consistent trend or a confirmed reversal.';
   out+='<div class="grid">'+card(classification(x)+' — '+(d.bias||'UNCLEAR')+' context','<p>'+esc(d.summary||summary)+'</p>'+((d.reasons||[]).map(r=>'<div class="reason">'+esc(r)+'</div>').join('')))+card('Evidence you can inspect',line('Model',x.analysis_version||'Legacy rules-v1')+line('Source',x.provider)+line('Exchange calendar',x.provenance?.calendar||'Unverified')+line('Currency',x.currency||'Unverified')+line('Minute-bar age',f.age===null?'Unavailable':val(f.age,1)+' minutes')+'<p class="hint">Recent retrieval is not evidence of a recent market trade. A calendar cannot detect a trading halt.</p>')+'</div>';
  }
@@ -71,6 +74,7 @@ function render(){const x=state.feed.tickers[state.ticker];if(!x)return;const t=
      '<p class="hint">Vendor-reported data is not independent confirmation. A modeled scenario is not a forecast or trade instruction.</p>');
  }
  if(state.tab==='technicals'){
+  out+=timeframeCards(x);
   out+=planCard(d,m);
   out+=card('What each timeframe is doing',Object.entries(d.timeframes||{}).map(([tf,z])=>'<div class="reason"><b>'+esc(tf)+' · '+esc(z.state)+'</b><p>'+esc(z.explanation)+'</p>'+line('Completed candle',['1D','1W'].includes(tf)?(z.asof||'').slice(0,10)+' (session date)':when(z.asof))+line('Nearest floor / ceiling',(z.support?.length?m(z.support[0].price):'Unavailable')+' / '+(z.resistance?.length?m(z.resistance[0].price):'Unavailable'))+'</div>').join(''));
   const structure=t.structure?.[state.tf]||{};
@@ -129,6 +133,7 @@ async function boot(){fetchJSON('./data/frameworks.json',20000).then(r=>{state.f
  el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':(state.config.hosting_reason||'Historical archive · Python hosting not connected');
  try{await loadFeed();const first=new URLSearchParams(location.search).get('ticker')||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error);if(first)await selectTicker(first,false);else notify('No valid published data available.',true)}catch(e){notify('Published data unavailable: '+e.message,true)}
 }
+if(el('archive-mode'))el('archive-mode').onchange=()=>{if(state.ticker)selectTicker(state.ticker,!el('archive-mode').checked)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;if(state.ticker)render()});
 el('search').onsubmit=e=>{e.preventDefault();selectTicker(el('ticker').value)};
 setInterval(async()=>{if(document.hidden)return;try{if(state.ticker&&(state.config.same_origin_api||state.config.api_url))await selectTicker(state.ticker);else{await loadFeed();if(state.ticker)render()}}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
@@ -159,4 +164,29 @@ function equityChart(points){
  const values=points.map(p=>p.value);const lo=Math.min(...values),hi=Math.max(...values),range=hi-lo||1;
  const xy=points.map((p,i)=>(40+i*630/Math.max(1,points.length-1))+','+(215-(p.value-lo)/range*170)).join(' ');
  return '<svg class="chart" viewBox="0 0 710 260" role="img" aria-label="Historical simulated portfolio value"><text x="20" y="22">Portfolio value · starting capital 10,000</text><polyline points="'+xy+'" fill="none" stroke="#73d9e5" stroke-width="2"/><text x="40" y="245">'+esc(points[0].time.slice(0,10))+'</text><text x="560" y="245">'+esc(points.at(-1).time.slice(0,10))+'</text></svg>';
+}
+
+function currentResult(x,now=Date.now()){
+ const report=x.timeframe_report;const checked=Date.parse(report?.checked_at_utc);
+ const f=freshness(x,now);
+ return Number.isFinite(checked)&&now>=checked&&now-checked<=900000&&
+ ['1H','4H','1D','1W'].every(tf=>report.timeframes?.[tf]?.freshness==='LATEST_COMPLETED')&&
+ f.status.indexOf('UNVERIFIED')<0&&(!f.open||f.live)&&!x.refresh_failed;
+}
+function renderUnavailable(reason){
+ el('dashboard').hidden=false;el('intro').hidden=true;
+ notify(reason,true);
+ el('kpis').innerHTML=['1 hour','4 hours','Daily','Weekly'].map(tf=>stat(tf,'UNAVAILABLE','Awaiting verified current candles')).join('');
+ el('view').innerHTML=card('No current analysis issued','<p>'+esc(reason)+'</p><p>Fresh results require a reachable Python service and current provider data. No archived price has been substituted. The optional archive view is labeled historical.</p>');
+}
+function timeframeCards(x){
+ const report=x.timeframe_report;const archive=!!el('archive-mode')?.checked;
+ const plan=x.technical_plan||x.decision||{};const moneyHere=v=>money(v,x.currency);
+ let html=card(archive?'Historical timeframe comparison':report?.verdict||'Timeframe data unavailable','<p>'+esc(archive?'These observations belong to the dated archive and are not current market analysis.':report?.summary||'No current combined direction is established.')+'</p>'+(x.data_changed===false?'<p>Underlying market observations are unchanged since the previous request.</p>':''));
+ html+='<div class="grid two">'+['1H','4H','1D','1W'].map(tf=>{
+  const r=report?.timeframes?.[tf];const old=plan.timeframes?.[tf]||{};
+  const s=r||{trend:archive?x.technical?.trends?.[tf]:'UNAVAILABLE',structure:old.state,explanation:old.explanation,support:old.support,resistance:old.resistance};
+  return card({'1H':'1 hour','4H':'4 hours','1D':'Daily','1W':'Weekly'}[tf],badge(s.trend||'UNAVAILABLE')+line('Price structure',s.structure||'Unavailable')+'<p>'+esc(s.explanation||'Not enough verified data.')+'</p>'+line('Candle closed at',r?when(r.bar_closed_at_utc):'Archive: '+(old.asof||'Unavailable'))+line('RSI (14)',val(s.rsi))+line('Volume / prior average',val(s.volume_ratio))+line('Nearest support',moneyHere(s.support?.[0]?.price))+line('Nearest resistance',moneyHere(s.resistance?.[0]?.price)));
+ }).join('')+'</div>';
+ return html;
 }

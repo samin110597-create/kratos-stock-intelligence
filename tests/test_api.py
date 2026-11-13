@@ -71,3 +71,33 @@ def test_explicit_public_analysis_does_not_unlock_private_endpoints(monkeypatch)
     assert c.get('/api/analyze?symbol=AAPL').status_code==401
     assert c.get('/config.json').json()['personal_access_required']
     with server.lock: server.requests.clear()
+
+
+def test_strict_endpoint_rejects_stale_candles_without_prices():
+    from types import SimpleNamespace
+    with server.lock: server.requests.clear()
+    snapshot=SimpleNamespace(freshness=lambda **kwargs:{'live_enough':True})
+    result=SimpleNamespace(snapshot=snapshot)
+    payload={'ticker':'NVDA','price':123,'timeframe_report':{'timeframes':{tf:{'freshness':'STALE_OR_MISSING'} for tf in ('1H','4H','1D','1W')}}}
+    with patch('server.analyze',return_value=result),patch('server.pack',return_value=payload):
+        r=TestClient(server.app).get('/api/analyze?symbol=NVDA&require_fresh=true')
+        assert r.status_code==409
+        assert 'price' not in r.json() and 'ticker' not in r.json()
+
+
+def test_strict_endpoint_rejects_old_market_hours_quote():
+    from types import SimpleNamespace
+    with server.lock: server.requests.clear()
+    result=SimpleNamespace(snapshot=SimpleNamespace(freshness=lambda **kwargs:{'live_enough':False}))
+    payload={'ticker':'NVDA','timeframe_report':{'timeframes':{tf:{'freshness':'LATEST_COMPLETED'} for tf in ('1H','4H','1D','1W')}}}
+    with patch('server.analyze',return_value=result),patch('server.pack',return_value=payload),patch('kratos.calendar.session_state',return_value={'market_open':True}):
+        assert TestClient(server.app).get('/api/analyze?symbol=NVDA&require_fresh=true').status_code==409
+
+
+def test_strict_endpoint_accepts_latest_closed_market_history():
+    from types import SimpleNamespace
+    with server.lock: server.requests.clear()
+    result=SimpleNamespace(snapshot=SimpleNamespace(freshness=lambda **kwargs:{'live_enough':False}))
+    payload={'ticker':'NVDA','timeframe_report':{'timeframes':{tf:{'freshness':'LATEST_COMPLETED'} for tf in ('1H','4H','1D','1W')}}}
+    with patch('server.analyze',return_value=result),patch('server.pack',return_value=payload),patch('kratos.calendar.session_state',return_value={'market_open':False}):
+        assert TestClient(server.app).get('/api/analyze?symbol=NVDA&require_fresh=true').status_code==200
