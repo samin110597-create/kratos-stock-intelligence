@@ -39,4 +39,4 @@ Market observations come from the named provider. Missing or outdated data is re
     explanation=gr.Textbox(label='Model explanation — verify against the evidence')
     explain.click(explain_evidence,inputs=evidence,outputs=explanation,api_name='explain_evidence')
 if __name__=='__main__':
-    console.launch(server_name='0.0.0.0', app_kwargs={'routes': app.router.routes, 'middleware': app.user_middleware})
+    console.launch(server_name='0.0.0.0', ssr_mode=False, app_kwargs={'routes': app.router.routes, 'middleware': app.user_middleware})
