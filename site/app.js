@@ -37,7 +37,7 @@ async function selectTicker(raw,fetchNew=true){
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
  if(!enabled&&fetchNew&&!el('archive-mode')?.checked){state.ticker=t;renderUnavailable('The live Python backend is not connected. No current price, trend or trading levels can be verified for '+t+'.');return;}
  if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
- if(enabled&&fetchNew){el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='Requesting new research for '+t+'…';el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
+ if(enabled&&fetchNew){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='Requesting new research for '+t+'…';el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
   try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
@@ -56,6 +56,7 @@ function render(){const x=state.feed.tickers[state.ticker];if(!x)return;
  if(!x.truth)out+='<div class="notice warn">Evidence report unavailable; source quality and predicted outcomes are not independently verified. No execution signal is established.</div>';
  if(state.tab==='overview'){
   out+=timeframeCards(x);
+  out+=card('Daily price history',candles(t.candles?.['1D']||[],[],d.timeframes?.['1D'])+'<p class="hint">Completed daily candles. Open Technicals to compare intraday charts and calculated price levels.</p>');
   const summary=d.bias==='DOWN'?'The observed trend is weak. A lower price alone does not confirm a bottom. Wait for a closed-bar reversal and reassess the risk.':d.bias==='UP'?'The observed trend is upward. That does not establish a profitable entry. Check support, confirmation, and data age before considering a setup.':'The timeframes do not provide a clear direction. Wait for a more consistent trend or a confirmed reversal.';
   out+='<div class="grid">'+card(classification(x)+' — '+(d.bias||'UNCLEAR')+' context','<p>'+esc(d.summary||summary)+'</p>'+((d.reasons||[]).map(r=>'<div class="reason">'+esc(r)+'</div>').join('')))+card('Evidence you can inspect',line('Model',x.analysis_version||'Legacy rules-v1')+line('Source',x.provider)+line('Exchange calendar',x.provenance?.calendar||'Unverified')+line('Currency',x.currency||'Unverified')+line('Minute-bar age',f.age===null?'Unavailable':val(f.age,1)+' minutes')+'<p class="hint">Recent retrieval is not evidence of a recent market trade. A calendar cannot detect a trading halt.</p>')+'</div>';
  }
@@ -131,7 +132,9 @@ async function loadFeed(){const feed=await fetchJSON('./data/snapshots.json',200
 async function boot(){fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.ticker)render()}).catch(()=>{});fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
  if(el('personal-access'))el('personal-access').hidden=!state.config.personal_access_required;
  el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':(state.config.hosting_reason||'Historical archive · Python hosting not connected');
- try{await loadFeed();const first=new URLSearchParams(location.search).get('ticker')||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error);if(first)await selectTicker(first,false);else notify('No valid published data available.',true)}catch(e){notify('Published data unavailable: '+e.message,true)}
+ try{await loadFeed()}catch(e){notify('Historical archive unavailable; on-demand search remains available.',true)}
+ const first=new URLSearchParams(location.search).get('ticker')||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error)||'NVDA';
+ await selectTicker(first,!!(state.config.same_origin_api||state.config.api_url));
 }
 if(el('archive-mode'))el('archive-mode').onchange=()=>{if(state.ticker)selectTicker(state.ticker,!el('archive-mode').checked)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;if(state.ticker)render()});
