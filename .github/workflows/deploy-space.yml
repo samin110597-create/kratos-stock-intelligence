@@ -19,6 +19,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install 'huggingface_hub>=0.34,<2'
+      - name: Read prior build diagnostics
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/space_diagnostics.py
       - name: Publish to existing ZeroGPU Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
