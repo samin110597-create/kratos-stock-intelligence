@@ -1,1 +1,9 @@
-{"api_url": "", "same_origin_api": false, "refresh_minutes": 15, "personal_access_required": false, "private_research_available": false, "hosting_status": "blocked", "hosting_reason": "Live Python backend not connected. Current prices, trends and levels are withheld. Hugging Face Docker requires a paid plan; free Gradio ZeroGPU eligibility remains unverified because account write access/sign-in is unavailable."}
+{
+  "api_url": "https://smit1105-kratos-backend.hf.space",
+  "same_origin_api": false,
+  "refresh_minutes": 15,
+  "personal_access_required": false,
+  "private_research_available": false,
+  "hosting_status": "deployed",
+  "hosting_reason": "Python backend hosted on Hugging Face ZeroGPU. On-demand requests require current completed candles; market-hours prices older than 15 minutes are rejected."
+}
