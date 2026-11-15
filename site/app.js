@@ -37,7 +37,7 @@ async function selectTicker(raw,fetchNew=true){
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
  if(!enabled&&fetchNew&&!el('archive-mode')?.checked){state.ticker=t;renderUnavailable('The live Python backend is not connected. No current price, trend or trading levels can be verified for '+t+'.');return;}
  if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
- if(enabled&&fetchNew){el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
+ if(enabled&&fetchNew){el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='Requesting new research for '+t+'…';el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
   try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
@@ -186,7 +186,7 @@ function timeframeCards(x){
  html+='<div class="grid two">'+['1H','4H','1D','1W'].map(tf=>{
   const r=report?.timeframes?.[tf];const old=plan.timeframes?.[tf]||{};
   const s=r||{trend:archive?x.technical?.trends?.[tf]:'UNAVAILABLE',structure:old.state,explanation:old.explanation,support:old.support,resistance:old.resistance};
-  return card({'1H':'1 hour','4H':'4 hours','1D':'Daily','1W':'Weekly'}[tf],badge(s.trend||'UNAVAILABLE')+line('Price structure',s.structure||'Unavailable')+'<p>'+esc(s.explanation||'Not enough verified data.')+'</p>'+line('Candle closed at',r?when(r.bar_closed_at_utc):'Archive: '+(old.asof||'Unavailable'))+line('RSI (14)',val(s.rsi))+line('Volume / prior average',val(s.volume_ratio))+line('Nearest support',moneyHere(s.support?.[0]?.price))+line('Nearest resistance',moneyHere(s.resistance?.[0]?.price)));
+  return card({'1H':'1 hour','4H':'4 hours','1D':'Daily','1W':'Weekly'}[tf],badge(s.trend||'UNAVAILABLE')+line('Price structure',s.structure||'Unavailable')+'<p>'+esc(s.explanation||'Not enough verified data.')+'</p>'+line(r?'Candle closed at':'Archived candle label',r?when(r.bar_closed_at_utc):when(old.asof))+line('RSI (14)',val(s.rsi))+line('Volume / prior average',val(s.volume_ratio))+line('Nearest support',moneyHere(s.support?.[0]?.price))+line('Nearest resistance',moneyHere(s.resistance?.[0]?.price)));
  }).join('')+'</div>';
  return html;
 }
