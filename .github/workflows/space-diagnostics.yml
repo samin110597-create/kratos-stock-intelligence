@@ -1,0 +1,17 @@
+name: Space diagnostics
+on:
+  push:
+    paths: ['.github/workflows/space-diagnostics.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read service build and runtime errors
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python scripts/space_diagnostics.py
