@@ -10,7 +10,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 model_id="Qwen/Qwen2.5-0.5B-Instruct"
 tokenizer=AutoTokenizer.from_pretrained(model_id)
-model=AutoModelForCausalLM.from_pretrained(model_id,torch_dtype=torch.float16).to("cuda")
+model=AutoModelForCausalLM.from_pretrained(model_id,dtype=torch.float16).to("cuda")
 
 @spaces.GPU(duration=60)
 def explain_evidence(evidence):
