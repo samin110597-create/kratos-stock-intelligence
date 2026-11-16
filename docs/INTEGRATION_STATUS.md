@@ -10,4 +10,4 @@ TradingAgents runs the actual pinned upstream graph on GitHub Actions with a fre
 
 All framework statuses describe completed executions, not imports or adapter code. An installed package without a successful run remains unavailable. Combining engines does not produce an accuracy percentage or a confidence vote. The primary quote remains an unofficial provider-reported minute bar; exchange entitlement and independent price confirmation remain unverified.
 
-Public on-demand forecasts are not durably recorded. Scheduled Qlib forecast records are durable; full live forward evaluation and durable arbitrary-ticker forecast collection remain unfinished. This gap must remain visible and must not be described as demonstrated accuracy.
+Public on-demand forecasts are not durably recorded. Scheduled Qlib forecast records and matured outcomes are durable. Outcomes are scored only when the forecast was recorded before the outcome session opened; intraday-created forecasts are excluded from this clean forward test. Durable arbitrary-ticker forecast collection remains unfinished. This gap must remain visible and must not be described as demonstrated accuracy.

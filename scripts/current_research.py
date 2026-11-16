@@ -8,6 +8,7 @@ import json
 import os
 from kratos.engine import analyze
 from kratos.data import valid_symbol
+from kratos.forecast_outcomes import resolve
 from kratos.frameworks import research_record, fingerprint
 from scripts.publish_snapshot import pack
 
@@ -19,6 +20,17 @@ def run():
         symbol=valid_symbol(raw)
         try:
             payload=pack(symbol,analyze(symbol))
+            outcomes=ROOT/'forecast-outcomes'
+            outcomes.mkdir(parents=True,exist_ok=True)
+            for previous in (ROOT/'framework-runs'/symbol).glob('*.json'):
+                destination=outcomes/(previous.stem+'.json')
+                if destination.exists():continue
+                resolved=resolve(json.loads(previous.read_text()),payload['technical']['candles']['1D'])
+                if resolved:
+                    resolved['forecast_record_id']=previous.stem
+                    resolved['outcome_source']=payload['provider']
+                    resolved['outcome_source_retrieved_at_utc']=payload['retrieved_at_utc']
+                    destination.write_text(json.dumps(resolved,allow_nan=False,indent=2)+'\n')
             record=research_record(symbol,payload)
             archive=ROOT/'framework-runs'/symbol
             archive.mkdir(parents=True,exist_ok=True)
