@@ -57,6 +57,13 @@ def run_engine(symbol, engine, payload):
                 'data_last_session':payload['last_closed_bar_date'],
                 'input_sha256':fingerprint(rows), 'calculated_at_utc':datetime.now(timezone.utc).isoformat(),
                 'engines':{engine:result}}
+        if engine=='vectorbt': record['input_bars']=rows
+        elif result.get('statements'):
+            record['input_sha256']=fingerprint(result['statements'])
+            record['source']=result['source']
+            record['source_retrieved_at_utc']=result['retrieved_at_utc']
+            dates=[str(r.get('period_ending') or r.get('date')) for table in result['statements'].values() for r in table if r.get('period_ending') or r.get('date')]
+            record['data_last_session']=max(dates) if dates else None
         if result['status']!='unavailable':
             _cache[key]=record
             while len(_cache)>24: _cache.popitem(last=False)
