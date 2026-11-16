@@ -6,7 +6,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:13:24.589722+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "3102bcd1baea29e1c8c2ab8dec37428ebe76f33a0279e8df0aa1d7926fad2102",
-      "calculated_at_utc": "2026-11-12T21:19:48.644049+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:13.312794+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -15,6 +15,8 @@
           "total_return": -0.04893559195520684,
           "max_drawdown": -0.10495736513042775,
           "closed_trades": 2,
+          "buy_hold_price_return": 0.02524392273592091,
+          "bar_count": 100,
           "win_rate": 0.5,
           "equity": [
             {
@@ -433,6 +435,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.004080370003656236,
+              -0.0077083422866231705,
+              -0.00019768744954936152,
+              -0.014681026534181376
+            ],
+            "intercept": 0.0019510276369663646,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.0030498549720116225,
+            "horizon": "next completed trading session close",
+            "reference_close": 216.47000122070312,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.01665811634450004,
@@ -701,7 +727,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "AVGO": {
       "symbol": "AVGO",
@@ -709,7 +735,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:14:15.488692+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "be607a44f6340ddcd359992777b1e236dfa3550a9084ec947914420e4f68bb4c",
-      "calculated_at_utc": "2026-11-12T21:19:55.424704+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.678103+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -718,6 +744,8 @@
           "total_return": -0.13128839198314454,
           "max_drawdown": -0.2302035952288194,
           "closed_trades": 3,
+          "buy_hold_price_return": -0.2515835813963877,
+          "bar_count": 100,
           "win_rate": 0.3333333333333333,
           "equity": [
             {
@@ -1136,6 +1164,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.002142178004621816,
+              -0.009340374421947488,
+              0.0004915993797030761,
+              -0.011835256661557818
+            ],
+            "intercept": -0.0010159013754685922,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.0002013392348367755,
+            "horizon": "next completed trading session close",
+            "reference_close": 334.3699951171875,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.016643993446221913,
@@ -1404,7 +1456,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "AMAT": {
       "symbol": "AMAT",
@@ -1412,7 +1464,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:15:06.171891+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "d40c5812b3c02628472a767ce2d910b4178324d68519db6d3513bca9586d43a1",
-      "calculated_at_utc": "2026-11-12T21:19:55.781553+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.715942+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -1421,6 +1473,8 @@
           "total_return": -0.21737129323168528,
           "max_drawdown": -0.25324216555177437,
           "closed_trades": 1,
+          "buy_hold_price_return": -0.1001643932293641,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -1839,6 +1893,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.010931216779474638,
+              -0.030905369065750966,
+              0.004345143930343852,
+              -0.004363934906540992
+            ],
+            "intercept": -0.005333789469471806,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": -0.0007931340170567493,
+            "horizon": "next completed trading session close",
+            "reference_close": 404.9800109863281,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.025798948479970864,
@@ -2107,7 +2185,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "MU": {
       "symbol": "MU",
@@ -2115,7 +2193,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:15:56.734502+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "0cca0af60d4a430bc0e075d00939456fd3472fe5905e03158296f308f4997147",
-      "calculated_at_utc": "2026-11-12T21:19:55.828064+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.753689+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -2124,6 +2202,8 @@
           "total_return": -0.05675727379763794,
           "max_drawdown": -0.1761067661220984,
           "closed_trades": 1,
+          "buy_hold_price_return": -0.07716786063417225,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -2542,6 +2622,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.011372070938793022,
+              -0.047830209448535284,
+              -0.00392545283615396,
+              -0.017820135881079467
+            ],
+            "intercept": -0.0022554246370891833,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.00269000142999093,
+            "horizon": "next completed trading session close",
+            "reference_close": 896.0700073242188,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.024608590905487317,
@@ -2810,7 +2914,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "CIFR": {
       "symbol": "CIFR",
@@ -2818,7 +2922,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:16:47.311151+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "515bb348bd21e2823c1929e3430cf565e964da457941c297c857610f115bc38f",
-      "calculated_at_utc": "2026-11-12T21:19:55.875358+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.790370+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -2827,6 +2931,8 @@
           "total_return": -0.1603877646761901,
           "max_drawdown": -0.21594959943296077,
           "closed_trades": 1,
+          "buy_hold_price_return": -0.6245243020011193,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -3245,6 +3351,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.01382693469127475,
+              -0.061597372946877595,
+              0.01749767295260941,
+              -0.005871423103889407
+            ],
+            "intercept": -0.015195169952484143,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.001126113331991094,
+            "horizon": "next completed trading session close",
+            "reference_close": 8.880000114440918,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.052324446144313606,
@@ -3513,7 +3643,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "IREN": {
       "symbol": "IREN",
@@ -3521,7 +3651,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:17:38.024099+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ab0007e79b065c9d6b7379c591115d1ed9e44dc5d0f44d7542361ffcc4712c4b",
-      "calculated_at_utc": "2026-11-12T21:19:55.938937+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.826749+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -3530,6 +3660,8 @@
           "total_return": -0.3144698818759367,
           "max_drawdown": -0.3144698818759363,
           "closed_trades": 2,
+          "buy_hold_price_return": -0.5810512990923133,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -3948,6 +4080,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.04875766875893432,
+              -0.04870746309735315,
+              0.035156435225542765,
+              0.0074468706852069315
+            ],
+            "intercept": -0.008300832518326187,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.004720141798133466,
+            "horizon": "next completed trading session close",
+            "reference_close": 26.6200008392334,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.040984274501803065,
@@ -4216,7 +4372,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "CRWV": {
       "symbol": "CRWV",
@@ -4224,7 +4380,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:28.553690+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "f6d1f1567ea0635aeb907207a8c21f428ebe060d54b9780e3b618e8012c21927",
-      "calculated_at_utc": "2026-11-12T21:19:55.984214+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.863816+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -4233,6 +4389,8 @@
           "total_return": -0.4207151521007116,
           "max_drawdown": -0.4207151521007114,
           "closed_trades": 2,
+          "buy_hold_price_return": -0.432758132378808,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -4651,6 +4809,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.002085959737299655,
+              -0.04345953854278023,
+              0.020284454448684267,
+              -0.0024525259917998845
+            ],
+            "intercept": -0.005604964690518736,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.004989037330744664,
+            "horizon": "next completed trading session close",
+            "reference_close": 62.130001068115234,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.035489370258723583,
@@ -4919,7 +5101,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "NBIS": {
       "symbol": "NBIS",
@@ -4927,7 +5109,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:31.595519+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "08d1aa8764de3425fc7cb2b47f6251c8ca143187782c3173f0dbb245c297ca45",
-      "calculated_at_utc": "2026-11-12T21:19:56.029953+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.900302+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -4936,6 +5118,8 @@
           "total_return": -0.37996407686491684,
           "max_drawdown": -0.4287011585570927,
           "closed_trades": 4,
+          "buy_hold_price_return": -0.2580812684874736,
+          "bar_count": 100,
           "win_rate": 0.25,
           "equity": [
             {
@@ -5354,6 +5538,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.014561094164452828,
+              -0.10375259810510312,
+              0.019186752215752317,
+              -0.003618549355400962
+            ],
+            "intercept": -0.003797087413679184,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.015822021949914382,
+            "horizon": "next completed trading session close",
+            "reference_close": 171.4499969482422,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.03672177497519765,
@@ -5622,7 +5830,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "USAR": {
       "symbol": "USAR",
@@ -5630,7 +5838,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:34.377048+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "891014ae8ae64bdf1ae183d4b832120018d8d22f161a6c24fc3d02892b160565",
-      "calculated_at_utc": "2026-11-12T21:19:56.074323+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.936823+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -5639,6 +5847,8 @@
           "total_return": -0.12372860226493085,
           "max_drawdown": -0.19920255329227465,
           "closed_trades": 1,
+          "buy_hold_price_return": -0.6408425441837886,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -6057,6 +6267,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.017263735141505508,
+              -0.0026747497683389265,
+              0.009591733943689803,
+              0.007748585889675011
+            ],
+            "intercept": -0.007845014789304064,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": -0.00877567017039078,
+            "horizon": "next completed trading session close",
+            "reference_close": 10.0600004196167,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.030643671138166007,
@@ -6325,7 +6559,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "AXTI": {
       "symbol": "AXTI",
@@ -6333,7 +6567,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:19:25.235180+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "6fed7a29911510f53d5f02c8607648846bec6c7f94e6ecf9a3c05e334548f8ff",
-      "calculated_at_utc": "2026-11-12T21:19:56.113912+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:18.973816+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -6342,6 +6576,8 @@
           "total_return": -0.5534293524251901,
           "max_drawdown": -0.6110783509333686,
           "closed_trades": 2,
+          "buy_hold_price_return": -0.4465878429048852,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -6760,6 +6996,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.0452316998736641,
+              -0.020641558007127542,
+              0.0344568561707652,
+              -0.011555221534383096
+            ],
+            "intercept": -0.001683888406100154,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.005618355644071632,
+            "horizon": "next completed trading session close",
+            "reference_close": 57.09000015258789,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.056259114355997654,
@@ -7028,7 +7288,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "GOOG": {
       "symbol": "GOOG",
@@ -7036,7 +7296,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:20:15.779386+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "9b5dd9ba578d5d1b60cec46ae67c503cb3bf3490279cf3b272152134ef7a08fb",
-      "calculated_at_utc": "2026-11-12T21:19:56.161992+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:19.010071+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -7045,6 +7305,8 @@
           "total_return": -0.1369431980598185,
           "max_drawdown": -0.14071458502595102,
           "closed_trades": 2,
+          "buy_hold_price_return": -0.10634115123173693,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -7463,6 +7725,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.0018183546843654006,
+              -0.0012077664569745067,
+              0.0009511474854182369,
+              -0.014461305617068262
+            ],
+            "intercept": 0.00017884235061972257,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": 0.0004447789310498872,
+            "horizon": "next completed trading session close",
+            "reference_close": 336.3999938964844,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.011173317339722853,
@@ -7731,7 +8017,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "UBER": {
       "symbol": "UBER",
@@ -7739,7 +8025,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:21:06.265978+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ac59b510e1bae79e33fa163e9689831c24fd611e4e15527547d9243a9b5e7208",
-      "calculated_at_utc": "2026-11-12T21:19:56.202304+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:19.046216+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -7748,6 +8034,8 @@
           "total_return": -0.07175671922060155,
           "max_drawdown": -0.11537021554582938,
           "closed_trades": 1,
+          "buy_hold_price_return": -0.020738622909489024,
+          "bar_count": 100,
           "win_rate": 0.0,
           "equity": [
             {
@@ -8166,6 +8454,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              -0.00026784671994440316,
+              -0.008099187781124844,
+              0.002227696932964609,
+              -0.007942491315484844
+            ],
+            "intercept": -0.0010869218158011812,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": -0.0006977004553989022,
+            "horizon": "next completed trading session close",
+            "reference_close": 68.94000244140625,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.014094289386863485,
@@ -8434,7 +8746,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     },
     "RY.TO": {
       "symbol": "RY.TO",
@@ -8442,7 +8754,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:21:56.794097+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ea1d420462a0dec1d5bccf1d0acee1c704b48bbe9aab5de38804de230f6f28a8",
-      "calculated_at_utc": "2026-11-12T21:19:56.242260+00:00",
+      "calculated_at_utc": "2026-11-16T15:13:19.083078+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -8451,6 +8763,8 @@
           "total_return": 0.0,
           "max_drawdown": 0.0,
           "closed_trades": 0,
+          "buy_hold_price_return": 0.07534353358028678,
+          "bar_count": 100,
           "win_rate": null,
           "equity": [
             {
@@ -8869,6 +9183,30 @@
         "qlib": {
           "status": "operational_historical",
           "version": "0.9.7",
+          "frozen_model": {
+            "features": [
+              "return_1",
+              "return_5",
+              "volatility_10",
+              "distance_ma20"
+            ],
+            "coefficients": [
+              0.00013507684426698004,
+              -0.0033978338757917133,
+              6.35204357275875e-05,
+              -0.0018139603898761662
+            ],
+            "intercept": -0.00029474934508536037,
+            "training_last_feature_date": "2026-10-19T04:00:00"
+          },
+          "experimental_forecast": {
+            "asof": "2026-10-20T04:00:00+00:00",
+            "predicted_return": -0.0003343098434138199,
+            "horizon": "next completed trading session close",
+            "reference_close": 280.1700134277344,
+            "status": "EXPERIMENTAL_NOT_VALIDATED",
+            "probability": null
+          },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
           "test_samples": 40,
           "return_mae": 0.007841471123400251,
@@ -9137,7 +9475,7 @@
           "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
         }
       },
-      "implementation_sha256": "db9d88dfceec42bc2ad74021223bf33d630e278a2f1cbf581dd1595c7ef4a5c0"
+      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
     }
   }
 }
