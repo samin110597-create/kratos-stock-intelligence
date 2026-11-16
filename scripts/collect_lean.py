@@ -5,7 +5,7 @@ from kratos.frameworks import fingerprint
 root=Path('lean-work');source=json.loads((root/'input.json').read_text());result=None
 for path in (root/'results').glob('*.json'):
     obj=json.loads(path.read_text())
-    if obj.get('Statistics') and obj.get('RuntimeStatistics',{}).get('Input observations'):
+    if obj.get('Statistics') and int(obj.get('RuntimeStatistics',{}).get('Input observations','0')) > 100:
         if obj.get('RuntimeError'):raise RuntimeError('LEAN runtime error')
         result=obj;break
 if result is None:raise RuntimeError('No successful LEAN statistics with input observations')

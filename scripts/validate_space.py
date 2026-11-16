@@ -1,5 +1,5 @@
 """External acceptance check; no credentials needed or printed."""
-import json,time,urllib.request,urllib.error
+import json,time,urllib.request,urllib.error,os
 BASE='https://smit1105-kratos-backend.hf.space'
 def get(path,timeout=150):
     try:
@@ -7,10 +7,10 @@ def get(path,timeout=150):
     except urllib.error.HTTPError as e:
         try:return e.code,json.load(e)
         except Exception:return e.code,{'detail':'Non-JSON error response'}
-for attempt in range(18):
+for attempt in range(60):
     try:
         code,body=get('/api/health',30)
-        if code==200 and body.get('status')=='ok':break
+        if code==200 and body.get('status')=='ok' and (not os.getenv('GITHUB_SHA') or body.get('source_revision')==os.environ['GITHUB_SHA']):break
     except Exception:pass
     print('Waiting for Space startup',attempt+1,flush=True);time.sleep(10)
 else:raise RuntimeError('Backend did not become healthy')

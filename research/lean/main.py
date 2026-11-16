@@ -16,6 +16,9 @@ class ReportedPrice(PythonData):
         item['is_close']=int(p[2])
         return item
 
+    GetSource = get_source
+    Reader = reader
+
 class ResearchFee(FeeModel):
     def get_order_fee(self, parameters):
         return OrderFee(CashAmount(abs(parameters.order.quantity)*parameters.security.price*0.001,'USD'))
@@ -27,8 +30,9 @@ class KratosResearch(QCAlgorithm):
         self.set_start_date(start.year,start.month,start.day)
         self.set_end_date(end.year,end.month,end.day)
         self.set_cash(10000)
+        self.set_benchmark(lambda time: 10000)
         self.set_time_zone(TimeZones.NEW_YORK)
-        security=self.add_data(ReportedPrice,'RESEARCH',Resolution.MINUTE,fill_forward=False)
+        security=self.add_data(ReportedPrice,'RESEARCH',Resolution.MINUTE)
         self.symbol=security.symbol
         security.set_fee_model(ResearchFee())
         security.set_slippage_model(ConstantSlippageModel(0.0005))

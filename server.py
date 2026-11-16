@@ -83,6 +83,7 @@ def paths(request:Request,symbol:str,horizon:int=5):
 def health():
     return {'status':'ok','version':'0.3.0','time_utc':datetime.now(timezone.utc).isoformat(),
             'providers':ROUTER.health,'live_data_guarantee':False,
+            'source_revision':(Path(__file__).parent/'SOURCE_REVISION').read_text().strip() if (Path(__file__).parent/'SOURCE_REVISION').exists() else None,
             'forecast_recording':'disabled on public API; scheduled publisher records observations',
             'storage':'local SQLite; persistence depends on host; public ledger versioned in Git',
             'institutional_feeds':'unavailable'}
