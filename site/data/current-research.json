@@ -3,10 +3,10 @@
     "NVDA": {
       "symbol": "NVDA",
       "source": "Yahoo Finance (unofficial yfinance feed)",
-      "source_retrieved_at_utc": "2026-11-16T15:12:37.820873+00:00",
+      "source_retrieved_at_utc": "2026-11-16T16:44:23.912852+00:00",
       "data_last_session": "2026-11-13",
       "input_sha256": "7163a7893659c2213ac76a7477fc60e156b6a9ea4e2e166f2f51ace025449269",
-      "calculated_at_utc": "2026-11-16T15:12:40.393647+00:00",
+      "calculated_at_utc": "2026-11-16T16:44:26.829571+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -7241,10 +7241,10 @@
     "GOOG": {
       "symbol": "GOOG",
       "source": "Yahoo Finance (unofficial yfinance feed)",
-      "source_retrieved_at_utc": "2026-11-16T15:12:56.717666+00:00",
+      "source_retrieved_at_utc": "2026-11-16T16:44:45.430387+00:00",
       "data_last_session": "2026-11-13",
       "input_sha256": "c2778c7c83137bed40c56388db1bb67d3275c803cb013e5751eb38dfb4972ac4",
-      "calculated_at_utc": "2026-11-16T15:12:58.463739+00:00",
+      "calculated_at_utc": "2026-11-16T16:44:47.604241+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -14479,10 +14479,10 @@
     "RY.TO": {
       "symbol": "RY.TO",
       "source": "Yahoo Finance (unofficial yfinance feed)",
-      "source_retrieved_at_utc": "2026-11-16T15:12:59.431261+00:00",
+      "source_retrieved_at_utc": "2026-11-16T16:44:48.989182+00:00",
       "data_last_session": "2026-11-13",
       "input_sha256": "a8405e8886af0cf137b44c2d5b7044513d6ff9868a882f957f55a6eda88040e5",
-      "calculated_at_utc": "2026-11-16T15:13:01.683368+00:00",
+      "calculated_at_utc": "2026-11-16T16:44:51.394369+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -21727,10 +21727,10 @@
     "AAPL": {
       "symbol": "AAPL",
       "source": "Yahoo Finance (unofficial yfinance feed)",
-      "source_retrieved_at_utc": "2026-11-16T15:13:02.420423+00:00",
+      "source_retrieved_at_utc": "2026-11-16T16:44:52.704071+00:00",
       "data_last_session": "2026-11-13",
       "input_sha256": "bae55517b4e50d548dbced9c4fcb2bff5eacc41734576407412087186ee12384",
-      "calculated_at_utc": "2026-11-16T15:13:04.175393+00:00",
+      "calculated_at_utc": "2026-11-16T16:44:54.538655+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
