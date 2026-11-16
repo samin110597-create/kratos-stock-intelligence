@@ -18,7 +18,7 @@ from scripts.publish_snapshot import pack, audit_summary
 app=FastAPI(title='KRATOS Research API',version='0.3.0',docs_url='/api/docs',redoc_url=None)
 origins=[x.strip() for x in os.getenv('KRATOS_ALLOWED_ORIGINS','https://samin110597-create.github.io').split(',') if x.strip()]
 app.add_middleware(CORSMiddleware,allow_origins=origins,allow_methods=['GET'],allow_headers=['Content-Type','Authorization'])
-lock=Lock();requests=OrderedDict();workers=BoundedSemaphore(2)
+lock=Lock();requests=OrderedDict();workers=BoundedSemaphore(2);engine_workers=BoundedSemaphore(2)
 
 def throttle(request):
     # Do not trust attacker-controlled X-Forwarded-For. Configure trusted proxies at deployment.
@@ -124,12 +124,12 @@ def engine_analysis(engine:str,request:Request,symbol:str):
     if engine not in ('openbb','vectorbt'): raise HTTPException(422,'Use openbb or vectorbt')
     try: ticker=valid_symbol(symbol);calendar_name(ticker)
     except ValueError as exc: raise HTTPException(422,str(exc)) from None
-    if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy',headers={'Retry-After':'15'})
+    if not engine_workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy',headers={'Retry-After':'15'})
     try:
         from kratos.integrations import run_engine
         return run_engine(ticker,engine,pack(ticker,analyze(ticker)))
     except Exception: raise HTTPException(503,'Upstream research unavailable; no result invented') from None
-    finally: workers.release()
+    finally: engine_workers.release()
 
 @app.get('/config.json')
 def config():
