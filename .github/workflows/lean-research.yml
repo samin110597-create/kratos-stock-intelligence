@@ -1,0 +1,39 @@
+name: Genuine LEAN simulation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['research/lean/**', 'scripts/prepare_lean.py', 'scripts/collect_lean.py', '.github/workflows/lean-research.yml']
+permissions:
+  contents: write
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m scripts.prepare_lean
+      - name: Run official upstream LEAN image without brokerage access
+        run: |
+          docker pull quantconnect/lean:latest
+          docker image inspect quantconnect/lean:latest --format '{{.Id}}' > lean-work/image.txt
+          docker run --rm --network none -v "$PWD/lean-work:/kratos" --entrypoint /bin/bash quantconnect/lean:latest -c 'cd /Lean/Launcher/bin/Debug && dotnet QuantConnect.Lean.Launcher.dll --config /kratos/config.json'
+      - run: python -m scripts.collect_lean
+      - name: Preserve completed simulation
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f site/data/lean-latest.json site/data/lean-runs
+          git commit -m 'Record genuine LEAN strategy simulation'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lean-diagnostics
+          path: lean-work
+          retention-days: 7

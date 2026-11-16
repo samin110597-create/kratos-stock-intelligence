@@ -116,6 +116,20 @@ def analysis(request:Request,symbol:str,require_fresh:bool=False):
         raise HTTPException(503,'Analysis failed; no market signal generated.') from exc
     finally: workers.release()
 
+@app.get('/api/engine/{engine}')
+def engine_analysis(engine:str,request:Request,symbol:str):
+    throttle(request)
+    if not public_analysis_enabled(): personal_access(request)
+    if engine not in ('openbb','vectorbt'): raise HTTPException(422,'Use openbb or vectorbt')
+    try: ticker=valid_symbol(symbol);calendar_name(ticker)
+    except ValueError as exc: raise HTTPException(422,str(exc)) from None
+    if not workers.acquire(blocking=False): raise HTTPException(503,'Analyzer busy',headers={'Retry-After':'15'})
+    try:
+        from kratos.integrations import run_engine
+        return run_engine(ticker,engine,pack(ticker,analyze(ticker)))
+    except Exception: raise HTTPException(503,'Upstream research unavailable; no result invented') from None
+    finally: workers.release()
+
 @app.get('/config.json')
 def config():
     return {'api_url':'','same_origin_api':True,'refresh_minutes':15,'personal_access_required':not public_analysis_enabled() and bool(os.getenv('KRATOS_ACCESS_TOKEN')), 'private_research_available':not public_analysis_enabled()}

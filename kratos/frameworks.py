@@ -37,6 +37,8 @@ def vectorbt_research(rows):
         'method':'Fixed 10/30-day moving-average crossover; next-session open execution',
         'total_return':float(pf.total_return()), 'max_drawdown':float(pf.max_drawdown()),
         'closed_trades':int(pf.trades.closed.count()),
+        'buy_hold_price_return':float(close.iloc[-1]/close.iloc[0]-1),
+        'bar_count':len(df),
         'win_rate':float(pf.trades.closed.win_rate()) if pf.trades.closed.count() else None,
         'equity':[{'time':str(i), 'value':float(v)} for i,v in equity.items()],
         'assumptions':{'initial_cash':10000,'fee_per_fill':0.001,'slippage_per_fill':0.0005},
@@ -76,7 +78,19 @@ def qlib_research(rows, symbol):
     if not predictions: raise ValueError('Insufficient held-out observations')
     actual=np.array([p['actual_return'] for p in predictions]); pred=np.array([p['predicted_return'] for p in predictions])
     mae=float(np.abs(actual-pred).mean()); baseline=float(np.abs(actual).mean())
+    all_handler=DataHandlerLP(data_loader={'class':'StaticDataLoader','module_path':'qlib.data.dataset.loader',
+        'kwargs':{'config':data}},infer_processors=[],learn_processors=[])
+    all_dataset=DatasetH(handler=all_handler,segments={'train':(data.index[0][0],data.index[-1][0])})
+    final_model=LinearModel(estimator='ridge',alpha=1.0,fit_intercept=True)
+    final_model.fit(all_dataset)
+    latest=features.iloc[-1].values
+    current_prediction=float(latest @ final_model.coef_ + final_model.intercept_)
     return {'status':'operational_historical', 'version':version('pyqlib'),
+        'frozen_model':{'features':list(features.columns),'coefficients':final_model.coef_.tolist(),
+            'intercept':float(final_model.intercept_), 'training_last_feature_date':data.index[-1][0].isoformat()},
+        'experimental_forecast':{'asof':df.index[-1].isoformat(),'predicted_return':current_prediction,
+            'horizon':'next completed trading session close','reference_close':float(close.iloc[-1]),
+            'status':'EXPERIMENTAL_NOT_VALIDATED','probability':None},
         'method':'Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo',
         'test_samples':len(predictions),'return_mae':mae,'no_change_mae':baseline,
         'skill_vs_no_change':1-mae/baseline if baseline else None,

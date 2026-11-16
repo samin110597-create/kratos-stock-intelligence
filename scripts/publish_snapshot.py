@@ -104,7 +104,7 @@ def pack(ticker, result):
             "high52w": tech["high52w"], "low52w": tech["low52w"],
             "history": history,
             "structure": tech.get("structure", {}),
-            "candles": {tf:[{"time":i.isoformat(), "open":r.Open,"high":r.High,"low":r.Low,"close":r.Close,"volume":r.Volume} for i,r in frame.tail(100).iterrows()] for tf,frame in tech.get("frames",{}).items()}
+            "candles": {tf:[{"time":i.isoformat(), "open":r.Open,"high":r.High,"low":r.Low,"close":r.Close,"volume":r.Volume} for i,r in frame.tail(756 if tf=='1D' else 100).iterrows()] for tf,frame in tech.get("frames",{}).items()}
         },
         "market_structure": causal_structure(df),
         "fundamentals": {

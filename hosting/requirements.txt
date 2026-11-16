@@ -1,2 +1,5 @@
 spaces>=0.40,<1
 transformers>=5,<6
+openbb-equity==2.0.0
+openbb-yfinance==2.1.0
+vectorbt==0.28.2

@@ -1,0 +1,39 @@
+name: Genuine TradingAgents committee
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['scripts/committee_research.py', '.github/workflows/committee-research.yml']
+permissions:
+  contents: write
+jobs:
+  committee:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      TRADINGAGENTS_REVISION: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated upstream package
+        run: pip install "git+https://github.com/TauricResearch/TradingAgents.git@$TRADINGAGENTS_REVISION"
+      - name: Start free local model inside hosted runner
+        run: |
+          docker run -d --name ollama -p 127.0.0.1:11434:11434 ollama/ollama:latest
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:11434/api/tags; then break; fi
+            sleep 2
+          done
+          docker exec ollama ollama pull qwen2.5:3b
+      - name: Execute actual upstream committee
+        run: python scripts/committee_research.py
+      - name: Preserve completed committee research
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f site/data/committee-latest.json site/data/committee-runs
+          git commit -m 'Record genuine TradingAgents research with local model'
+          git pull --rebase origin main
+          git push origin HEAD:main

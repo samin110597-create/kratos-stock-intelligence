@@ -1,5 +1,5 @@
 'use strict';
-const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,frameworks:null,paths:{},request:0};
+const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,frameworks:null,archives:{},engines:{},enginePending:{},paths:{},request:0};
 const el=id=>document.getElementById(id),esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>typeof v==='number'&&Number.isFinite(v);
 const val=(v,d=2)=>num(v)?v.toLocaleString('en-CA',{maximumFractionDigits:d}):'Unavailable';
@@ -44,10 +44,12 @@ async function selectTicker(raw,fetchNew=true){
  }
  const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':(state.config.hosting_reason||'On-demand backend unavailable. Only explicitly dated archived research is available.');notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
  state.ticker=t;el('dashboard').hidden=false;el('intro').hidden=true;render();
+ if(fetchNew&&enabled&&currentResult(x)&&!el('archive-mode')?.checked)loadEngines(t,id);
 }
 function render(){const x=state.feed.tickers[state.ticker];if(!x)return;
  if(!el('archive-mode')?.checked&&!currentResult(x)){renderUnavailable('Fresh analysis unavailable. Archived prices and trading levels are hidden.');return;}const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
  if(['openbb','qlib','tradingagents','vectorbt','lean'].includes(state.tab))out+=frameworkView(x);
+ if(state.tab==='overview')out+=integratedView(x);
  const legacy=x.analysis_version!=='rules-v2.0.0';
  notify(x.ticker+' · '+(el('archive-mode')?.checked?'ARCHIVE VIEW · ':'')+f.status+' · Minute bar opened: '+when(x.minute_bar_utc)+' · Retrieved: '+when(x.retrieved_at_utc)+' · '+x.provider, !f.live);
  el('kpis').innerHTML=(f.open||el('archive-mode')?.checked?stat(el('archive-mode')?.checked?'Archived minute price':'Latest reported minute price',m(el('archive-mode')?.checked||f.live?x.quote?.price:null),'Minute bar: '+when(x.minute_bar_utc)):stat('Market status','CLOSED','Last reported minute: '+when(x.minute_bar_utc)))+stat('Last completed daily close',m(x.price),x.last_closed_bar_date)+stat(el('archive-mode')?.checked?'Historical rule classification':'Research decision',classification(x),'NO RELIABLE EDGE established')+stat('Daily price structure',d.timeframes?.['1D']?.state||'Unavailable','Weekly: '+(d.timeframes?.['1W']?.state||'Unavailable'));
@@ -129,7 +131,10 @@ function candles(data,zones,plan){const rows=data.filter(r=>['open','high','low'
  return '<svg class="chart" viewBox="0 0 710 260" role="img" aria-label="Closed '+esc(state.tf)+' OHLC candles">'+ticks+overlay+bars+levels+'<text x="40" y="255">'+esc(rows[0].time.slice(0,10))+'</text><text x="590" y="255">'+esc(rows.at(-1).time.slice(0,10))+'</text></svg>';
 }
 async function loadFeed(){const feed=await fetchJSON('./data/snapshots.json',20000);if(!feed?.tickers)throw Error('Invalid snapshot file');try{const plans=await fetchJSON('./data/plans.json',10000);for(const [symbol,p] of Object.entries(plans)){const x=feed.tickers[symbol];if(x&&p.based_on_date===x.last_closed_bar_date&&p.source_retrieved_at===x.retrieved_at_utc)x.technical_plan=p;}}catch{}for(const [symbol,current] of Object.entries(state.feed.tickers)){const incoming=feed.tickers[symbol];if(!incoming||Date.parse(current.retrieved_at_utc)>Date.parse(incoming.retrieved_at_utc))feed.tickers[symbol]=current;}state.feed=feed;tickerButtons();}
-async function boot(){fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.ticker)render()}).catch(()=>{});fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
+async function boot(){
+ for(const file of ['current-research.json','lean-latest.json','committee-latest.json'])fetchJSON('https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/'+file,20000).then(r=>{for(const [symbol,record] of Object.entries(r.tickers||{})){for(const [key,engine] of Object.entries(record.engines||{})){if(!['operational','operational_historical'].includes(engine.status))continue;state.archives[symbol]=state.archives[symbol]||{};state.archives[symbol][key]=record;}}if(state.ticker)render()}).catch(()=>{});
+
+fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.ticker)render()}).catch(()=>{});fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
  if(el('personal-access'))el('personal-access').hidden=!state.config.personal_access_required;
  el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':(state.config.hosting_reason||'Historical archive · Python hosting not connected');
  try{await loadFeed()}catch(e){notify('Historical archive unavailable; on-demand search remains available.',true)}
@@ -145,18 +150,22 @@ boot();
 
 function frameworkView(x){
  const names={openbb:'OpenBB',qlib:'Microsoft Qlib',tradingagents:'TradingAgents',vectorbt:'VectorBT',lean:'QuantConnect LEAN'};
- const record=state.frameworks?.tickers?.[state.ticker];
+ const record=state.engines[state.ticker]?.[state.tab]||state.archives[state.ticker]?.[state.tab]||state.frameworks?.tickers?.[state.ticker];
  const engine=record?.engines?.[state.tab];
- const reasons={openbb:'OpenBB is not integrated. Existing provider facts below are from Kratos, not OpenBB. Statement history and intrinsic value are unavailable.',tradingagents:'No actual AI committee is running. An authenticated AI model with verified cost and upstream TradingAgents integration is required.',lean:'The QuantConnect LEAN runtime and compatible data have not been installed or tested. No LEAN simulation is claimed.'};
- let out=card(names[state.tab]+' · Integration status',line('Upstream engine',engine?.status==='operational_historical'?'RUN COMPLETED · historical research':'NOT OPERATIONAL')+'<p>'+esc(engine?.status==='operational_historical'?'Executed with the actual upstream package on the archived dataset.':(engine?.reason||reasons[state.tab]||'No completed upstream run is available for this ticker.'))+'</p>');
- if(engine?.status==='operational_historical'){
+ const reasons={openbb:'OpenBB is not integrated. Existing provider facts below are from Kratos, not OpenBB. Statement history and intrinsic value are unavailable.',tradingagents:'No verified TradingAgents committee result is available for this ticker. The optional evidence-selection model is not TradingAgents.',lean:'The QuantConnect LEAN runtime and compatible data have not been installed or tested. No LEAN simulation is claimed.'};
+ let out=state.enginePending[state.ticker]?.[state.tab]?card('Calculating upstream research','<p>This ticker is being processed. Results appear when the real engine finishes.</p>'):'';
+ out+=card(names[state.tab]+' · Integration status',line('Upstream engine',['operational','operational_historical'].includes(engine?.status)?'RUN COMPLETED · historical research':'NOT OPERATIONAL')+'<p>'+esc(['operational','operational_historical'].includes(engine?.status)?'Executed with the actual upstream package. Check the input dates below; historical tests do not establish a live trading edge.':(engine?.reason||reasons[state.tab]||'No completed upstream run is available for this ticker.'))+'</p>');
+ if(['operational','operational_historical'].includes(engine?.status)){
   // Never silently attach an archived backtest to a newer live ticker response.
-  if(record.source_retrieved_at_utc!==x.retrieved_at_utc||record.data_last_session!==x.last_closed_bar_date)return out+card('Different data version','<p>The saved experiment uses an older input dataset. It is not shown as a result of this new analysis.</p>');
+  if(record.data_last_session!==x.last_closed_bar_date)out+=card('Older historical experiment','<p>This experiment uses a different dataset date. It is historical evidence only and does not describe the current ticker price.</p>');
   out+=card('Historical dataset · not today’s forecast',line('Data through',record.data_last_session)+line('Source',record.source)+line('Data retrieved',when(record.source_retrieved_at_utc))+line('Calculated',when(record.calculated_at_utc))+line('Framework version',engine.version)+'<p>'+esc(engine.method)+'</p><p class="hint">Input SHA-256: '+esc(record.input_sha256)+'</p>');
   if(state.tab==='qlib')out+=card('Out-of-sample model comparison',line('Held-out sessions',engine.test_samples)+line('Qlib mean absolute return error',val(engine.return_mae*100,3)+' percentage points')+line('No-change baseline error',val(engine.no_change_mae*100,3)+' percentage points')+line('Improvement over no-change',val(engine.skill_vs_no_change*100,2)+'%')+line('Historical direction accuracy',val(engine.direction_accuracy*100,1)+'%')+'<p class="hint">Negative improvement means the model was worse than predicting no change. This small test does not establish a reliable trading edge.</p>');
-  if(state.tab==='vectorbt')out+=card('Measured historical strategy results',line('Net total return',val(engine.total_return*100,2)+'%')+line('Maximum drawdown',val(engine.max_drawdown*100,2)+'%')+line('Closed trades',engine.closed_trades)+line('Closed-trade win rate',num(engine.win_rate)?val(engine.win_rate*100,1)+'%':'No closed trades')+line('Costs per fill','0.10% fee + 0.05% slippage')+equityChart(engine.equity));
+  if(state.tab==='tradingagents')out+=card('AI committee · verification boundary','<p>The actual upstream committee completed. Its generated opinions are not independently verified and are not used to issue a buy/sell instruction.</p><a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/committee-runs">Inspect full debate and risk discussion in the audit archive</a>');
+  if(state.tab==='lean')out+=card('LEAN simulation results',Object.entries(engine.statistics||{}).map(([k,v])=>line(k,v)).join(''));
+  if(state.tab==='vectorbt')out+=card('Measured historical strategy results',line('Net total return',val(engine.total_return*100,2)+'%')+line('Maximum drawdown',val(engine.max_drawdown*100,2)+'%')+line('Buy and hold price return (before costs)',num(engine.buy_hold_price_return)?val(engine.buy_hold_price_return*100,2)+'%':'Unavailable')+line('Closed trades',engine.closed_trades)+line('Closed-trade win rate',num(engine.win_rate)?val(engine.win_rate*100,1)+'%':'No closed trades')+line('Costs per fill','0.10% fee + 0.05% slippage')+equityChart(engine.equity));
   out+=card('Limits & reproducibility',(engine.limitations||[]).map(v=>'<p>'+esc(v)+'</p>').join('')+'<a href="./data/frameworks.json">Inspect predictions and calculation inputs</a> · <a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/framework-runs">Immutable run files</a>');
  }
+ if(state.tab==='openbb'&&engine?.statements)out+=statementView(engine);
  if(state.tab==='openbb')out+=card('Preserved Kratos financial facts',(x.fundamentals?.facts||[]).map(z=>line(z.label,z.value)).join('')||'<p>No financial facts available.</p>');
  if(state.tab==='tradingagents')out+=card('Existing deterministic context · not AI debate','<p>'+esc((x.technical_plan||x.decision||{}).summary||'No summary available.')+'</p><p>News catalysts and bullish/bearish AI debate are unavailable.</p>');
  if(state.tab==='vectorbt')out+=card('Kratos price structure · custom calculations',candles(x.technical?.candles?.['1D']||[],[],null)+'<p>Use Technicals for FVGs, RSI, volume and liquidity diagnostics. These custom calculations are separate from the upstream VectorBT backtest.</p>');
@@ -192,4 +201,35 @@ function timeframeCards(x){
   return card({'1H':'1 hour','4H':'4 hours','1D':'Daily','1W':'Weekly'}[tf],badge(s.trend||'UNAVAILABLE')+line('Price structure',s.structure||'Unavailable')+'<p>'+esc(s.explanation||'Not enough verified data.')+'</p>'+line(r?'Candle closed at':'Archived candle label',r?when(r.bar_closed_at_utc):when(old.asof))+line('RSI (14)',val(s.rsi))+line('Volume / prior average',val(s.volume_ratio))+line('Nearest support',moneyHere(s.support?.[0]?.price))+line('Nearest resistance',moneyHere(s.resistance?.[0]?.price)));
  }).join('')+'</div>';
  return html;
+}
+
+async function loadEngines(t,id){
+ state.enginePending[t]={openbb:true,vectorbt:true};
+ state.engines[t]={};
+ await Promise.all(['openbb','vectorbt'].map(async engine=>{
+  try {const record=await fetchJSON(apiBase()+'/api/engine/'+engine+'?symbol='+encodeURIComponent(t),180000);
+   if(id!==state.request)return;
+   if(record.symbol!==t)throw Error('Ticker mismatch');
+   state.engines[t][engine]=record;
+  }catch(e){if(id!==state.request)return;state.engines[t][engine]={symbol:t,engines:{[engine]:{status:'unavailable',reason:'Research unavailable: '+e.message}}};}
+  finally{if(id===state.request){state.enginePending[t][engine]=false;if(state.ticker===t)render();}}
+ }));
+}
+function statementView(engine){
+ const preferred=['date','period_ending','fiscal_period','reported_currency','total_revenue','operating_revenue','cost_of_revenue','gross_profit','operating_income','net_income','diluted_earnings_per_share','total_assets','total_liabilities','total_equity','operating_cash_flow','capital_expenditure','free_cash_flow'];
+ return Object.entries(engine.statements).map(([name,rows])=>{
+  const keys=preferred.filter(k=>rows.some(r=>r[k]!=null));
+  return card('OpenBB · '+name+' statements','<p>Source: '+esc(engine.source)+' · Retrieved '+esc(when(engine.retrieved_at_utc))+'</p><div style="overflow:auto"><table><thead><tr>'+keys.map(k=>'<th>'+esc(k.replaceAll('_',' '))+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+keys.map(k=>'<td>'+esc(num(r[k])?val(r[k]):r[k]??'Unavailable')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><p class="hint">Amounts use the statement currency, which may differ from the stock trading currency. Missing fields are not zero.</p>');
+ }).join('');
+}
+function integratedView(x){
+ const live=state.engines[x.ticker]||{},historic=state.frameworks?.tickers?.[x.ticker];
+ let body='<p>Read the evidence in this order: data quality, business results, price structure, model tests, then risk. Agreement between engines is not a calibrated probability.</p>';
+ const labels={openbb:'OpenBB · business statements',qlib:'Qlib · prediction testing',tradingagents:'TradingAgents · AI debate',vectorbt:'VectorBT · strategy testing',lean:'LEAN · execution simulation'};
+ for(const [key,label] of Object.entries(labels)){
+  const record=live[key]||state.archives[x.ticker]?.[key]||historic,e=record?.engines?.[key];
+  body+=line(label,state.enginePending[x.ticker]?.[key]?'Calculating for '+x.ticker:e?.status==='operational'?'Statements retrieved':e?.status==='operational_historical'?'Historical test · through '+record.data_last_session:'Unavailable — no result claimed');
+ }
+ body+='<p><b>What this means for a trade:</b> a trend describes what prices have done. A backtest measures one fixed rule in the past. Neither proves what happens next. Check the engine tabs for evidence and assumptions.</p>';
+ return card('One ticker · integrated evidence',body)+card('Learn from this chart','<p><b>1H:</b> short-term movement. <b>4H:</b> the broader intraday setup. <b>Daily:</b> swing context. <b>Weekly:</b> the larger trend. A short-term bounce can occur during a longer-term decline.</p><p><b>Support / resistance:</b> observed price levels, not promises. <b>RSI:</b> recent momentum, not a standalone buy signal. <b>Drawdown:</b> the largest simulated loss from a previous portfolio peak.</p><p><b>Before considering a setup:</b> check the source time, the condition that would confirm the idea, the price that would invalidate it, and whether the historical strategy beat a simple baseline after costs. Missing evidence means the conclusion remains unverified.</p>');
 }
