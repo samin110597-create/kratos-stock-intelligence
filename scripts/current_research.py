@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]/'site/data'
 
 def run():
     index={}
-    for raw in os.getenv('RESEARCH_SYMBOLS','NVDA,GOOG,RY.TO,AAPL').split(','):
+    for raw in os.getenv('RESEARCH_SYMBOLS','NVDA,GOOG,RY.TO,AAPL,MSFT,AMZN,META,AVGO,AMD,MU,AMAT,LRCX,IREN,CIFR').split(','):
         symbol=valid_symbol(raw)
         try:
             payload=pack(symbol,analyze(symbol))

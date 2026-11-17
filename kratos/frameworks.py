@@ -62,6 +62,7 @@ def qlib_research(rows, symbol):
     data.index = pd.MultiIndex.from_arrays([data.index.tz_localize(None), [symbol]*len(data)], names=['datetime','instrument'])
     # Expanding windows with a one-row embargo. Every prediction precedes its label.
     predictions=[]
+    comparison_predictions=[]
     for start in range(40, len(data), 10):
         stop=min(start+10,len(data)); train_end=start-2
         handler=DataHandlerLP(data_loader={'class':'StaticDataLoader','module_path':'qlib.data.dataset.loader',
@@ -71,6 +72,9 @@ def qlib_research(rows, symbol):
             'test':(data.index[start][0],data.index[stop-1][0])})
         model=LinearModel(estimator='ridge',alpha=1.0,fit_intercept=True)
         model.fit(dataset)
+        comparison_model=LinearModel(estimator='ols',fit_intercept=True)
+        comparison_model.fit(dataset)
+        comparison_predictions.extend(float(v) for v in comparison_model.predict(dataset).values)
         for idx,pred in model.predict(dataset).items():
             predictions.append({'asof':idx[0].isoformat(),'predicted_return':float(pred),
                 'actual_return':float(data.loc[idx,('label','next_session_return')]),
@@ -78,6 +82,21 @@ def qlib_research(rows, symbol):
     if not predictions: raise ValueError('Insufficient held-out observations')
     actual=np.array([p['actual_return'] for p in predictions]); pred=np.array([p['predicted_return'] for p in predictions])
     mae=float(np.abs(actual-pred).mean()); baseline=float(np.abs(actual).mean())
+    def metrics(values):
+        values=np.asarray(values)
+        err=np.abs(actual-values)
+        return {'test_samples':len(actual),'return_mae':float(err.mean()),
+            'return_rmse':float(np.sqrt(((actual-values)**2).mean())),
+            'skill_vs_no_change':float(1-err.mean()/baseline) if baseline else None,
+            'direction_accuracy':float(((values>0)==(actual>0)).mean()) if np.any(values) else None}
+    comparisons={'Qlib ridge (fixed primary)':metrics(pred),'Qlib ordinary least squares':metrics(comparison_predictions),
+        'No-change baseline':metrics(np.zeros(len(pred)))}
+    folds=[]
+    for i in range(0,len(pred),60):
+        a=actual[i:i+60];p=pred[i:i+60]
+        folds.append({'first_date':predictions[i]['asof'],'last_date':predictions[min(i+59,len(pred)-1)]['asof'],
+            'samples':len(a),'return_mae':float(np.abs(a-p).mean()),'no_change_mae':float(np.abs(a).mean()),
+            'direction_accuracy':float(((p>0)==(a>0)).mean())})
     all_handler=DataHandlerLP(data_loader={'class':'StaticDataLoader','module_path':'qlib.data.dataset.loader',
         'kwargs':{'config':data}},infer_processors=[],learn_processors=[])
     all_dataset=DatasetH(handler=all_handler,segments={'train':(data.index[0][0],data.index[-1][0])})
@@ -92,13 +111,16 @@ def qlib_research(rows, symbol):
             'horizon':'next completed trading session close','reference_close':float(close.iloc[-1]),
             'status':'EXPERIMENTAL_NOT_VALIDATED','probability':None},
         'method':'Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo',
+        'model_comparison':comparisons,'chronological_folds':folds,
+        'model_selection':'Ridge remains fixed in advance; the best backtest is not automatically selected.',
         'test_samples':len(predictions),'return_mae':mae,'no_change_mae':baseline,
         'skill_vs_no_change':1-mae/baseline if baseline else None,
         'direction_accuracy':float(((pred>0)==(actual>0)).mean()),'predictions':predictions,
         'limitations':['Small single-symbol revised-data experiment, not production forecasting.',
             'Features use completed bars only. No hyperparameter search or random split.',
             'Historical out-of-sample results are not forward-recorded accuracy or trading returns.',
-            'No current forecast is issued from archived data.']}
+            'Archived forecasts retain their original date and are never represented as newly generated.',
+            'OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test.']}
 
 
 def research_record(symbol, snapshot):
@@ -112,8 +134,8 @@ def research_record(symbol, snapshot):
         except Exception as exc:
             result['engines'][key]={'status':'unavailable','reason':type(exc).__name__+'; research did not complete'}
     for key,reason in {
-        'openbb':'Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model.',
-        'tradingagents':'Not integrated: no authenticated, cost-approved AI inference endpoint has been verified.',
-        'lean':'Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested.'}.items():
+        'openbb':'OpenBB statements are requested separately on demand; not part of this scheduled model record.',
+        'tradingagents':'Committee reports are loaded separately from completed upstream runs.',
+        'lean':'LEAN results are loaded separately; this model record is not a LEAN execution.'}.items():
         result['engines'][key]={'status':'unavailable','reason':reason}
     return result

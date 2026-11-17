@@ -43,4 +43,7 @@ def test_real_qlib_future_changes_do_not_change_past_predictions():
     after=qlib_research(data,'TEST')
     assert before['predictions'][:10]==after['predictions'][:10]
     assert before['test_samples']>=20
+    assert len(before['model_comparison'])==3
+    assert all(v['test_samples']==before['test_samples'] for v in before['model_comparison'].values())
+    assert sum(f['samples'] for f in before['chronological_folds'])==before['test_samples']
     assert all(p['training_last_feature_date']<p['asof'] for p in before['predictions'])
