@@ -9,7 +9,7 @@ permissions:
 jobs:
   committee:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     env:
       TRADINGAGENTS_REVISION: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
     steps:
@@ -21,12 +21,15 @@ jobs:
         run: pip install "git+https://github.com/TauricResearch/TradingAgents.git@$TRADINGAGENTS_REVISION"
       - name: Start free local model inside hosted runner
         run: |
-          docker run -d --name ollama -p 127.0.0.1:11434:11434 ollama/ollama:latest
+          docker run -d --name ollama -p 127.0.0.1:11434:11434 ollama/ollama:0.13.0
           for attempt in $(seq 1 30); do
             if curl --fail --silent http://localhost:11434/api/tags; then break; fi
             sleep 2
           done
-          docker exec ollama ollama pull qwen2.5:3b
+          docker exec ollama ollama pull qwen2.5:1.5b
+          printf 'FROM qwen2.5:1.5b\nPARAMETER num_ctx 8192\nPARAMETER num_predict 384\nPARAMETER temperature 0\n' > /tmp/Modelfile
+          docker cp /tmp/Modelfile ollama:/tmp/Modelfile
+          docker exec ollama ollama create kratos-committee -f /tmp/Modelfile
       - name: Execute actual upstream committee
         run: python scripts/committee_research.py
       - name: Preserve completed committee research
