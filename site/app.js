@@ -207,7 +207,7 @@ async function loadEngines(t,id){
  state.enginePending[t]={openbb:true,vectorbt:true};
  state.engines[t]={};
  await Promise.all(['openbb','vectorbt'].map(async engine=>{
-  try {const record=await fetchJSON(apiBase()+'/api/engine/'+engine+'?symbol='+encodeURIComponent(t),180000);
+  try {const record=await fetchEngine(t,engine,id);
    if(id!==state.request)return;
    if(record.symbol!==t)throw Error('Ticker mismatch');
    state.engines[t][engine]=record;
@@ -232,4 +232,13 @@ function integratedView(x){
  }
  body+='<p><b>What this means for a trade:</b> a trend describes what prices have done. A backtest measures one fixed rule in the past. Neither proves what happens next. Check the engine tabs for evidence and assumptions.</p>';
  return card('One ticker · integrated evidence',body)+card('Learn from this chart','<p><b>1H:</b> short-term movement. <b>4H:</b> the broader intraday setup. <b>Daily:</b> swing context. <b>Weekly:</b> the larger trend. A short-term bounce can occur during a longer-term decline.</p><p><b>Support / resistance:</b> observed price levels, not promises. <b>RSI:</b> recent momentum, not a standalone buy signal. <b>Drawdown:</b> the largest simulated loss from a previous portfolio peak.</p><p><b>Before considering a setup:</b> check the source time, the condition that would confirm the idea, the price that would invalidate it, and whether the historical strategy beat a simple baseline after costs. Missing evidence means the conclusion remains unverified.</p>');
+}
+
+async function fetchEngine(t,engine,id){
+ for(let attempt=0;attempt<3;attempt++){
+  if(id!==state.request)throw Error('Ticker changed; old request discarded');
+  try{return await fetchJSON(apiBase()+'/api/engine/'+engine+'?symbol='+encodeURIComponent(t),90000);}
+  catch(error){if(attempt===2||![undefined,429,502,503,504].includes(error.status))throw error;
+   await new Promise(resolve=>setTimeout(resolve,error.status===429?60000:15000));}
+ }
 }
