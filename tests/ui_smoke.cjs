@@ -11,7 +11,7 @@ const w=dom.window; const errors=[];
 w.addEventListener('error',e=>errors.push(e.message));
 w.fetch=async url=>({ok:true,json:async()=>String(url).includes('config.json')?{same_origin_api:false}:String(url).includes('frameworks.json')?JSON.parse(fs.readFileSync('site/data/frameworks.json','utf8')):String(url).includes('research.json')?research:String(url).includes('plans.json')?JSON.parse(fs.readFileSync('site/data/plans.json','utf8')):structuredClone(feed)});
 w.AbortController=AbortController;
-w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state,currentResult};');
+w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state,currentResult,render};');
 await new Promise(r=>setTimeout(r,50));
 assert.equal(w.document.getElementById('dashboard').hidden,false);
 assert(!w.document.getElementById('kpis').textContent.includes('220.17'));
@@ -20,9 +20,21 @@ w.document.getElementById('archive-mode').checked=true;
 await w.__test.selectTicker('NVDA',false);
 let visited=0;
 for(const tab of w.document.querySelectorAll('.tab')){
- tab.click();if(['qlib','vectorbt'].includes(tab.dataset.tab)){assert.match(w.document.getElementById('view').textContent,/RUN COMPLETED/);assert(!w.document.getElementById('view').textContent.includes('No completed upstream run'));}if(['openbb','tradingagents','lean'].includes(tab.dataset.tab))assert.match(w.document.getElementById('view').textContent,/NOT OPERATIONAL/);if(tab.dataset.tab==='forecast'){assert.match(w.document.getElementById('view').textContent,/The price plan/);assert.match(w.document.getElementById('view').textContent,/Historical re-analysis/);assert(!w.document.getElementById('view').textContent.includes('ATR ×'));}assert.equal(tab.getAttribute('aria-selected'),'true');assert(w.document.getElementById('view').textContent.length>30);visited++;
+ tab.click();if(['qlib','vectorbt'].includes(tab.dataset.tab)){assert.match(w.document.getElementById('view').textContent,/RUN COMPLETED/);assert(!w.document.getElementById('view').textContent.includes('No completed upstream run'));}if(['openbb','tradingagents','lean'].includes(tab.dataset.tab))assert.match(w.document.getElementById('view').textContent,/NOT YET RUN FOR THIS TICKER/);if(tab.dataset.tab==='forecast'){assert.match(w.document.getElementById('view').textContent,/The price plan/);assert.match(w.document.getElementById('view').textContent,/Historical re-analysis/);assert(!w.document.getElementById('view').textContent.includes('ATR ×'));}assert.equal(tab.getAttribute('aria-selected'),'true');assert(w.document.getElementById('view').textContent.length>30);visited++;
 }
 assert.equal(visited,13);assert.deepEqual(errors,[]);
+// Display real engine states distinctly and safely render untrusted model text.
+w.eval(`window.__test.state.tab='openbb';window.__test.state.enginePending.NVDA={openbb:true};window.__test.render()`);
+assert.match(w.document.getElementById('view').textContent,/CALCULATING/);
+assert(!w.document.getElementById('view').textContent.includes('NOT YET RUN'));
+w.eval(`window.__test.state.enginePending.NVDA={};window.__test.state.tab='tradingagents';window.__test.state.archives.NVDA={tradingagents:{symbol:'NVDA',research_date:'2026-11-16',engines:{tradingagents:{status:'operational_historical',reports:{market_report:'<img src=x onerror=alert(1)>test discussion'}}}}};window.__test.render()`);
+assert.match(w.document.getElementById('view').textContent,/test discussion/);
+assert.equal(w.document.getElementById('view').querySelector('img'),null);
+assert(!w.document.getElementById('view').textContent.includes('bullish/bearish AI debate are unavailable'));
+w.eval(`window.__test.state.tab='qlib';window.__test.state.archives.NVDA.qlib={symbol:'NVDA',engines:{qlib:{status:'operational_historical',model_comparison:{Ridge:{test_samples:25,return_mae:0.02,skill_vs_no_change:-0.1,direction_accuracy:0.48}},chronological_folds:[]}}};window.__test.render()`);
+assert.match(w.document.getElementById('view').textContent,/Models tested on identical unseen sessions/);
+assert.match(w.document.getElementById('view').textContent,/-10/);
+
 w.eval("window.__test.selectTicker('../etc/passwd',false)");assert.match(w.document.getElementById('status').textContent,/valid US or Canadian/);
 await w.eval("window.__test.selectTicker('NOTCOVERED',false)");assert(w.document.getElementById('dashboard').hidden);
 assert.match(w.document.getElementById('status').textContent,/no published snapshot/);
