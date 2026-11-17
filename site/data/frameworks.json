@@ -6,7 +6,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:13:24.589722+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "3102bcd1baea29e1c8c2ab8dec37428ebe76f33a0279e8df0aa1d7926fad2102",
-      "calculated_at_utc": "2026-11-16T15:13:13.312794+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:49.761366+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -460,6 +460,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.01665811634450004,
+              "return_rmse": 0.022592236251179378,
+              "skill_vs_no_change": 0.007056770087581543,
+              "direction_accuracy": 0.525
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.018811204644978558,
+              "return_rmse": 0.025315225309686405,
+              "skill_vs_no_change": -0.12128273764251318,
+              "direction_accuracy": 0.45
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.016776504278063663,
+              "return_rmse": 0.022529015543312384,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.01665811634450004,
+              "no_change_mae": 0.016776504278063663,
+              "direction_accuracy": 0.525
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.01665811634450004,
           "no_change_mae": 0.016776504278063663,
@@ -468,7 +502,7 @@
           "predictions": [
             {
               "asof": "2026-08-24T04:00:00",
-              "predicted_return": 0.003934047230913706,
+              "predicted_return": 0.003934047230913705,
               "actual_return": 0.021920603500928948,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -711,23 +745,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "AVGO": {
       "symbol": "AVGO",
@@ -735,7 +770,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:14:15.488692+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "be607a44f6340ddcd359992777b1e236dfa3550a9084ec947914420e4f68bb4c",
-      "calculated_at_utc": "2026-11-16T15:13:18.678103+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.112402+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -1172,8 +1207,8 @@
               "distance_ma20"
             ],
             "coefficients": [
-              0.002142178004621816,
-              -0.009340374421947488,
+              0.0021421780046218166,
+              -0.00934037442194749,
               0.0004915993797030761,
               -0.011835256661557818
             ],
@@ -1182,13 +1217,47 @@
           },
           "experimental_forecast": {
             "asof": "2026-10-20T04:00:00+00:00",
-            "predicted_return": 0.0002013392348367755,
+            "predicted_return": 0.0002013392348367757,
             "horizon": "next completed trading session close",
             "reference_close": 334.3699951171875,
             "status": "EXPERIMENTAL_NOT_VALIDATED",
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.016643993446221913,
+              "return_rmse": 0.021432800083237606,
+              "skill_vs_no_change": -0.003226540706432024,
+              "direction_accuracy": 0.45
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.018571495365153224,
+              "return_rmse": 0.022075551828061413,
+              "skill_vs_no_change": -0.11940785792350961,
+              "direction_accuracy": 0.425
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.016590463639949038,
+              "return_rmse": 0.021564623285076308,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.016643993446221913,
+              "no_change_mae": 0.016590463639949038,
+              "direction_accuracy": 0.45
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.016643993446221913,
           "no_change_mae": 0.016590463639949038,
@@ -1209,7 +1278,7 @@
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": 0.0015156851781316662,
+              "predicted_return": 0.001515685178131666,
               "actual_return": 0.04485506445989884,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -1239,7 +1308,7 @@
             },
             {
               "asof": "2026-09-02T04:00:00",
-              "predicted_return": 0.0008280628206524221,
+              "predicted_return": 0.0008280628206524222,
               "actual_return": -0.02744795458096083,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -1269,7 +1338,7 @@
             },
             {
               "asof": "2026-09-10T04:00:00",
-              "predicted_return": 0.00010117701536341094,
+              "predicted_return": 0.000101177015363411,
               "actual_return": 0.0032148205672397623,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -1299,7 +1368,7 @@
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": 0.0002934146058871205,
+              "predicted_return": 0.00029341460588712046,
               "actual_return": 0.029686144316076746,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -1311,7 +1380,7 @@
             },
             {
               "asof": "2026-09-21T04:00:00",
-              "predicted_return": -0.0005239273826625817,
+              "predicted_return": -0.0005239273826625818,
               "actual_return": 0.005183932233575161,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -1323,7 +1392,7 @@
             },
             {
               "asof": "2026-09-23T04:00:00",
-              "predicted_return": -0.00031138899139692425,
+              "predicted_return": -0.0003113889913969242,
               "actual_return": -0.013042635032485372,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -1335,7 +1404,7 @@
             },
             {
               "asof": "2026-09-25T04:00:00",
-              "predicted_return": 0.0002575240517300725,
+              "predicted_return": 0.00025752405173007245,
               "actual_return": -0.009183385552550605,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -1353,7 +1422,7 @@
             },
             {
               "asof": "2026-09-30T04:00:00",
-              "predicted_return": 0.00016680395634011114,
+              "predicted_return": 0.00016680395634011112,
               "actual_return": -0.021498299326526027,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -1365,13 +1434,13 @@
             },
             {
               "asof": "2026-10-02T04:00:00",
-              "predicted_return": -7.436320570494025e-06,
+              "predicted_return": -7.4363205704940575e-06,
               "actual_return": 0.020752364738406692,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-05T04:00:00",
-              "predicted_return": -0.00046219972216647885,
+              "predicted_return": -0.0004621997221664788,
               "actual_return": 0.03668860840992405,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -1395,13 +1464,13 @@
             },
             {
               "asof": "2026-10-09T04:00:00",
-              "predicted_return": -0.00035023661598243,
+              "predicted_return": -0.0003502366159824301,
               "actual_return": -0.018836082861207304,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
             {
               "asof": "2026-10-12T04:00:00",
-              "predicted_return": 0.0001949212881020555,
+              "predicted_return": 0.00019492128810205553,
               "actual_return": 0.007273099237056213,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -1431,7 +1500,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": 0.0011489795575911153,
+              "predicted_return": 0.0011489795575911157,
               "actual_return": -0.0006575248008340306,
               "training_last_feature_date": "2026-10-02T04:00:00"
             }
@@ -1440,23 +1509,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "AMAT": {
       "symbol": "AMAT",
@@ -1464,7 +1534,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:15:06.171891+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "d40c5812b3c02628472a767ce2d910b4178324d68519db6d3513bca9586d43a1",
-      "calculated_at_utc": "2026-11-16T15:13:18.715942+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.182695+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -1903,7 +1973,7 @@
             "coefficients": [
               0.010931216779474638,
               -0.030905369065750966,
-              0.004345143930343852,
+              0.0043451439303438515,
               -0.004363934906540992
             ],
             "intercept": -0.005333789469471806,
@@ -1911,13 +1981,47 @@
           },
           "experimental_forecast": {
             "asof": "2026-10-20T04:00:00+00:00",
-            "predicted_return": -0.0007931340170567493,
+            "predicted_return": -0.0007931340170567501,
             "horizon": "next completed trading session close",
             "reference_close": 404.9800109863281,
             "status": "EXPERIMENTAL_NOT_VALIDATED",
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.025798948479970864,
+              "return_rmse": 0.03258239167256516,
+              "skill_vs_no_change": -0.1293296696762798,
+              "direction_accuracy": 0.5
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.03472174729838469,
+              "return_rmse": 0.04170702814832199,
+              "skill_vs_no_change": -0.5199185128615105,
+              "direction_accuracy": 0.375
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.02284447949319005,
+              "return_rmse": 0.030141787062097816,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.025798948479970864,
+              "no_change_mae": 0.02284447949319005,
+              "direction_accuracy": 0.5
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.025798948479970864,
           "no_change_mae": 0.02284447949319005,
@@ -1926,7 +2030,7 @@
           "predictions": [
             {
               "asof": "2026-08-24T04:00:00",
-              "predicted_return": -0.00030992799761481345,
+              "predicted_return": -0.0003099279976148126,
               "actual_return": -0.00857100286160195,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -1956,7 +2060,7 @@
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": -0.00191743803344717,
+              "predicted_return": -0.0019174380334471691,
               "actual_return": -0.036082829067747624,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -2112,7 +2216,7 @@
             },
             {
               "asof": "2026-10-07T04:00:00",
-              "predicted_return": -0.0025689195498334065,
+              "predicted_return": -0.002568919549833407,
               "actual_return": -0.021281122770162475,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -2160,7 +2264,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": 0.0062294841714776025,
+              "predicted_return": 0.006229484171477602,
               "actual_return": -0.01967992702552479,
               "training_last_feature_date": "2026-10-02T04:00:00"
             }
@@ -2169,23 +2273,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "MU": {
       "symbol": "MU",
@@ -2193,7 +2298,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:15:56.734502+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "0cca0af60d4a430bc0e075d00939456fd3472fe5905e03158296f308f4997147",
-      "calculated_at_utc": "2026-11-16T15:13:18.753689+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.252525+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -2647,6 +2752,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.024608590905487317,
+              "return_rmse": 0.03110135882297131,
+              "skill_vs_no_change": -0.009988940692268411,
+              "direction_accuracy": 0.475
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.027781920158072265,
+              "return_rmse": 0.03444980359823552,
+              "skill_vs_no_change": -0.14022912643046892,
+              "direction_accuracy": 0.525
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.024365208284973947,
+              "return_rmse": 0.030224433883907713,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.024608590905487317,
+              "no_change_mae": 0.024365208284973947,
+              "direction_accuracy": 0.475
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.024608590905487317,
           "no_change_mae": 0.024365208284973947,
@@ -2673,7 +2812,7 @@
             },
             {
               "asof": "2026-08-27T04:00:00",
-              "predicted_return": -0.002389325192385963,
+              "predicted_return": -0.0023893251923859634,
               "actual_return": -0.0027047854448456476,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -2685,7 +2824,7 @@
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": -0.007880873563864223,
+              "predicted_return": -0.007880873563864221,
               "actual_return": -0.02637862437031413,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -2739,7 +2878,7 @@
             },
             {
               "asof": "2026-09-14T04:00:00",
-              "predicted_return": 0.004496433572039811,
+              "predicted_return": 0.004496433572039809,
               "actual_return": 0.00386345267564403,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -2751,7 +2890,7 @@
             },
             {
               "asof": "2026-09-16T04:00:00",
-              "predicted_return": 0.0041741732529153985,
+              "predicted_return": 0.0041741732529154,
               "actual_return": 0.05498895135533233,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -2787,7 +2926,7 @@
             },
             {
               "asof": "2026-09-24T04:00:00",
-              "predicted_return": -0.009470385576080962,
+              "predicted_return": -0.009470385576080964,
               "actual_return": 0.001619575534739015,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -2805,7 +2944,7 @@
             },
             {
               "asof": "2026-09-29T04:00:00",
-              "predicted_return": -0.0007691596893834039,
+              "predicted_return": -0.0007691596893834038,
               "actual_return": 2.819440616108615e-05,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -2877,7 +3016,7 @@
             },
             {
               "asof": "2026-10-15T04:00:00",
-              "predicted_return": 0.007918723799230448,
+              "predicted_return": 0.007918723799230446,
               "actual_return": -0.05626902187235128,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -2898,23 +3037,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "CIFR": {
       "symbol": "CIFR",
@@ -2922,7 +3062,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:16:47.311151+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "515bb348bd21e2823c1929e3430cf565e964da457941c297c857610f115bc38f",
-      "calculated_at_utc": "2026-11-16T15:13:18.790370+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.320670+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -3362,20 +3502,54 @@
               0.01382693469127475,
               -0.061597372946877595,
               0.01749767295260941,
-              -0.005871423103889407
+              -0.0058714231038894055
             ],
             "intercept": -0.015195169952484143,
             "training_last_feature_date": "2026-10-19T04:00:00"
           },
           "experimental_forecast": {
             "asof": "2026-10-20T04:00:00+00:00",
-            "predicted_return": 0.001126113331991094,
+            "predicted_return": 0.0011261133319910906,
             "horizon": "next completed trading session close",
             "reference_close": 8.880000114440918,
             "status": "EXPERIMENTAL_NOT_VALIDATED",
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.052324446144313606,
+              "return_rmse": 0.06597309372391409,
+              "skill_vs_no_change": -0.10641737720150868,
+              "direction_accuracy": 0.45
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.06047147611592394,
+              "return_rmse": 0.07465580819831008,
+              "skill_vs_no_change": -0.2786889672019084,
+              "direction_accuracy": 0.425
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.04729177905417505,
+              "return_rmse": 0.060314362755269996,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.052324446144313606,
+              "no_change_mae": 0.04729177905417505,
+              "direction_accuracy": 0.45
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.052324446144313606,
           "no_change_mae": 0.04729177905417505,
@@ -3384,7 +3558,7 @@
           "predictions": [
             {
               "asof": "2026-08-24T04:00:00",
-              "predicted_return": 0.0069425055612276805,
+              "predicted_return": 0.006942505561227684,
               "actual_return": 0.06184894729813073,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -3396,7 +3570,7 @@
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": -0.012144068788692156,
+              "predicted_return": -0.012144068788692154,
               "actual_return": 0.04681647806299116,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -3426,7 +3600,7 @@
             },
             {
               "asof": "2026-09-02T04:00:00",
-              "predicted_return": -0.008444043269928902,
+              "predicted_return": -0.008444043269928904,
               "actual_return": 0.14426880698486633,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -3438,7 +3612,7 @@
             },
             {
               "asof": "2026-09-04T04:00:00",
-              "predicted_return": -0.038198466974088005,
+              "predicted_return": -0.038198466974088,
               "actual_return": 0.04340476142605598,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -3522,7 +3696,7 @@
             },
             {
               "asof": "2026-09-25T04:00:00",
-              "predicted_return": -0.007484841811516754,
+              "predicted_return": -0.007484841811516753,
               "actual_return": -0.055837551984126765,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -3546,7 +3720,7 @@
             },
             {
               "asof": "2026-10-01T04:00:00",
-              "predicted_return": 0.00998982944380868,
+              "predicted_return": 0.009989829443808676,
               "actual_return": 0.016170763220125117,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -3558,13 +3732,13 @@
             },
             {
               "asof": "2026-10-05T04:00:00",
-              "predicted_return": 0.003104557449441064,
+              "predicted_return": 0.003104557449441066,
               "actual_return": 0.0012920192735859093,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-06T04:00:00",
-              "predicted_return": -0.0005682486060699481,
+              "predicted_return": -0.0005682486060699498,
               "actual_return": -0.06064513421827744,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -3588,13 +3762,13 @@
             },
             {
               "asof": "2026-10-12T04:00:00",
-              "predicted_return": 0.013464705041642553,
+              "predicted_return": 0.01346470504164255,
               "actual_return": -0.1276922959547776,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
             {
               "asof": "2026-10-13T04:00:00",
-              "predicted_return": 0.026295912521293846,
+              "predicted_return": 0.02629591252129384,
               "actual_return": -0.1234568389212144,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -3606,7 +3780,7 @@
             },
             {
               "asof": "2026-10-15T04:00:00",
-              "predicted_return": 0.029242447242855164,
+              "predicted_return": 0.02924244724285517,
               "actual_return": -0.10557773143866234,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -3618,7 +3792,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": 0.035362158110691745,
+              "predicted_return": 0.03536215811069174,
               "actual_return": -0.006711349972995273,
               "training_last_feature_date": "2026-10-02T04:00:00"
             }
@@ -3627,23 +3801,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "IREN": {
       "symbol": "IREN",
@@ -3651,7 +3826,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:17:38.024099+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ab0007e79b065c9d6b7379c591115d1ed9e44dc5d0f44d7542361ffcc4712c4b",
-      "calculated_at_utc": "2026-11-16T15:13:18.826749+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.388905+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -4088,10 +4263,10 @@
               "distance_ma20"
             ],
             "coefficients": [
-              -0.04875766875893432,
+              -0.04875766875893433,
               -0.04870746309735315,
               0.035156435225542765,
-              0.0074468706852069315
+              0.00744687068520693
             ],
             "intercept": -0.008300832518326187,
             "training_last_feature_date": "2026-10-19T04:00:00"
@@ -4105,6 +4280,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.040984274501803065,
+              "return_rmse": 0.05262892527530977,
+              "skill_vs_no_change": -0.03268485088111861,
+              "direction_accuracy": 0.45
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.04317709087446449,
+              "return_rmse": 0.057566960355654374,
+              "skill_vs_no_change": -0.08793746365365673,
+              "direction_accuracy": 0.6
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.03968710731723625,
+              "return_rmse": 0.050571211129861245,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.040984274501803065,
+              "no_change_mae": 0.03968710731723625,
+              "direction_accuracy": 0.45
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.040984274501803065,
           "no_change_mae": 0.03968710731723625,
@@ -4119,13 +4328,13 @@
             },
             {
               "asof": "2026-08-25T04:00:00",
-              "predicted_return": -0.006766809803302246,
+              "predicted_return": -0.006766809803302245,
               "actual_return": -0.06230744635067853,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": 0.005762021009937981,
+              "predicted_return": 0.005762021009937979,
               "actual_return": 0.024001943008926663,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -4143,7 +4352,7 @@
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": 0.0008587482332117011,
+              "predicted_return": 0.000858748233211702,
               "actual_return": -0.007948321980374096,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -4167,7 +4376,7 @@
             },
             {
               "asof": "2026-09-04T04:00:00",
-              "predicted_return": -0.024565832546098697,
+              "predicted_return": -0.024565832546098693,
               "actual_return": 0.05035810171512822,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -4179,7 +4388,7 @@
             },
             {
               "asof": "2026-09-09T04:00:00",
-              "predicted_return": -0.017287611973846026,
+              "predicted_return": -0.017287611973846023,
               "actual_return": -0.038130914325865906,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -4197,61 +4406,61 @@
             },
             {
               "asof": "2026-09-14T04:00:00",
-              "predicted_return": 0.0005773968410539274,
+              "predicted_return": 0.0005773968410539283,
               "actual_return": -0.03683104946329141,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-15T04:00:00",
-              "predicted_return": 0.008019639729756499,
+              "predicted_return": 0.008019639729756497,
               "actual_return": 0.02501195418546942,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-16T04:00:00",
-              "predicted_return": 0.0005003058318616888,
+              "predicted_return": 0.0005003058318616897,
               "actual_return": 0.020178334864015657,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": -0.0036824873194588334,
+              "predicted_return": -0.0036824873194588326,
               "actual_return": 0.07359707443950136,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-18T04:00:00",
-              "predicted_return": -0.012617227239347273,
+              "predicted_return": -0.012617227239347271,
               "actual_return": 0.011782331479538666,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-21T04:00:00",
-              "predicted_return": -0.011527693383444284,
+              "predicted_return": -0.011527693383444285,
               "actual_return": 0.027948331730212717,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-22T04:00:00",
-              "predicted_return": -0.01319858634670439,
+              "predicted_return": -0.013198586346704387,
               "actual_return": -0.030895984007657362,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-23T04:00:00",
-              "predicted_return": -0.0056732297363121095,
+              "predicted_return": -0.00567322973631211,
               "actual_return": -0.019128538273656903,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-24T04:00:00",
-              "predicted_return": -0.003167301890225008,
+              "predicted_return": -0.0031673018902250083,
               "actual_return": -0.043878688167396374,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-25T04:00:00",
-              "predicted_return": 0.00628407519898861,
+              "predicted_return": 0.006284075198988611,
               "actual_return": -0.05450422162712465,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -4281,7 +4490,7 @@
             },
             {
               "asof": "2026-10-02T04:00:00",
-              "predicted_return": 0.003463325669582043,
+              "predicted_return": 0.0034633256695820436,
               "actual_return": -0.030651312996745395,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -4356,23 +4565,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "CRWV": {
       "symbol": "CRWV",
@@ -4380,7 +4590,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:28.553690+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "f6d1f1567ea0635aeb907207a8c21f428ebe060d54b9780e3b618e8012c21927",
-      "calculated_at_utc": "2026-11-16T15:13:18.863816+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.458032+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -4818,9 +5028,9 @@
             ],
             "coefficients": [
               -0.002085959737299655,
-              -0.04345953854278023,
+              -0.043459538542780216,
               0.020284454448684267,
-              -0.0024525259917998845
+              -0.0024525259917998906
             ],
             "intercept": -0.005604964690518736,
             "training_last_feature_date": "2026-10-19T04:00:00"
@@ -4834,6 +5044,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.035489370258723583,
+              "return_rmse": 0.0494584263404384,
+              "skill_vs_no_change": 0.018853194813717167,
+              "direction_accuracy": 0.475
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.05407941155398299,
+              "return_rmse": 0.07437245878521165,
+              "skill_vs_no_change": -0.49509110716051685,
+              "direction_accuracy": 0.525
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.03617131510914464,
+              "return_rmse": 0.04910672757709439,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.035489370258723583,
+              "no_change_mae": 0.03617131510914464,
+              "direction_accuracy": 0.475
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.035489370258723583,
           "no_change_mae": 0.03617131510914464,
@@ -4848,19 +5092,19 @@
             },
             {
               "asof": "2026-08-25T04:00:00",
-              "predicted_return": 0.0033078686522160167,
+              "predicted_return": 0.003307868652216017,
               "actual_return": -0.00034074033376785273,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": 0.0013567952552361864,
+              "predicted_return": 0.0013567952552361868,
               "actual_return": -0.013748426941289082,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-27T04:00:00",
-              "predicted_return": 0.001458014513709994,
+              "predicted_return": 0.0014580145137099948,
               "actual_return": -0.029608290374042445,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -4872,25 +5116,25 @@
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": 0.0005852820295549766,
+              "predicted_return": 0.0005852820295549769,
               "actual_return": -0.035811060635936864,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-01T04:00:00",
-              "predicted_return": 0.0029802992465813435,
+              "predicted_return": 0.002980299246581344,
               "actual_return": -0.011240051143509677,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-02T04:00:00",
-              "predicted_return": 0.0034619002760230945,
+              "predicted_return": 0.003461900276023095,
               "actual_return": 0.04485354305856615,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-03T04:00:00",
-              "predicted_return": 0.0007756473180136789,
+              "predicted_return": 0.0007756473180136796,
               "actual_return": 0.056764465354102844,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -4944,7 +5188,7 @@
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": 0.005165139850285949,
+              "predicted_return": 0.00516513985028595,
               "actual_return": 0.0185278343492965,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -4962,7 +5206,7 @@
             },
             {
               "asof": "2026-09-22T04:00:00",
-              "predicted_return": -0.004958610436790534,
+              "predicted_return": -0.004958610436790535,
               "actual_return": 0.00161363976718909,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -4974,7 +5218,7 @@
             },
             {
               "asof": "2026-09-24T04:00:00",
-              "predicted_return": -0.008166421869841956,
+              "predicted_return": -0.008166421869841957,
               "actual_return": -0.028181526605239315,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -4992,19 +5236,19 @@
             },
             {
               "asof": "2026-09-29T04:00:00",
-              "predicted_return": -0.0006668012524219326,
+              "predicted_return": -0.0006668012524219324,
               "actual_return": 0.01384850968439455,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-30T04:00:00",
-              "predicted_return": -0.001378418931214904,
+              "predicted_return": -0.0013784189312149038,
               "actual_return": 0.016643674271452857,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-01T04:00:00",
-              "predicted_return": -0.0004347025169141739,
+              "predicted_return": -0.0004347025169141737,
               "actual_return": 0.011855064416570915,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -5016,7 +5260,7 @@
             },
             {
               "asof": "2026-10-05T04:00:00",
-              "predicted_return": -0.0030835398013604257,
+              "predicted_return": -0.003083539801360426,
               "actual_return": 0.04954802450276241,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -5034,7 +5278,7 @@
             },
             {
               "asof": "2026-10-08T04:00:00",
-              "predicted_return": 0.0037273304476488646,
+              "predicted_return": 0.0037273304476488638,
               "actual_return": 0.006128953037233931,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -5085,23 +5329,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "NBIS": {
       "symbol": "NBIS",
@@ -5109,7 +5354,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:31.595519+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "08d1aa8764de3425fc7cb2b47f6251c8ca143187782c3173f0dbb245c297ca45",
-      "calculated_at_utc": "2026-11-16T15:13:18.900302+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.526310+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -5549,7 +5794,7 @@
               0.014561094164452828,
               -0.10375259810510312,
               0.019186752215752317,
-              -0.003618549355400962
+              -0.00361854935540096
             ],
             "intercept": -0.003797087413679184,
             "training_last_feature_date": "2026-10-19T04:00:00"
@@ -5563,6 +5808,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.03672177497519765,
+              "return_rmse": 0.04849295663449491,
+              "skill_vs_no_change": 0.042248284531113955,
+              "direction_accuracy": 0.65
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.04657424691146909,
+              "return_rmse": 0.06296542269275779,
+              "skill_vs_no_change": -0.2147170148027655,
+              "direction_accuracy": 0.6
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.03834164364531552,
+              "return_rmse": 0.04662677997386055,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.03672177497519765,
+              "no_change_mae": 0.03834164364531552,
+              "direction_accuracy": 0.65
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.03672177497519765,
           "no_change_mae": 0.03834164364531552,
@@ -5583,7 +5862,7 @@
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": 0.007643759034950108,
+              "predicted_return": 0.007643759034950107,
               "actual_return": 0.02126865426791058,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -5595,7 +5874,7 @@
             },
             {
               "asof": "2026-08-28T04:00:00",
-              "predicted_return": 0.0076524438560820595,
+              "predicted_return": 0.007652443856082058,
               "actual_return": -0.013672365674069709,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -5607,7 +5886,7 @@
             },
             {
               "asof": "2026-09-01T04:00:00",
-              "predicted_return": 0.014766061205490604,
+              "predicted_return": 0.014766061205490602,
               "actual_return": 0.02280246168613065,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -5631,25 +5910,25 @@
             },
             {
               "asof": "2026-09-08T04:00:00",
-              "predicted_return": -0.020115855693507798,
+              "predicted_return": -0.020115855693507795,
               "actual_return": -0.014474326343371535,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-09T04:00:00",
-              "predicted_return": -0.02381541888679192,
+              "predicted_return": -0.023815418886791916,
               "actual_return": -0.050925754867226614,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-10T04:00:00",
-              "predicted_return": -0.013741083513585287,
+              "predicted_return": -0.013741083513585283,
               "actual_return": -0.015606494888730449,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-11T04:00:00",
-              "predicted_return": -0.007115281902136941,
+              "predicted_return": -0.007115281902136939,
               "actual_return": -0.055043422143720155,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -5667,25 +5946,25 @@
             },
             {
               "asof": "2026-09-16T04:00:00",
-              "predicted_return": 0.016139946423518268,
+              "predicted_return": 0.016139946423518264,
               "actual_return": 0.041171182963212205,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": 0.006376691140709658,
+              "predicted_return": 0.006376691140709656,
               "actual_return": 0.025459826841202515,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-18T04:00:00",
-              "predicted_return": 0.0011901402420057365,
+              "predicted_return": 0.0011901402420057363,
               "actual_return": 0.04142439851365709,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-21T04:00:00",
-              "predicted_return": -0.010846920318982038,
+              "predicted_return": -0.010846920318982036,
               "actual_return": 0.014261134114725849,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -5697,7 +5976,7 @@
             },
             {
               "asof": "2026-09-23T04:00:00",
-              "predicted_return": -0.009308530329598122,
+              "predicted_return": -0.009308530329598124,
               "actual_return": 0.07444506011098295,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -5709,13 +5988,13 @@
             },
             {
               "asof": "2026-09-25T04:00:00",
-              "predicted_return": -0.006932328448466033,
+              "predicted_return": -0.006932328448466035,
               "actual_return": -0.022963792635546376,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-28T04:00:00",
-              "predicted_return": 0.0010851922782638534,
+              "predicted_return": 0.0010851922782638532,
               "actual_return": 0.023611310718634426,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -5739,19 +6018,19 @@
             },
             {
               "asof": "2026-10-02T04:00:00",
-              "predicted_return": -0.0006474644658027247,
+              "predicted_return": -0.0006474644658027245,
               "actual_return": -0.042172852589827725,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-05T04:00:00",
-              "predicted_return": 0.00016511068440464385,
+              "predicted_return": 0.00016511068440464363,
               "actual_return": 0.07438615147331262,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-06T04:00:00",
-              "predicted_return": -0.0031087725183133255,
+              "predicted_return": -0.0031087725183133264,
               "actual_return": -0.05090647724524722,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -5781,13 +6060,13 @@
             },
             {
               "asof": "2026-10-13T04:00:00",
-              "predicted_return": 0.0235462966882838,
+              "predicted_return": 0.023546296688283796,
               "actual_return": -0.10079283593733235,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
             {
               "asof": "2026-10-14T04:00:00",
-              "predicted_return": 0.028073896420966905,
+              "predicted_return": 0.028073896420966898,
               "actual_return": 0.012902581722216144,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -5805,7 +6084,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": 0.02821007207192387,
+              "predicted_return": 0.028210072071923865,
               "actual_return": 0.007107562359228936,
               "training_last_feature_date": "2026-10-02T04:00:00"
             }
@@ -5814,23 +6093,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "USAR": {
       "symbol": "USAR",
@@ -5838,7 +6118,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:18:34.377048+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "891014ae8ae64bdf1ae183d4b832120018d8d22f161a6c24fc3d02892b160565",
-      "calculated_at_utc": "2026-11-16T15:13:18.936823+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.594707+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -6276,7 +6556,7 @@
             ],
             "coefficients": [
               -0.017263735141505508,
-              -0.0026747497683389265,
+              -0.002674749768338926,
               0.009591733943689803,
               0.007748585889675011
             ],
@@ -6292,6 +6572,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.030643671138166007,
+              "return_rmse": 0.03879734620723087,
+              "skill_vs_no_change": 0.032589534285555444,
+              "direction_accuracy": 0.65
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.043357285279243554,
+              "return_rmse": 0.054735456411524636,
+              "skill_vs_no_change": -0.36877501899132326,
+              "direction_accuracy": 0.55
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.0316759764590052,
+              "return_rmse": 0.03982680593906585,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.030643671138166007,
+              "no_change_mae": 0.0316759764590052,
+              "direction_accuracy": 0.65
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.030643671138166007,
           "no_change_mae": 0.0316759764590052,
@@ -6300,43 +6614,43 @@
           "predictions": [
             {
               "asof": "2026-08-24T04:00:00",
-              "predicted_return": 0.0006558123073067937,
+              "predicted_return": 0.0006558123073067938,
               "actual_return": 0.06123558643094107,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-25T04:00:00",
-              "predicted_return": 0.00025701911947031557,
+              "predicted_return": 0.00025701911947031573,
               "actual_return": -0.025244707623400364,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-26T04:00:00",
-              "predicted_return": 0.0007623958237755506,
+              "predicted_return": 0.0007623958237755507,
               "actual_return": 0.017441856362333308,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-27T04:00:00",
-              "predicted_return": 0.00067155471946945,
+              "predicted_return": 0.0006715547194694502,
               "actual_return": -0.065454557344511,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-28T04:00:00",
-              "predicted_return": 0.0004836688120272129,
+              "predicted_return": 0.00048366881202721286,
               "actual_return": -0.00944969863573153,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": 0.00010162938110376144,
+              "predicted_return": 0.00010162938110376145,
               "actual_return": -0.03142533532730829,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-01T04:00:00",
-              "predicted_return": -8.30403048457179e-05,
+              "predicted_return": -8.304030484571797e-05,
               "actual_return": 0.03418309065840108,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -6348,13 +6662,13 @@
             },
             {
               "asof": "2026-09-03T04:00:00",
-              "predicted_return": -0.00010795111255711005,
+              "predicted_return": -0.00010795111255711002,
               "actual_return": -0.004522324550077617,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-04T04:00:00",
-              "predicted_return": -6.437882912155173e-05,
+              "predicted_return": -6.437882912155172e-05,
               "actual_return": 0.0028392524320048906,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -6378,7 +6692,7 @@
             },
             {
               "asof": "2026-09-11T04:00:00",
-              "predicted_return": -0.0009637365965137193,
+              "predicted_return": -0.0009637365965137195,
               "actual_return": 0.00964007805174405,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -6402,7 +6716,7 @@
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": -0.0024603599148299155,
+              "predicted_return": -0.002460359914829915,
               "actual_return": -0.016634691425345238,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -6504,7 +6818,7 @@
             },
             {
               "asof": "2026-10-12T04:00:00",
-              "predicted_return": -0.003433564887138983,
+              "predicted_return": -0.0034335648871389826,
               "actual_return": -0.045685277140022684,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -6516,7 +6830,7 @@
             },
             {
               "asof": "2026-10-14T04:00:00",
-              "predicted_return": -0.0024860022654297586,
+              "predicted_return": -0.002486002265429758,
               "actual_return": 0.07461244966410696,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -6543,23 +6857,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "AXTI": {
       "symbol": "AXTI",
@@ -6567,7 +6882,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:19:25.235180+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "6fed7a29911510f53d5f02c8607648846bec6c7f94e6ecf9a3c05e334548f8ff",
-      "calculated_at_utc": "2026-11-16T15:13:18.973816+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.665608+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -7004,23 +7319,57 @@
               "distance_ma20"
             ],
             "coefficients": [
-              0.0452316998736641,
+              0.04523169987366411,
               -0.020641558007127542,
-              0.0344568561707652,
-              -0.011555221534383096
+              0.03445685617076521,
+              -0.011555221534383098
             ],
-            "intercept": -0.001683888406100154,
+            "intercept": -0.0016838884061001545,
             "training_last_feature_date": "2026-10-19T04:00:00"
           },
           "experimental_forecast": {
             "asof": "2026-10-20T04:00:00+00:00",
-            "predicted_return": 0.005618355644071632,
+            "predicted_return": 0.005618355644071633,
             "horizon": "next completed trading session close",
             "reference_close": 57.09000015258789,
             "status": "EXPERIMENTAL_NOT_VALIDATED",
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.056259114355997654,
+              "return_rmse": 0.0684873365339131,
+              "skill_vs_no_change": -0.006690142258040099,
+              "direction_accuracy": 0.55
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.07401662094992437,
+              "return_rmse": 0.09015887411894787,
+              "skill_vs_no_change": -0.32443966682520764,
+              "direction_accuracy": 0.475
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.05588523418914837,
+              "return_rmse": 0.06775505759635073,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.056259114355997654,
+              "no_change_mae": 0.05588523418914837,
+              "direction_accuracy": 0.55
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.056259114355997654,
           "no_change_mae": 0.05588523418914837,
@@ -7035,7 +7384,7 @@
             },
             {
               "asof": "2026-08-25T04:00:00",
-              "predicted_return": 0.010242577660218763,
+              "predicted_return": 0.010242577660218764,
               "actual_return": -0.03365451068601666,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -7047,25 +7396,25 @@
             },
             {
               "asof": "2026-08-27T04:00:00",
-              "predicted_return": 0.009181386513560288,
+              "predicted_return": 0.009181386513560286,
               "actual_return": -0.12387921888313957,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-28T04:00:00",
-              "predicted_return": 0.006128804672030426,
+              "predicted_return": 0.006128804672030424,
               "actual_return": 0.033771098518930565,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-08-31T04:00:00",
-              "predicted_return": 0.009657155885768199,
+              "predicted_return": 0.009657155885768197,
               "actual_return": -0.07424517331602609,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
             {
               "asof": "2026-09-01T04:00:00",
-              "predicted_return": 0.007350410151684262,
+              "predicted_return": 0.007350410151684261,
               "actual_return": 0.014970596033693884,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -7095,61 +7444,61 @@
             },
             {
               "asof": "2026-09-09T04:00:00",
-              "predicted_return": -0.0008675124889952411,
+              "predicted_return": -0.0008675124889952403,
               "actual_return": -0.06109427499830611,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-10T04:00:00",
-              "predicted_return": -0.0007154927939629054,
+              "predicted_return": -0.0007154927939629046,
               "actual_return": 0.0010819118721168142,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-11T04:00:00",
-              "predicted_return": 0.0007729376259982986,
+              "predicted_return": 0.0007729376259982994,
               "actual_return": -0.11903652415274202,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-14T04:00:00",
-              "predicted_return": 0.000749155624505829,
+              "predicted_return": 0.0007491556245058295,
               "actual_return": 0.011216252615584565,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-15T04:00:00",
-              "predicted_return": 0.004750511284570837,
+              "predicted_return": 0.004750511284570838,
               "actual_return": 0.11438478685528053,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-16T04:00:00",
-              "predicted_return": 0.005121262791581675,
+              "predicted_return": 0.005121262791581677,
               "actual_return": 0.053654693382598095,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-17T04:00:00",
-              "predicted_return": 0.0014974949037716949,
+              "predicted_return": 0.0014974949037716958,
               "actual_return": 0.03365311851360708,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-18T04:00:00",
-              "predicted_return": 7.446213869950324e-07,
+              "predicted_return": 7.446213869958997e-07,
               "actual_return": 0.14136800940236016,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-21T04:00:00",
-              "predicted_return": -0.0017636184774090598,
+              "predicted_return": -0.0017636184774090591,
               "actual_return": -0.02677341901010677,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
             {
               "asof": "2026-09-22T04:00:00",
-              "predicted_return": -0.004722898846222394,
+              "predicted_return": -0.004722898846222392,
               "actual_return": -0.06183310839418754,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -7161,13 +7510,13 @@
             },
             {
               "asof": "2026-09-24T04:00:00",
-              "predicted_return": 0.004158883459963275,
+              "predicted_return": 0.004158883459963276,
               "actual_return": 0.040052712179337924,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-25T04:00:00",
-              "predicted_return": 0.0037423651126981027,
+              "predicted_return": 0.003742365112698103,
               "actual_return": -0.06675961628418536,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -7179,13 +7528,13 @@
             },
             {
               "asof": "2026-09-29T04:00:00",
-              "predicted_return": 0.007780143214257056,
+              "predicted_return": 0.007780143214257055,
               "actual_return": -0.009849023280387836,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-09-30T04:00:00",
-              "predicted_return": 0.0033256728111518037,
+              "predicted_return": 0.0033256728111518033,
               "actual_return": 0.05684011998875649,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -7203,19 +7552,19 @@
             },
             {
               "asof": "2026-10-05T04:00:00",
-              "predicted_return": 0.0005805981660828886,
+              "predicted_return": 0.0005805981660828895,
               "actual_return": -0.030002377032582905,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
             {
               "asof": "2026-10-06T04:00:00",
-              "predicted_return": 0.0030939849986749415,
+              "predicted_return": 0.0030939849986749406,
               "actual_return": -0.05079701126674452,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
             {
               "asof": "2026-10-07T04:00:00",
-              "predicted_return": 0.0038348124128853,
+              "predicted_return": 0.003834812412885299,
               "actual_return": -0.10189243213601529,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -7245,7 +7594,7 @@
             },
             {
               "asof": "2026-10-14T04:00:00",
-              "predicted_return": 0.013346534192202022,
+              "predicted_return": 0.01334653419220202,
               "actual_return": -0.05974996421592238,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -7272,23 +7621,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "GOOG": {
       "symbol": "GOOG",
@@ -7296,7 +7646,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:20:15.779386+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "9b5dd9ba578d5d1b60cec46ae67c503cb3bf3490279cf3b272152134ef7a08fb",
-      "calculated_at_utc": "2026-11-16T15:13:19.010071+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.736223+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -7743,13 +8093,47 @@
           },
           "experimental_forecast": {
             "asof": "2026-10-20T04:00:00+00:00",
-            "predicted_return": 0.0004447789310498872,
+            "predicted_return": 0.00044477893104988726,
             "horizon": "next completed trading session close",
             "reference_close": 336.3999938964844,
             "status": "EXPERIMENTAL_NOT_VALIDATED",
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.011173317339722853,
+              "return_rmse": 0.013615780398208975,
+              "skill_vs_no_change": 0.0033293058476995263,
+              "direction_accuracy": 0.575
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.013012587196548553,
+              "return_rmse": 0.015324272081376048,
+              "skill_vs_no_change": -0.1607353411321868,
+              "direction_accuracy": 0.45
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.011210640992335093,
+              "return_rmse": 0.013590296873304845,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.011173317339722853,
+              "no_change_mae": 0.011210640992335093,
+              "direction_accuracy": 0.575
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.011173317339722853,
           "no_change_mae": 0.011210640992335093,
@@ -7848,7 +8232,7 @@
             },
             {
               "asof": "2026-09-15T04:00:00",
-              "predicted_return": 2.300126399259992e-05,
+              "predicted_return": 2.3001263992599894e-05,
               "actual_return": -0.00606275772083209,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -7866,7 +8250,7 @@
             },
             {
               "asof": "2026-09-18T04:00:00",
-              "predicted_return": -3.6321369646768266e-05,
+              "predicted_return": -3.632136964676824e-05,
               "actual_return": 0.018756689371357105,
               "training_last_feature_date": "2026-09-03T04:00:00"
             },
@@ -7878,7 +8262,7 @@
             },
             {
               "asof": "2026-09-22T04:00:00",
-              "predicted_return": 0.0005997791638930283,
+              "predicted_return": 0.0005997791638930284,
               "actual_return": -0.03577902922988552,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -7944,7 +8328,7 @@
             },
             {
               "asof": "2026-10-07T04:00:00",
-              "predicted_return": 0.00024830407178445173,
+              "predicted_return": 0.0002483040717844518,
               "actual_return": -0.007225752946158237,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -7968,7 +8352,7 @@
             },
             {
               "asof": "2026-10-13T04:00:00",
-              "predicted_return": 0.00023141746772881476,
+              "predicted_return": 0.0002314174677288148,
               "actual_return": -0.016794447532893164,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -7980,7 +8364,7 @@
             },
             {
               "asof": "2026-10-15T04:00:00",
-              "predicted_return": 0.00045453236825893317,
+              "predicted_return": 0.0004545323682589331,
               "actual_return": -0.0231944562786216,
               "training_last_feature_date": "2026-10-02T04:00:00"
             },
@@ -7992,7 +8376,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": 0.0006605703046709091,
+              "predicted_return": 0.000660570304670909,
               "actual_return": -0.011053650414937999,
               "training_last_feature_date": "2026-10-02T04:00:00"
             }
@@ -8001,23 +8385,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "UBER": {
       "symbol": "UBER",
@@ -8025,7 +8410,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:21:06.265978+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ac59b510e1bae79e33fa163e9689831c24fd611e4e15527547d9243a9b5e7208",
-      "calculated_at_utc": "2026-11-16T15:13:19.046216+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.805260+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -8479,6 +8864,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.014094289386863485,
+              "return_rmse": 0.01721712064097038,
+              "skill_vs_no_change": -0.008523882454925413,
+              "direction_accuracy": 0.475
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.017143649526479475,
+              "return_rmse": 0.022593808876280173,
+              "skill_vs_no_change": -0.226722362888794,
+              "direction_accuracy": 0.6
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.013975166708551801,
+              "return_rmse": 0.017031086706497084,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-24T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.014094289386863485,
+              "no_change_mae": 0.013975166708551801,
+              "direction_accuracy": 0.475
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.014094289386863485,
           "no_change_mae": 0.013975166708551801,
@@ -8487,7 +8906,7 @@
           "predictions": [
             {
               "asof": "2026-08-24T04:00:00",
-              "predicted_return": 0.00034762405115206093,
+              "predicted_return": 0.0003476240511520607,
               "actual_return": 0.013368615794607352,
               "training_last_feature_date": "2026-08-20T04:00:00"
             },
@@ -8613,7 +9032,7 @@
             },
             {
               "asof": "2026-09-23T04:00:00",
-              "predicted_return": -0.0003985272241973747,
+              "predicted_return": -0.00039852722419737483,
               "actual_return": -0.002880970232172264,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -8637,7 +9056,7 @@
             },
             {
               "asof": "2026-09-29T04:00:00",
-              "predicted_return": -0.0006470221057259191,
+              "predicted_return": -0.0006470221057259193,
               "actual_return": -0.012254879853536793,
               "training_last_feature_date": "2026-09-18T04:00:00"
             },
@@ -8730,23 +9149,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     },
     "RY.TO": {
       "symbol": "RY.TO",
@@ -8754,7 +9174,7 @@
       "source_retrieved_at_utc": "2026-10-21T15:21:56.794097+00:00",
       "data_last_session": "2026-10-20",
       "input_sha256": "ea1d420462a0dec1d5bccf1d0acee1c704b48bbe9aab5de38804de230f6f28a8",
-      "calculated_at_utc": "2026-11-16T15:13:19.083078+00:00",
+      "calculated_at_utc": "2026-11-17T19:47:58.874262+00:00",
       "engines": {
         "vectorbt": {
           "status": "operational_historical",
@@ -9208,6 +9628,40 @@
             "probability": null
           },
           "method": "Qlib DatasetH + LinearModel ridge; expanding 10-session test blocks; one-row embargo",
+          "model_comparison": {
+            "Qlib ridge (fixed primary)": {
+              "test_samples": 40,
+              "return_mae": 0.007841471123400251,
+              "return_rmse": 0.009745148602167105,
+              "skill_vs_no_change": -0.006081174054727523,
+              "direction_accuracy": 0.45
+            },
+            "Qlib ordinary least squares": {
+              "test_samples": 40,
+              "return_mae": 0.00781297318797616,
+              "return_rmse": 0.009578086877606357,
+              "skill_vs_no_change": -0.002424814695825228,
+              "direction_accuracy": 0.55
+            },
+            "No-change baseline": {
+              "test_samples": 40,
+              "return_mae": 0.007794074002793835,
+              "return_rmse": 0.009725436077105534,
+              "skill_vs_no_change": 0.0,
+              "direction_accuracy": null
+            }
+          },
+          "chronological_folds": [
+            {
+              "first_date": "2026-08-21T04:00:00",
+              "last_date": "2026-10-19T04:00:00",
+              "samples": 40,
+              "return_mae": 0.007841471123400251,
+              "no_change_mae": 0.007794074002793835,
+              "direction_accuracy": 0.45
+            }
+          ],
+          "model_selection": "Ridge remains fixed in advance; the best backtest is not automatically selected.",
           "test_samples": 40,
           "return_mae": 0.007841471123400251,
           "no_change_mae": 0.007794074002793835,
@@ -9354,7 +9808,7 @@
             },
             {
               "asof": "2026-09-24T04:00:00",
-              "predicted_return": -0.00010769047994681548,
+              "predicted_return": -0.00010769047994681549,
               "actual_return": 0.01247747231230889,
               "training_last_feature_date": "2026-09-17T04:00:00"
             },
@@ -9450,7 +9904,7 @@
             },
             {
               "asof": "2026-10-19T04:00:00",
-              "predicted_return": -0.00044175527443697445,
+              "predicted_return": -0.0004417552744369745,
               "actual_return": 0.009585253030533591,
               "training_last_feature_date": "2026-10-01T04:00:00"
             }
@@ -9459,23 +9913,24 @@
             "Small single-symbol revised-data experiment, not production forecasting.",
             "Features use completed bars only. No hyperparameter search or random split.",
             "Historical out-of-sample results are not forward-recorded accuracy or trading returns.",
-            "No current forecast is issued from archived data."
+            "Archived forecasts retain their original date and are never represented as newly generated.",
+            "OLS comparison uses identical held-out windows; model selection on these results would need a new untouched test."
           ]
         },
         "openbb": {
           "status": "unavailable",
-          "reason": "Not integrated: existing financial facts are Kratos provider output, not OpenBB. No verified statement feed or DCF model."
+          "reason": "OpenBB statements are requested separately on demand; not part of this scheduled model record."
         },
         "tradingagents": {
           "status": "unavailable",
-          "reason": "Not integrated: no authenticated, cost-approved AI inference endpoint has been verified."
+          "reason": "Committee reports are loaded separately from completed upstream runs."
         },
         "lean": {
           "status": "unavailable",
-          "reason": "Not integrated: LEAN runtime and a compatible licensed data bundle have not been installed or tested."
+          "reason": "LEAN results are loaded separately; this model record is not a LEAN execution."
         }
       },
-      "implementation_sha256": "af8285217b33745cccbbefe9ba9ad7c20a5249db2a62dcb6c556551367855a64"
+      "implementation_sha256": "18ab6c4b5a849178fca015e104d289349e7203d3ae08fcb2529cabd513e6472f"
     }
   }
 }
