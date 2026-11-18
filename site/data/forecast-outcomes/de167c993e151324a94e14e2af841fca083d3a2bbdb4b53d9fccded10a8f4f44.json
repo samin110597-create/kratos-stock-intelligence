@@ -1,0 +1,16 @@
+{
+  "symbol": "NVDA",
+  "forecast_recorded_at_utc": "2026-11-17T04:43:30.049759+00:00",
+  "reference_session": "2026-11-16",
+  "outcome_session": "2026-11-17",
+  "predicted_return": 0.005286675946900875,
+  "actual_close_return": -0.004355019075440891,
+  "absolute_error": 0.009641695022341766,
+  "no_change_absolute_error": 0.004355019075440891,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-18T03:47:42.810796+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "de167c993e151324a94e14e2af841fca083d3a2bbdb4b53d9fccded10a8f4f44",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-18T03:47:40.202029+00:00"
+}

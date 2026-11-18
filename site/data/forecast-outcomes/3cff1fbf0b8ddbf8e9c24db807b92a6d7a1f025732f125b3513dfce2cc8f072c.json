@@ -1,0 +1,16 @@
+{
+  "symbol": "AAPL",
+  "forecast_recorded_at_utc": "2026-11-17T04:44:01.470925+00:00",
+  "reference_session": "2026-11-16",
+  "outcome_session": "2026-11-17",
+  "predicted_return": 0.0007946706596714627,
+  "actual_close_return": -0.00246611236520744,
+  "absolute_error": 0.003260783024878903,
+  "no_change_absolute_error": 0.00246611236520744,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-18T03:47:55.981461+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "3cff1fbf0b8ddbf8e9c24db807b92a6d7a1f025732f125b3513dfce2cc8f072c",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-18T03:47:54.304743+00:00"
+}
