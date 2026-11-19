@@ -1,0 +1,16 @@
+{
+  "symbol": "LRCX",
+  "forecast_recorded_at_utc": "2026-11-18T03:48:17.235348+00:00",
+  "reference_session": "2026-11-17",
+  "outcome_session": "2026-11-18",
+  "predicted_return": 0.00455191498942746,
+  "actual_close_return": 0.004651363216968907,
+  "absolute_error": 9.944822754144687e-05,
+  "no_change_absolute_error": 0.004651363216968907,
+  "direction_correct": true,
+  "evaluated_at_utc": "2026-11-19T03:47:27.862428+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "fab0080b2a48de1134e739ec8585efb06b84a141b0cd29a481b1d76784f02567",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-19T03:47:25.125100+00:00"
+}

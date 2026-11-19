@@ -1,0 +1,16 @@
+{
+  "symbol": "GOOG",
+  "forecast_recorded_at_utc": "2026-11-18T03:47:50.220464+00:00",
+  "reference_session": "2026-11-17",
+  "outcome_session": "2026-11-18",
+  "predicted_return": 0.0011092359661217725,
+  "actual_close_return": 0.005763710620809492,
+  "absolute_error": 0.004654474654687719,
+  "no_change_absolute_error": 0.005763710620809492,
+  "direction_correct": true,
+  "evaluated_at_utc": "2026-11-19T03:46:49.897341+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "008a80e2c2d48e9ab354f0c6908c4d9f56b8d24dd0834face4c7de9f3584fe6f",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-19T03:46:46.900716+00:00"
+}
