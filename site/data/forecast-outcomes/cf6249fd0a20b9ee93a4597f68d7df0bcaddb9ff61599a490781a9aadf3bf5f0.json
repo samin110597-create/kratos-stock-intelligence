@@ -1,0 +1,16 @@
+{
+  "symbol": "META",
+  "forecast_recorded_at_utc": "2026-11-19T03:47:09.464498+00:00",
+  "reference_session": "2026-11-18",
+  "outcome_session": "2026-11-19",
+  "predicted_return": 0.0011814773259282193,
+  "actual_close_return": -0.03270715146498038,
+  "absolute_error": 0.0338886287909086,
+  "no_change_absolute_error": 0.03270715146498038,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-20T13:27:03.760047+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "cf6249fd0a20b9ee93a4597f68d7df0bcaddb9ff61599a490781a9aadf3bf5f0",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-20T13:26:59.255167+00:00"
+}

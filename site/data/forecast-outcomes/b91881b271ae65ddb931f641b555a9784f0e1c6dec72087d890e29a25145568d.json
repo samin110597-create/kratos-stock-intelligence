@@ -1,0 +1,16 @@
+{
+  "symbol": "CIFR",
+  "forecast_recorded_at_utc": "2026-11-19T03:47:35.510230+00:00",
+  "reference_session": "2026-11-18",
+  "outcome_session": "2026-11-19",
+  "predicted_return": 0.007005218501784623,
+  "actual_close_return": -0.013698653004012296,
+  "absolute_error": 0.020703871505796917,
+  "no_change_absolute_error": 0.013698653004012296,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-20T13:27:43.302103+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "b91881b271ae65ddb931f641b555a9784f0e1c6dec72087d890e29a25145568d",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-20T13:27:39.081541+00:00"
+}
