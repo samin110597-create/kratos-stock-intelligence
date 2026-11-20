@@ -79,6 +79,13 @@ def paths(request:Request,symbol:str,horizon:int=5):
     except Exception: raise HTTPException(503,'Path research unavailable; no probability issued') from None
     finally: workers.release()
 
+@app.get('/api/research-inbox')
+def research_inbox(request:Request):
+    if not public_analysis_enabled(): personal_access(request)
+    from kratos.request_inbox import pending
+    return {'requests':pending()}
+
+
 @app.get('/api/health')
 def health():
     return {'status':'ok','version':'0.3.0','time_utc':datetime.now(timezone.utc).isoformat(),
@@ -89,7 +96,7 @@ def health():
             'institutional_feeds':'unavailable'}
 
 @app.get('/api/analyze')
-def analysis(request:Request,symbol:str,require_fresh:bool=False):
+def analysis(request:Request,symbol:str,require_fresh:bool=False,request_research:bool=False):
     throttle(request)
     if not public_analysis_enabled():
         personal_access(request)
@@ -109,7 +116,14 @@ def analysis(request:Request,symbol:str,require_fresh:bool=False):
             if incomplete or (session['market_open'] and not quote.get('live_enough')):
                 return JSONResponse(status_code=409,content={'detail':'Fresh analysis unavailable: a required candle is missing or the market-hours price exceeds 15 minutes. No current levels issued.',
                     'ticker_symbol':ticker,'timeframe_status':{k:{f:v.get(f) for f in ('freshness','bar_closed_at_utc','expected_close_utc')} for k,v in rows.items()}})
-        return {'generated_at_utc':datetime.now(timezone.utc).isoformat(),'ticker':payload}
+        ticket = None
+        if request_research and require_fresh:
+            try:
+                from kratos.request_inbox import register
+                ticket = register(ticker, payload['last_closed_bar_date'])
+            except Exception:
+                ticket = 'intake_unavailable'
+        return {'generated_at_utc':datetime.now(timezone.utc).isoformat(),'ticker':payload,'research_request':ticket}
     except (MarketDataError,ValueError) as exc:
         raise HTTPException(503,str(exc)[:240]) from exc
     except Exception as exc:
