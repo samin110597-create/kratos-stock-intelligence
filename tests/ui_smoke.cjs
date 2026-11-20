@@ -11,7 +11,7 @@ const w=dom.window; const errors=[];
 w.addEventListener('error',e=>errors.push(e.message));
 w.fetch=async url=>({ok:true,json:async()=>String(url).includes('config.json')?{same_origin_api:false}:String(url).includes('frameworks.json')?JSON.parse(fs.readFileSync('site/data/frameworks.json','utf8')):String(url).includes('research.json')?research:String(url).includes('plans.json')?JSON.parse(fs.readFileSync('site/data/plans.json','utf8')):structuredClone(feed)});
 w.AbortController=AbortController;
-w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state,currentResult,render};');
+w.eval(fs.readFileSync('site/app.js','utf8')+'\nwindow.__test={selectTicker,freshness,state,currentResult,render,rememberResearch};');
 await new Promise(r=>setTimeout(r,50));
 assert.equal(w.document.getElementById('dashboard').hidden,false);
 assert(!w.document.getElementById('kpis').textContent.includes('220.17'));
@@ -50,6 +50,22 @@ await w.__test.selectTicker('AAPL');assert.equal(requested,0);assert.match(w.doc
 w.document.getElementById('access-token').value='fixture-token';
 await w.__test.selectTicker('AAPL');assert.equal(requested,1);assert.equal(w.document.getElementById('dashboard').hidden,false);assert.match(w.document.getElementById('status').textContent,/AAPL/);
 assert.equal(w.__test.currentResult(feed.tickers.NVDA),false);
+// Clicking the real form is the opt-in for public background work. Normal page loads stay read-only.
+w.document.getElementById('archive-mode').checked=false;
+w.document.getElementById('ticker').value='TSX:SHOP';
+let submitted=[];
+w.fetch=async url=>{
+ submitted.push(String(url));
+ const x=structuredClone(feed.tickers.NVDA);
+ x.ticker='SHOP.TO';
+ return {ok:true,json:async()=>({ticker:x,research_request:'received'})};
+};
+w.document.getElementById('search').dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
+await new Promise(resolve=>setTimeout(resolve,20));
+assert(submitted.some(url=>url.endsWith('symbol=SHOP.TO&require_fresh=true&request_research=true')));
+assert.equal(w.__test.state.tickets['SHOP.TO'].status,'received');
+w.__test.rememberResearch('SHOP.TO','qlib',{symbol:'NVDA',engines:{qlib:{status:'operational_historical'}}});
+assert(!w.__test.state.archives['SHOP.TO']?.qlib);
 console.log(JSON.stringify({tabs:visited,uncaughtErrors:errors.length,invalidSymbols:'pass',unknownTicker:'pass',holiday:'pass',futureTimestamp:'pass'}));
 dom.window.close();
 })().catch(e=>{console.error(e);process.exit(1)});
