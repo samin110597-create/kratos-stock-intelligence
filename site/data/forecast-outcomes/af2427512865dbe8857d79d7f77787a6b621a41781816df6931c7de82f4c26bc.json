@@ -1,0 +1,16 @@
+{
+  "symbol": "MU",
+  "forecast_recorded_at_utc": "2026-11-19T03:47:20.477457+00:00",
+  "reference_session": "2026-11-18",
+  "outcome_session": "2026-11-19",
+  "predicted_return": 0.004837105195360167,
+  "actual_close_return": -0.021027431592371304,
+  "absolute_error": 0.02586453678773147,
+  "no_change_absolute_error": 0.021027431592371304,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-20T03:41:07.128548+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "af2427512865dbe8857d79d7f77787a6b621a41781816df6931c7de82f4c26bc",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-20T03:41:04.825249+00:00"
+}

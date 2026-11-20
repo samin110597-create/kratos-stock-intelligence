@@ -1,0 +1,16 @@
+{
+  "symbol": "AMD",
+  "forecast_recorded_at_utc": "2026-11-19T03:47:16.783261+00:00",
+  "reference_session": "2026-11-18",
+  "outcome_session": "2026-11-19",
+  "predicted_return": 0.006623315669854768,
+  "actual_close_return": -0.07724376782648124,
+  "absolute_error": 0.08386708349633601,
+  "no_change_absolute_error": 0.07724376782648124,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-20T03:41:03.564961+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "fdcf18e368d1a4cc237d85f9430bb0a8a3c82c37af57ce83c66085bce677e9c7",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-20T03:41:01.270416+00:00"
+}
