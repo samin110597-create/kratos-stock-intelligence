@@ -1,0 +1,62 @@
+{
+  "symbol": "NVDA",
+  "source": "Yahoo Finance (unofficial yfinance feed)",
+  "data_last_session": "2026-11-19",
+  "source_retrieved_at_utc": "2026-11-20T15:29:10.198649+00:00",
+  "calculated_at_utc": "2026-11-20T15:32:44Z",
+  "collected_at_utc": "2026-11-20T15:32:47.882195+00:00",
+  "input_sha256": "b8d0bdcd16b39421d4a01eb8b8c09f742b1404a3aeda86f8d78a8281d2245a3a",
+  "engines": {
+    "lean": {
+      "status": "operational_historical",
+      "version": "sha256:61590b692c93d5cd3bf7175ae28a39bca8e34cfcd5c1713016085112d38edd13",
+      "method": "LEAN custom-data 10/30 moving-average strategy; signal at close, next reported open execution; 95% allocation",
+      "statistics": {
+        "Total Orders": "26",
+        "Average Win": "19.15%",
+        "Average Loss": "-10.56%",
+        "Compounding Annual Return": "6.738%",
+        "Drawdown": "45.600%",
+        "Expectancy": "0.299",
+        "Start Equity": "10000",
+        "End Equity": "12162.09",
+        "Net Profit": "21.621%",
+        "Sharpe Ratio": "0.098",
+        "Sortino Ratio": "0.077",
+        "Probabilistic Sharpe Ratio": "2.881%",
+        "Loss Rate": "54%",
+        "Win Rate": "46%",
+        "Profit-Loss Ratio": "1.81",
+        "Alpha": "0",
+        "Beta": "0",
+        "Annual Standard Deviation": "0.249",
+        "Annual Variance": "0.062",
+        "Information Ratio": "0.319",
+        "Tracking Error": "0.249",
+        "Treynor Ratio": "0",
+        "Total Fees": "$289.35",
+        "Estimated Strategy Capacity": "$0",
+        "Lowest Capacity Asset": "RESEARCH.ReportedPrice 2S",
+        "Portfolio Turnover": "2.24%",
+        "Drawdown Recovery": "6"
+      },
+      "runtime_statistics": {
+        "Equity": "$12,162.09",
+        "Fees": "-$289.35",
+        "Holdings": "$0.00",
+        "Input observations": "1506",
+        "Net Profit": "$2,162.09",
+        "Probabilistic Sharpe Ratio": "2.881%",
+        "Return": "21.62 %",
+        "Unrealized": "$0.00",
+        "Volume": "$289,346.71"
+      },
+      "limitations": [
+        "Custom reported open/close observations, not a licensed exchange execution feed.",
+        "0.10% fee and 0.05% slippage per fill; no order-book simulation, dividends or fill-capacity model.",
+        "Benchmark-dependent statistics use a constant benchmark, not a market index.",
+        "Single-symbol simulation in nominal price units. No FX conversion or live brokerage orders."
+      ]
+    }
+  }
+}
