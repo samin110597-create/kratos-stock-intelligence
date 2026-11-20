@@ -161,7 +161,7 @@ function frameworkView(x){
   if(!['openbb','tradingagents'].includes(state.tab)&&record.data_last_session!==x.last_closed_bar_date)out+=card('Older historical experiment','<p>This experiment uses a different dataset date. It is historical evidence only and does not describe the current ticker price.</p>');
   out+=card('Historical dataset · not today’s forecast',line(state.tab==='openbb'?'Latest statement period':state.tab==='tradingagents'?'Research date (not a verified quote time)':'Data through',record.data_last_session||record.research_date||'Not recorded')+line('Source',record.source)+line('Data retrieved',when(record.source_retrieved_at_utc))+line('Calculated',when(record.calculated_at_utc))+line('Framework version',engine.version)+'<p>'+esc(engine.method)+'</p><p class="hint">Input SHA-256: '+esc(record.input_sha256)+'</p>');
   if(state.tab==='qlib')out+=qlibDetails(engine,record,x.currency)+card('Out-of-sample model comparison',line('Held-out sessions',engine.test_samples)+line('Qlib mean absolute return error',val(engine.return_mae*100,3)+' percentage points')+line('No-change baseline error',val(engine.no_change_mae*100,3)+' percentage points')+line('Improvement over no-change',val(engine.skill_vs_no_change*100,2)+'%')+line('Historical direction accuracy',val(engine.direction_accuracy*100,1)+'%')+'<p class="hint">Negative improvement means the model was worse than predicting no change. This small test does not establish a reliable trading edge.</p>');
-  if(state.tab==='tradingagents')out+=committeeDetails(engine)+card('AI committee · verification boundary','<p>The actual upstream committee completed. Its generated opinions are not independently verified and are not used to issue a buy/sell instruction.</p><a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/committee-runs">Inspect full debate and risk discussion in the audit archive</a>');
+  if(state.tab==='tradingagents')out+=committeeDetails(engine,x)+card('AI committee · verification boundary','<p>The actual upstream committee completed. Its generated opinions are not independently verified and are not used to issue a buy/sell instruction.</p><a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/committee-runs">Inspect full debate and risk discussion in the audit archive</a>');
   if(state.tab==='lean')out+=card('LEAN simulation results',Object.entries(engine.statistics||{}).filter(([k])=>['Total Orders','Net Profit','Drawdown','Start Equity','End Equity','Average Win','Average Loss','Win Rate','Total Fees'].includes(k)).map(([k,v])=>line(k,v)).join(''));
   if(state.tab==='vectorbt')out+=card('Measured historical strategy results',line('Net total return',val(engine.total_return*100,2)+'%')+line('Maximum drawdown',val(engine.max_drawdown*100,2)+'%')+line('Buy and hold price return (before costs)',num(engine.buy_hold_price_return)?val(engine.buy_hold_price_return*100,2)+'%':'Unavailable')+line('Closed trades',engine.closed_trades)+line('Closed-trade win rate',num(engine.win_rate)?val(engine.win_rate*100,1)+'%':'No closed trades')+line('Costs per fill','0.10% fee + 0.05% slippage')+equityChart(engine.equity));
   out+=card('Limits & reproducibility',(engine.limitations||[]).map(v=>'<p>'+esc(v)+'</p>').join('')+(state.engines[state.ticker]?.[state.tab]?'<p class="hint">This on-demand result is cached temporarily; it has not been saved to the durable forecast archive.</p>':'<a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/framework-runs">Inspect immutable historical run files</a>'));
@@ -254,8 +254,27 @@ function qlibDetails(engine,record,currency){
  if(engine.chronological_folds)html+=card('Does performance hold across time?','<div style="overflow:auto"><table><thead><tr><th>Period</th><th>Sessions</th><th>Model error</th><th>No-change error</th><th>Direction correct</th></tr></thead><tbody>'+engine.chronological_folds.map(f=>'<tr><td>'+esc(f.first_date.slice(0,10)+' to '+f.last_date.slice(0,10))+'</td><td>'+f.samples+'</td><td>'+val(f.return_mae*100,3)+' pp</td><td>'+val(f.no_change_mae*100,3)+' pp</td><td>'+val(f.direction_accuracy*100,1)+'%</td></tr>').join('')+'</tbody></table></div>');
  return html;
 }
-function committeeDetails(engine){
+function committeeNumber(text){
+ const match=String(text).trim().match(/^(?:US\$|CA\$|\$)?([\d,.]+)\s*([TBMK]?)(?:\s+(?:USD|CAD))?$/i);
+ if(!match)return null;
+ return Number(match[1].replaceAll(',',''))*({T:1e12,B:1e9,M:1e6,K:1e3}[match[2].toUpperCase()]||1);
+}
+function committeeDisagreements(report,facts){
+ const mismatches=[];
+ for(const [pattern,label] of [[/market cap(?:italization)?(?: \(TTM\))?[:*\s]+(\$?[\d,.]+\s*[TBMK]?)/i,'Market capitalization'],[/revenue \(ttm\)[:*\s]+(\$?[\d,.]+\s*[TBMK]?)/i,'Revenue (ttm)']]){
+  const claim=String(report||'').match(pattern);
+  const fact=facts.find(f=>f.label===label);
+  if(!claim||!fact)continue;
+  const claimed=committeeNumber(claim[1]),provider=committeeNumber(fact.value);
+  if(claimed>0&&provider>0&&Math.max(claimed/provider,provider/claimed)>=5)
+   mismatches.push(label+' — committee: '+claim[1].trim()+', displayed provider figure: '+fact.value);
+ }
+ return mismatches;
+}
+function committeeDetails(engine,x){
  const reports=engine.reports||{};
  const labels={market_report:'Market analyst',fundamentals_report:'Business analyst',investment_debate_state:'Bullish and bearish debate',risk_debate_state:'Risk committee',investment_plan:'Research manager',trader_investment_plan:'Trading proposal',final_trade_decision:'Final AI opinion — unverified'};
- return card('Read the actual committee discussion','<p>These are generated opinions from the named model. Check every factual claim against the data tabs. A completed discussion does not mean the proposed trade works.</p>')+Object.entries(reports).filter(([,v])=>v).map(([key,value])=>card(labels[key]||key,'<details><summary>Read '+esc(labels[key]||key)+'</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(typeof value==='string'?value:JSON.stringify(value,null,2))+'</div></details>')).join('');
+ const discrepancies=committeeDisagreements(reports.fundamentals_report,x.fundamentals?.facts||[]);
+ const warning=discrepancies.length?card('Conflicting figures · trading conclusion withheld',discrepancies.map(d=>'<p>'+esc(d)+'</p>').join('')+'<p>These values differ by at least fivefold. Check reporting dates and source statements. The full original opinion remains in the audit archive.</p>'):'';
+ return warning+card('Read the actual committee discussion','<p>These are generated opinions from the named model. Check every factual claim against the data tabs. A completed discussion does not mean the proposed trade works.</p>')+Object.entries(reports).filter(([key,v])=>v&&(!discrepancies.length||!['final_trade_decision','trader_investment_plan','investment_plan'].includes(key))).map(([key,value])=>card(labels[key]||key,'<details><summary>Read '+esc(labels[key]||key)+'</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(typeof value==='string'?value:JSON.stringify(value,null,2))+'</div></details>')).join('');
 }
