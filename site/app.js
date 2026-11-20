@@ -1,5 +1,6 @@
+const backgroundEngines=['qlib','tradingagents','lean'];
 'use strict';
-const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,frameworks:null,archives:{},engines:{},enginePending:{},paths:{},request:0};
+const state={feed:{tickers:{}},ticker:null,tab:'overview',tf:'1D',bars:60,overlay:true,config:{},research:null,frameworks:null,archives:{},engines:{},tickets:{},enginePending:{},paths:{},request:0};
 const el=id=>document.getElementById(id),esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=v=>typeof v==='number'&&Number.isFinite(v);
 const val=(v,d=2)=>num(v)?v.toLocaleString('en-CA',{maximumFractionDigits:d}):'Unavailable';
@@ -19,32 +20,32 @@ function freshness(x,now=Date.now()){
  return {age,open,live,status:!coverage?'SESSION UNVERIFIED — no live signal':!open?'MARKET CLOSED — research only':live?'RECENT MINUTE BAR — entitlement unverified':'STALE DATA — NO VALIDATED LIVE TRADE SIGNAL'};
 }
 function classification(x){return (x.technical_plan||x.decision)?.classification==='AVOID'?'AVOID':'WAIT'}
-function tickerButtons(){const symbols=Object.keys(state.feed.tickers).filter(k=>!state.feed.tickers[k].error);el('tickers').innerHTML=symbols.map(s=>'<option value="'+esc(s)+'"></option>').join('');el('chips').innerHTML=symbols.map(s=>'<button class="chip" data-symbol="'+esc(s)+'">'+esc(s)+'</button>').join('');document.querySelectorAll('[data-symbol]').forEach(b=>b.onclick=()=>selectTicker(b.dataset.symbol));}
+function tickerButtons(){const symbols=Object.keys(state.feed.tickers).filter(k=>!state.feed.tickers[k].error);el('tickers').innerHTML=symbols.map(s=>'<option value="'+esc(s)+'"></option>').join('');el('chips').innerHTML=symbols.map(s=>'<button class="chip" data-symbol="'+esc(s)+'">'+esc(s)+'</button>').join('');document.querySelectorAll('[data-symbol]').forEach(b=>b.onclick=()=>selectTicker(b.dataset.symbol,true,!el('archive-mode').checked));}
 function notify(message,bad=false){el('status').className='notice '+(bad?'warn':'');el('status').textContent=message;}
 async function fetchJSON(url,timeout=180000){const c=new AbortController();const timer=setTimeout(()=>c.abort(),timeout);try{const r=await fetch(url,{cache:'no-store',signal:c.signal,headers:url.includes('/api/')&&el('access-token')?.value?{Authorization:'Bearer '+el('access-token').value}:{}});const data=await r.json();if(!r.ok){const e=Error(data.detail||'HTTP '+r.status);e.status=r.status;throw e}return data}finally{clearTimeout(timer)}}
-async function analyzeWithRetry(t,id){
+async function analyzeWithRetry(t,id,background=false){
  for(let attempt=0;attempt<3;attempt++){
-  try{return await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t)+'&require_fresh=true',60000)}
+  try{return await fetchJSON(apiBase()+'/api/analyze?symbol='+encodeURIComponent(t)+'&require_fresh=true'+(background?'&request_research=true':''),60000)}
   catch(e){if(id!==state.request||attempt===2||![undefined,502,503,504].includes(e.status))throw e;
    notify('Backend or provider unavailable. Retrying '+t+' ('+(attempt+1)+'/2)…');
    await new Promise(r=>setTimeout(r,3000*(attempt+1)));}
  }
 }
 function apiBase(){return state.config.same_origin_api?'':state.config.api_url?.replace(/\/$/,'')}
-async function selectTicker(raw,fetchNew=true){
+async function selectTicker(raw,fetchNew=true,background=false){
  const id=++state.request;let t=String(raw||'').trim().toUpperCase();if(t.startsWith('TSX:'))t=t.slice(4)+'.TO';t=t.replace(/^(NYSE|NASDAQ):/,'');
  if(!/^[A-Z0-9^][A-Z0-9.^=_-]{0,19}$/.test(t)){notify('Enter a valid US or Canadian symbol, such as NVDA or RY.TO.',true);return}
  el('ticker').value=t;const enabled=state.config.same_origin_api||!!state.config.api_url;
  if(!enabled&&fetchNew&&!el('archive-mode')?.checked){state.ticker=t;renderUnavailable('The live Python backend is not connected. No current price, trend or trading levels can be verified for '+t+'.');return;}
  if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
  if(enabled&&fetchNew){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='Requesting new research for '+t+'…';el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
-  try{const response=await analyzeWithRetry(t,id);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
+  try{const response=await analyzeWithRetry(t,id,background);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');if(response.research_request)state.tickets[t]={session:response.ticker.last_closed_bar_date,status:response.research_request};const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
  }
  const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':(state.config.hosting_reason||'On-demand backend unavailable. Only explicitly dated archived research is available.');notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
  state.ticker=t;el('dashboard').hidden=false;el('intro').hidden=true;render();
- if(fetchNew&&enabled&&currentResult(x)&&!el('archive-mode')?.checked)loadEngines(t,id);
+ if(fetchNew&&enabled&&currentResult(x)&&!el('archive-mode')?.checked){loadEngines(t,id);if(state.tickets[t])loadRequested(t,id);}
 }
 function render(){const x=state.feed.tickers[state.ticker];if(!x)return;
  if(!el('archive-mode')?.checked&&!currentResult(x)){renderUnavailable('Fresh analysis unavailable. Archived prices and trading levels are hidden.');return;}const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
@@ -143,7 +144,7 @@ fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.t
 }
 if(el('archive-mode'))el('archive-mode').onchange=()=>{if(state.ticker)selectTicker(state.ticker,!el('archive-mode').checked)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;if(state.ticker)render()});
-el('search').onsubmit=e=>{e.preventDefault();selectTicker(el('ticker').value)};
+el('search').onsubmit=e=>{e.preventDefault();selectTicker(el('ticker').value,true,!el('archive-mode').checked)};
 setInterval(async()=>{if(document.hidden)return;try{if(state.ticker&&(state.config.same_origin_api||state.config.api_url))await selectTicker(state.ticker);else{await loadFeed();if(state.ticker)render()}}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
 setInterval(()=>{if(state.ticker&&!document.hidden)render()},60000);
 boot();
@@ -152,9 +153,11 @@ function frameworkView(x){
  const names={openbb:'OpenBB',qlib:'Microsoft Qlib',tradingagents:'TradingAgents',vectorbt:'VectorBT',lean:'QuantConnect LEAN'};
  const record=state.engines[state.ticker]?.[state.tab]||state.archives[state.ticker]?.[state.tab]||state.frameworks?.tickers?.[state.ticker];
  const engine=record?.engines?.[state.tab];
- const reasons={qlib:'Scheduled Qlib coverage: NVDA, GOOG, RY.TO, AAPL, MSFT, AMZN, META, AVGO, AMD, MU, AMAT, LRCX, IREN and CIFR. Training runs in GitHub Actions; unsupported tickers do not inherit another stock’s model.',openbb:'Financial statements have not completed for this request. The separate company facts remain available below; a statement-provider failure does not establish that the company has no financial data.',tradingagents:'No completed TradingAgents report is available for this ticker. The scheduled free CPU committee has limited coverage; it does not run instantly for every ticker.',lean:'No completed LEAN simulation is available for this ticker. The verified initial simulation covers NVDA only.'};
+ const reasons={qlib:'Press Analyze to request a Qlib experiment for this ticker. The worker needs enough completed daily bars to train and evaluate both models.',openbb:'Financial statements have not completed for this request. The separate company facts remain available below; a statement-provider failure does not establish that the company has no financial data.',tradingagents:'No completed TradingAgents report is available for this ticker. Press Analyze to request the committee. Its analysts and debate run in the background.',lean:'No completed LEAN simulation is available for this ticker. Press Analyze to request the offline simulation for this ticker.'};
+ const requested=requestStatus(x,state.tab);
  const pending=state.enginePending[state.ticker]?.[state.tab];
  let out=pending?card('Calculating upstream research','<p>This ticker is being processed. Results appear when the real engine finishes.</p>'):'';
+ if(requested)out+=card('Requested research',esc(requested));
  out+=card(names[state.tab]+' · Integration status',line('Upstream engine',['operational','operational_historical'].includes(engine?.status)?(state.tab==='openbb'?'STATEMENTS RETRIEVED':'RUN COMPLETED · historical research'):(pending?'CALCULATING':state.engines[state.ticker]?.[state.tab]?'REQUEST FAILED · retry available':'NOT YET RUN FOR THIS TICKER'))+'<p>'+esc(['operational','operational_historical'].includes(engine?.status)?'Executed with the actual upstream package. Check the input dates below; historical tests do not establish a live trading edge.':(pending?'Waiting for the real engine. No result has been claimed.':((['lean','tradingagents','openbb','qlib'].includes(state.tab)?reasons[state.tab]:engine?.reason)||reasons[state.tab]||'No completed upstream run is available for this ticker.')))+'</p>');
  if(['operational','operational_historical'].includes(engine?.status)){
   // Never silently attach an archived backtest to a newer live ticker response.
@@ -229,7 +232,7 @@ function integratedView(x){
  const labels={openbb:'OpenBB · business statements',qlib:'Qlib · prediction testing',tradingagents:'TradingAgents · AI debate',vectorbt:'VectorBT · strategy testing',lean:'LEAN · execution simulation'};
  for(const [key,label] of Object.entries(labels)){
   const record=live[key]||state.archives[x.ticker]?.[key]||historic,e=record?.engines?.[key];
-  body+=line(label,state.enginePending[x.ticker]?.[key]?'Calculating for '+x.ticker:e?.status==='operational'?'Statements retrieved':e?.status==='operational_historical'?'Historical test · through '+record.data_last_session:'Unavailable — no result claimed');
+  body+=line(label,state.enginePending[x.ticker]?.[key]?'Calculating for '+x.ticker:e?.status==='operational'?'Statements retrieved':e?.status==='operational_historical'?'Historical research · '+(record.data_last_session||record.research_date):requestStatus(x,key)||'No completed research for this ticker');
  }
  body+='<p><b>What this means for a trade:</b> a trend describes what prices have done. A backtest measures one fixed rule in the past. Neither proves what happens next. Check the engine tabs for evidence and assumptions.</p>';
  return card('One ticker · integrated evidence',body)+card('Learn from this chart','<p><b>1H:</b> short-term movement. <b>4H:</b> the broader intraday setup. <b>Daily:</b> swing context. <b>Weekly:</b> the larger trend. A short-term bounce can occur during a longer-term decline.</p><p><b>Support / resistance:</b> observed price levels, not promises. <b>RSI:</b> recent momentum, not a standalone buy signal. <b>Drawdown:</b> the largest simulated loss from a previous portfolio peak.</p><p><b>Before considering a setup:</b> check the source time, the condition that would confirm the idea, the price that would invalidate it, and whether the historical strategy beat a simple baseline after costs. Missing evidence means the conclusion remains unverified.</p>');
@@ -278,3 +281,36 @@ function committeeDetails(engine,x){
  const warning=discrepancies.length?card('Conflicting figures · trading conclusion withheld',discrepancies.map(d=>'<p>'+esc(d)+'</p>').join('')+'<p>These values differ by at least fivefold. Check reporting dates and source statements. The full original opinion remains in the audit archive.</p>'):'';
  return warning+card('Read the actual committee discussion','<p>These are generated opinions from the named model. Check every factual claim against the data tabs. A completed discussion does not mean the proposed trade works.</p>')+Object.entries(reports).filter(([key,v])=>v&&(!discrepancies.length||!['final_trade_decision','trader_investment_plan','investment_plan'].includes(key))).map(([key,value])=>card(labels[key]||key,'<details><summary>Read '+esc(labels[key]||key)+'</summary><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(typeof value==='string'?value:JSON.stringify(value,null,2))+'</div></details>')).join('');
 }
+
+
+function requestStatus(x,engine){
+ const ticket=state.tickets[x.ticker];
+ if(!backgroundEngines.includes(engine)||!ticket||ticket.session!==x.last_closed_bar_date)return '';
+ if(ticket.status==='full')return 'Research intake is full. Retry Analyze later.';
+ if(ticket.status==='intake_unavailable')return 'Research intake is temporarily unavailable. Retry Analyze.';
+ return ticket[engine]||'Request received by the Space. GitHub normally collects requests twice an hour. A Space restart before collection can require pressing Analyze again.';
+}
+async function optionalResearchFile(url){
+ try{return await fetchJSON(url,20000);}catch(e){if(e.status===404||e instanceof SyntaxError)return null;throw e;}
+}
+async function loadRequested(symbol,id){
+ const ticket=state.tickets[symbol];if(!ticket||ticket.status!=='received')return;
+ const url='https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/requested/'+encodeURIComponent(symbol)+'/'+encodeURIComponent(ticket.session)+'/';
+ try{
+  const receipt=await optionalResearchFile(url+'request.json');
+  if(!receipt||receipt.symbol!==symbol||receipt.session!==ticket.session||id!==state.request)return;
+  await Promise.all(backgroundEngines.map(async engine=>{
+   const result=await optionalResearchFile(url+engine+'.json');
+   if(id!==state.request||ticket!==state.tickets[symbol])return;
+   if(result?.symbol===symbol&&result.engines?.[engine]?.status==='operational_historical'){
+    state.archives[symbol]??={};state.archives[symbol][engine]=result;
+    ticket[engine]='Completed for '+symbol+' · '+when(result.calculated_at_utc);
+   }else{
+    const failed=await optionalResearchFile(url+engine+'-failure.json');
+    ticket[engine]=failed?(failed.attempts>=3?'Three attempts failed. Inspect GitHub Actions for provider or engine errors.':'Worker attempt failed. Another attempt is eligible after one hour.'):'Saved on GitHub. Waiting for a completed '+engine+' result.';
+   }
+  }));
+  if(id===state.request&&state.ticker===symbol)render();
+ }catch{if(id===state.request&&state.ticker===symbol){for(const e of backgroundEngines)ticket[e]??='Request received. Could not check GitHub for completion.';render();}}
+}
+setInterval(()=>{if(!document.hidden&&state.tickets[state.ticker])loadRequested(state.ticker,state.request)},120000);

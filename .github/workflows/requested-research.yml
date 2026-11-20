@@ -1,0 +1,132 @@
+name: Process requested ticker research
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '8,38 * * * *'
+  push:
+    branches: [main]
+    paths: ['.github/workflows/requested-research.yml','research/requested/**']
+permissions:
+  contents: write
+concurrency:
+  group: requested-ticker-workers
+  cancel-in-progress: false
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      qlib_symbol: ${{ steps.pick.outputs.qlib_symbol }}
+      qlib_session: ${{ steps.pick.outputs.qlib_session }}
+      lean_symbol: ${{ steps.pick.outputs.lean_symbol }}
+      lean_session: ${{ steps.pick.outputs.lean_session }}
+      tradingagents_symbol: ${{ steps.pick.outputs.tradingagents_symbol }}
+      tradingagents_session: ${{ steps.pick.outputs.tradingagents_session }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: pick
+        run: python research/requested/queue.py
+      - run: bash research/requested/publish.sh
+  qlib:
+    needs: intake
+    if: needs.intake.outputs.qlib_symbol != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      RESEARCH_SYMBOL: ${{ needs.intake.outputs.qlib_symbol }}
+      REQUEST_SESSION: ${{ needs.intake.outputs.qlib_session }}
+      RESEARCH_SYMBOLS: ${{ needs.intake.outputs.qlib_symbol }}
+      COMMITTEE_SYMBOL: ${{ needs.intake.outputs.qlib_symbol }}
+      TRADINGAGENTS_REVISION: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-research.txt
+      - run: python -m scripts.current_research
+      - name: Validate and save engine output
+        run: python research/requested/queue.py qlib success
+      - name: Save failed attempt for retry
+        if: failure()
+        run: python research/requested/queue.py qlib failure
+      - name: Publish result or failure status
+        if: always()
+        run: bash research/requested/publish.sh
+  lean:
+    needs: intake
+    if: needs.intake.outputs.lean_symbol != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      RESEARCH_SYMBOL: ${{ needs.intake.outputs.lean_symbol }}
+      REQUEST_SESSION: ${{ needs.intake.outputs.lean_session }}
+      RESEARCH_SYMBOLS: ${{ needs.intake.outputs.lean_symbol }}
+      COMMITTEE_SYMBOL: ${{ needs.intake.outputs.lean_symbol }}
+      TRADINGAGENTS_REVISION: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m scripts.prepare_lean
+      - name: Run official upstream LEAN image without brokerage access
+        run: |
+          docker pull quantconnect/lean:latest
+          docker image inspect quantconnect/lean:latest --format '{{.Id}}' > lean-work/image.txt
+          docker run --rm --network none -v "$PWD/lean-work:/kratos" --entrypoint /bin/bash quantconnect/lean:latest -c 'cd /Lean/Launcher/bin/Debug && dotnet QuantConnect.Lean.Launcher.dll --config /kratos/config.json'
+      - run: python -m scripts.collect_lean
+      - name: Validate and save engine output
+        run: python research/requested/queue.py lean success
+      - name: Save failed attempt for retry
+        if: failure()
+        run: python research/requested/queue.py lean failure
+      - name: Publish result or failure status
+        if: always()
+        run: bash research/requested/publish.sh
+  tradingagents:
+    needs: intake
+    if: needs.intake.outputs.tradingagents_symbol != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    env:
+      RESEARCH_SYMBOL: ${{ needs.intake.outputs.tradingagents_symbol }}
+      REQUEST_SESSION: ${{ needs.intake.outputs.tradingagents_session }}
+      RESEARCH_SYMBOLS: ${{ needs.intake.outputs.tradingagents_symbol }}
+      COMMITTEE_SYMBOL: ${{ needs.intake.outputs.tradingagents_symbol }}
+      TRADINGAGENTS_REVISION: 9fa1196fffbcfd9de5146d2dd2869df84ab99838
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated upstream package
+        run: pip install "git+https://github.com/TauricResearch/TradingAgents.git@$TRADINGAGENTS_REVISION"
+      - name: Start free local model inside hosted runner
+        run: |
+          docker run -d --name ollama -p 127.0.0.1:11434:11434 ollama/ollama:0.13.0
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:11434/api/tags; then break; fi
+            sleep 2
+          done
+          docker exec ollama ollama pull qwen2.5:1.5b
+          printf 'FROM qwen2.5:1.5b\nPARAMETER num_ctx 8192\nPARAMETER num_predict 384\nPARAMETER temperature 0\n' > /tmp/Modelfile
+          docker cp /tmp/Modelfile ollama:/tmp/Modelfile
+          docker exec ollama ollama create kratos-committee -f /tmp/Modelfile
+      - name: Execute actual upstream committee
+        run: python scripts/committee_research.py
+      - name: Validate and save engine output
+        run: python research/requested/queue.py tradingagents success
+      - name: Save failed attempt for retry
+        if: failure()
+        run: python research/requested/queue.py tradingagents failure
+      - name: Publish result or failure status
+        if: always()
+        run: bash research/requested/publish.sh

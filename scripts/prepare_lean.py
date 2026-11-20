@@ -1,15 +1,17 @@
 """Generate real-source custom-data input and a strictly offline LEAN backtest config."""
-import json
+import json, os
+from kratos.data import valid_symbol
 from pathlib import Path
 from kratos.engine import analyze
 from scripts.publish_snapshot import pack
 root=Path('lean-work');(root/'prices').mkdir(parents=True,exist_ok=True)
-p=pack('NVDA',analyze('NVDA'))
+symbol=valid_symbol(os.getenv('RESEARCH_SYMBOL','NVDA'))
+p=pack(symbol,analyze(symbol))
 rows=p['technical']['candles']['1D']
 for r in rows:
     day=r['time'][:10]
     (root/'prices'/(day+'.csv')).write_text(f'{day}T09:30:00,{r["open"]},0\n{day}T16:00:00,{r["close"]},1\n')
-(root/'input.json').write_text(json.dumps({'symbol':'NVDA','source':p['provider'],'data_last_session':p['last_closed_bar_date'],'source_retrieved_at_utc':p['retrieved_at_utc'],'rows':rows}))
+(root/'input.json').write_text(json.dumps({'symbol':symbol,'source':p['provider'],'data_last_session':p['last_closed_bar_date'],'source_retrieved_at_utc':p['retrieved_at_utc'],'rows':rows}))
 config={
  'environment':'backtesting','algorithm-type-name':'KratosResearch','algorithm-language':'Python',
  'algorithm-location':'/kratos/main.py','data-folder':'/Lean/Data','results-destination-folder':'/kratos/results',

@@ -40,7 +40,7 @@ def run(root=Path('lean-work'),output=Path('site/data')):
             'limitations':['Custom reported open/close observations, not a licensed exchange execution feed.',
                 '0.10% fee and 0.05% slippage per fill; no order-book simulation, dividends or fill-capacity model.',
                 'Benchmark-dependent statistics use a constant benchmark, not a market index.',
-                'Only NVDA has been run. No live brokerage connection or orders.']}}}
+                'Single-symbol simulation in nominal price units. No FX conversion or live brokerage orders.']}}}
     archive=output/'lean-runs';archive.mkdir(parents=True,exist_ok=True)
     (archive/(fingerprint(record)+'.json')).write_text(json.dumps(record,indent=2)+'\n')
     (output/'lean-latest.json').write_text(json.dumps({'tickers':{source['symbol']:record}},indent=2)+'\n')
