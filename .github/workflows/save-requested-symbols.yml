@@ -1,0 +1,23 @@
+name: Save submitted ticker requests
+on:
+  schedule:
+    - cron: '3,18,33,48 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/save-requested-symbols.yml']
+permissions:
+  contents: write
+concurrency:
+  group: kratos-save-requested-symbols
+  cancel-in-progress: false
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect submitted symbols while longer research jobs are running
+        run: python research/requested/queue.py
+      - name: Save new requests for the workers
+        run: bash research/requested/publish.sh

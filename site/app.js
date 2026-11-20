@@ -294,7 +294,7 @@ function requestStatus(x,engine){
  if(!backgroundEngines.includes(engine)||!ticket||ticket.session!==x.last_closed_bar_date)return '';
  if(ticket.status==='full')return 'Research intake is full. Retry Analyze later.';
  if(ticket.status==='intake_unavailable')return 'Research intake is temporarily unavailable. Retry Analyze.';
- return ticket[engine]||'Request received by the Space. GitHub normally collects requests twice an hour. This tab retries intake during its regular refresh until GitHub confirms collection.';
+ return ticket[engine]||'Request received by the Space. GitHub intake is scheduled every 15 minutes. Research workers check twice an hour. This tab retries intake during its regular refresh until GitHub confirms collection.';
 }
 async function optionalResearchFile(url){
  try{return await fetchJSON(url,20000);}catch(e){if(e.status===404||e instanceof SyntaxError)return null;throw e;}
