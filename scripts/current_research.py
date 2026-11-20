@@ -14,6 +14,20 @@ from scripts.publish_snapshot import pack
 
 ROOT=Path(__file__).resolve().parents[1]/'site/data'
 
+def last_completed(symbol):
+    """Recover an actual, dated two-model experiment without changing its timestamps."""
+    candidates = (ROOT / 'framework-runs' / symbol).glob('*.json')
+    latest = None
+    for path in candidates:
+        record = json.loads(path.read_text())
+        model = record.get('engines', {}).get('qlib', {})
+        if record.get('symbol') != symbol or not model.get('model_comparison'):
+            continue
+        if latest is None or (record['data_last_session'], record['calculated_at_utc']) > (latest['data_last_session'], latest['calculated_at_utc']):
+            latest = record
+    return latest
+
+
 def run():
     index={}
     for raw in os.getenv('RESEARCH_SYMBOLS','NVDA,GOOG,RY.TO,AAPL,MSFT,AMZN,META,AVGO,AMD,MU,AMAT,LRCX,IREN,CIFR').split(','):
@@ -36,11 +50,18 @@ def run():
             archive.mkdir(parents=True,exist_ok=True)
             path=archive/(fingerprint(record)+'.json')
             path.write_text(json.dumps(record,allow_nan=False,indent=2)+'\n')
+            if record['engines']['qlib'].get('status') != 'operational_historical':
+                raise ValueError('Model experiment did not complete')
             index[symbol]=record
             print(symbol,{k:v['status'] for k,v in record['engines'].items()},flush=True)
         except Exception as exc:
-            index[symbol]={'symbol':symbol,'engines':{},'error':type(exc).__name__,
-                'calculated_at_utc':datetime.now(timezone.utc).isoformat()}
+            prior = last_completed(symbol)
+            index[symbol] = prior or {'symbol': symbol, 'engines': {}}
+            index[symbol]['refresh_failure'] = {
+                'error': type(exc).__name__,
+                'attempted_at_utc': datetime.now(timezone.utc).isoformat(),
+                'retained_prior_result': prior is not None,
+            }
             print(symbol,'FAILED',type(exc).__name__,flush=True)
     (ROOT/'current-research.json').write_text(json.dumps({'tickers':index},allow_nan=False,indent=2)+'\n')
 
