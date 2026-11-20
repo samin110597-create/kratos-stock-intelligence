@@ -159,6 +159,11 @@ function frameworkView(x){
  const names={openbb:'OpenBB',qlib:'Microsoft Qlib',tradingagents:'TradingAgents',vectorbt:'VectorBT',lean:'QuantConnect LEAN'};
  const record=state.engines[state.ticker]?.[state.tab]||state.archives[state.ticker]?.[state.tab]||state.frameworks?.tickers?.[state.ticker];
  const engine=record?.engines?.[state.tab];
+ const archiveBase='https://github.com/samin110597-create/kratos-stock-intelligence/';
+ const folder={lean:'lean-runs',tradingagents:'committee-runs'}[state.tab]||'framework-runs';
+ const archiveURL=record?.requestSession
+  ?archiveBase+'blob/main/site/data/requested/'+encodeURIComponent(x.ticker)+'/'+encodeURIComponent(record.requestSession)+'/'+state.tab+'.json'
+  :archiveBase+'tree/main/site/data/'+folder;
  const reasons={qlib:'Press Analyze to request a Qlib experiment for this ticker. The worker needs enough completed daily bars to train and evaluate both models.',openbb:'Financial statements have not completed for this request. The separate company facts remain available below; a statement-provider failure does not establish that the company has no financial data.',tradingagents:'No completed TradingAgents report is available for this ticker. Press Analyze to request the committee. Its analysts and debate run in the background.',lean:'No completed LEAN simulation is available for this ticker. Press Analyze to request the offline simulation for this ticker.'};
  const requested=requestStatus(x,state.tab);
  const pending=state.enginePending[state.ticker]?.[state.tab];
@@ -170,10 +175,10 @@ function frameworkView(x){
   if(!['openbb','tradingagents'].includes(state.tab)&&record.data_last_session!==x.last_closed_bar_date)out+=card('Older historical experiment','<p>This experiment uses a different dataset date. It is historical evidence only and does not describe the current ticker price.</p>');
   out+=card('Historical dataset · not today’s forecast',line(state.tab==='openbb'?'Latest statement period':state.tab==='tradingagents'?'Research date (not a verified quote time)':'Data through',record.data_last_session||record.research_date||'Not recorded')+line('Source',record.source)+line('Data retrieved',when(record.source_retrieved_at_utc))+line('Calculated',when(record.calculated_at_utc))+line('Framework version',engine.version)+'<p>'+esc(engine.method)+'</p><p class="hint">Input SHA-256: '+esc(record.input_sha256)+'</p>');
   if(state.tab==='qlib')out+=qlibDetails(engine,record,x.currency)+card('Out-of-sample model comparison',line('Held-out sessions',engine.test_samples)+line('Qlib mean absolute return error',val(engine.return_mae*100,3)+' percentage points')+line('No-change baseline error',val(engine.no_change_mae*100,3)+' percentage points')+line('Improvement over no-change',val(engine.skill_vs_no_change*100,2)+'%')+line('Historical direction accuracy',val(engine.direction_accuracy*100,1)+'%')+'<p class="hint">Negative improvement means the model was worse than predicting no change. This small test does not establish a reliable trading edge.</p>');
-  if(state.tab==='tradingagents')out+=committeeDetails(engine,x)+card('AI committee · verification boundary','<p>The actual upstream committee completed. Its generated opinions are not independently verified and are not used to issue a buy/sell instruction.</p><a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/committee-runs">Inspect full debate and risk discussion in the audit archive</a>');
+  if(state.tab==='tradingagents')out+=committeeDetails(engine,x)+card('AI committee · verification boundary','<p>The actual upstream committee completed. Its generated opinions are not independently verified and are not used to issue a buy/sell instruction.</p><a href="'+esc(archiveURL)+'">Inspect full debate and risk discussion in the audit archive</a>');
   if(state.tab==='lean')out+=card('LEAN simulation results',Object.entries(engine.statistics||{}).filter(([k])=>['Total Orders','Net Profit','Drawdown','Start Equity','End Equity','Average Win','Average Loss','Win Rate','Total Fees'].includes(k)).map(([k,v])=>line(k,v)).join(''));
   if(state.tab==='vectorbt')out+=card('Measured historical strategy results',line('Net total return',val(engine.total_return*100,2)+'%')+line('Maximum drawdown',val(engine.max_drawdown*100,2)+'%')+line('Buy and hold price return (before costs)',num(engine.buy_hold_price_return)?val(engine.buy_hold_price_return*100,2)+'%':'Unavailable')+line('Closed trades',engine.closed_trades)+line('Closed-trade win rate',num(engine.win_rate)?val(engine.win_rate*100,1)+'%':'No closed trades')+line('Costs per fill','0.10% fee + 0.05% slippage')+equityChart(engine.equity));
-  out+=card('Limits & reproducibility',(engine.limitations||[]).map(v=>'<p>'+esc(v)+'</p>').join('')+(state.engines[state.ticker]?.[state.tab]?'<p class="hint">This on-demand result is cached temporarily; it has not been saved to the durable forecast archive.</p>':'<a href="https://github.com/samin110597-create/kratos-stock-intelligence/tree/main/site/data/framework-runs">Inspect immutable historical run files</a>'));
+  out+=card('Limits & reproducibility',(engine.limitations||[]).map(v=>'<p>'+esc(v)+'</p>').join('')+(state.engines[state.ticker]?.[state.tab]?'<p class="hint">This on-demand result is cached temporarily; it has not been saved to the durable forecast archive.</p>':'<a href="'+esc(archiveURL)+'">Inspect immutable historical run files</a>'));
  }
  if(state.tab==='openbb'&&engine?.statements)out+=statementView(engine);
  if(state.tab==='openbb')out+=card('Preserved Kratos financial facts',(x.fundamentals?.facts||[]).map(z=>line(z.label,z.value)).join('')||'<p>No financial facts available.</p>');
@@ -310,7 +315,7 @@ async function loadRequested(symbol,id){
    const result=await optionalResearchFile(url+engine+'.json');
    if(id!==state.request||ticket!==state.tickets[symbol])return;
    if(result?.symbol===symbol&&result.engines?.[engine]?.status==='operational_historical'){
-    rememberResearch(symbol,engine,result);
+    rememberResearch(symbol,engine,result,ticket.session);
     ticket[engine]='Completed for '+symbol+' · '+when(result.calculated_at_utc);
    }else{
     const failed=await optionalResearchFile(url+engine+'-failure.json');
@@ -322,13 +327,13 @@ async function loadRequested(symbol,id){
 }
 setInterval(()=>{if(!document.hidden&&state.tickets[state.ticker])loadRequested(state.ticker,state.request)},120000);
 
-function rememberResearch(symbol,engine,record){
+function rememberResearch(symbol,engine,record,requestSession){
  if(record?.symbol!==symbol||record.engines?.[engine]?.status!=='operational_historical')return;
  state.archives[symbol]??={};
  const prior=state.archives[symbol][engine];
  const date=String(record.data_last_session||record.research_date||'');
  const priorDate=String(prior?.data_last_session||prior?.research_date||'');
- if(!prior||date>priorDate||(date===priorDate&&Date.parse(record.calculated_at_utc)>=Date.parse(prior.calculated_at_utc)))state.archives[symbol][engine]=record;
+ if(!prior||date>priorDate||(date===priorDate&&Date.parse(record.calculated_at_utc)>=Date.parse(prior.calculated_at_utc)))state.archives[symbol][engine]=requestSession?{...record,requestSession}:record;
 }
 async function restoreRequested(symbol,id){
  const base='https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/requested/'+encodeURIComponent(symbol)+'/';
@@ -336,6 +341,6 @@ async function restoreRequested(symbol,id){
   const ptr=await optionalResearchFile(base+'latest-'+engine+'.json');
   if(id!==state.request||ptr?.symbol!==symbol||!/^\d{4}-\d{2}-\d{2}$/.test(ptr.session))return;
   const record=await optionalResearchFile(base+ptr.session+'/'+engine+'.json');
-  if(id===state.request&&record?.symbol===symbol){rememberResearch(symbol,engine,record);if(state.ticker===symbol)render();}
+  if(id===state.request&&record?.symbol===symbol){rememberResearch(symbol,engine,record,ptr.session);if(state.ticker===symbol)render();}
  }));
 }
