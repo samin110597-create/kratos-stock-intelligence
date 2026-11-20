@@ -39,7 +39,11 @@ async function selectTicker(raw,fetchNew=true,background=false){
  if(!enabled&&fetchNew&&!el('archive-mode')?.checked){state.ticker=t;renderUnavailable('The live Python backend is not connected. No current price, trend or trading levels can be verified for '+t+'.');return;}
  if(enabled&&fetchNew&&state.config.personal_access_required&&!el('access-token')?.value){notify('Enter your personal KRATOS access token above, then press Analyze. Use the separately configured backend access token; never enter a financial provider key.',true);el('access-token')?.focus();return;}
  if(enabled&&fetchNew){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='Requesting new research for '+t+'…';el('analyze').disabled=true;el('analyze').textContent='Analyzing…';notify('Analyzing '+t+'… The free server may take about a minute to wake up. Keep this page open.');
-  try{const response=await analyzeWithRetry(t,id,background);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');if(response.research_request)state.tickets[t]={session:response.ticker.last_closed_bar_date,status:response.research_request};const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
+  try{const response=await analyzeWithRetry(t,id,background);if(id!==state.request)return;if(response.ticker?.ticker!==t)throw Error('Backend returned a different ticker; result rejected.');if(response.research_request){
+    const same=state.tickets[t]?.session===response.ticker.last_closed_bar_date;
+    state.tickets[t]={...(same?state.tickets[t]:{}),session:response.ticker.last_closed_bar_date,status:response.research_request};
+    try{sessionStorage.setItem('kratos-selected-research',t)}catch{}
+   }const prior=state.feed.tickers[t];response.ticker.data_changed=prior?.data_version&&response.ticker.data_version?prior.data_version!==response.ticker.data_version:null;state.feed.tickers[t]=response.ticker;}
   catch(e){if(id!==state.request)return;state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent='No new result. Retry when the provider or backend is available.';notify('On-demand analysis failed: '+e.message,true);return}
   finally{if(id===state.request){el('analyze').disabled=false;el('analyze').textContent='Analyze →'}}
  }
@@ -139,13 +143,15 @@ fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.t
  if(el('personal-access'))el('personal-access').hidden=!state.config.personal_access_required;
  el('connection').textContent=state.config.same_origin_api||state.config.api_url?'On-demand Python analysis enabled. Any supported US/TSX ticker can be requested.':(state.config.hosting_reason||'Historical archive · Python hosting not connected');
  try{await loadFeed()}catch(e){notify('Historical archive unavailable; on-demand search remains available.',true)}
- const first=new URLSearchParams(location.search).get('ticker')||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error)||'NVDA';
- await selectTicker(first,!!(state.config.same_origin_api||state.config.api_url));
+ let previousSymbol=null;try{previousSymbol=sessionStorage.getItem('kratos-selected-research')}catch{}
+ const chosen=new URLSearchParams(location.search).get('ticker')||previousSymbol;
+ const first=chosen||Object.keys(state.feed.tickers).find(k=>!state.feed.tickers[k].error)||'NVDA';
+ await selectTicker(first,!!(state.config.same_origin_api||state.config.api_url),!!chosen);
 }
 if(el('archive-mode'))el('archive-mode').onchange=()=>{if(state.ticker)selectTicker(state.ticker,!el('archive-mode').checked)};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;if(state.ticker)render()});
 el('search').onsubmit=e=>{e.preventDefault();selectTicker(el('ticker').value,true,!el('archive-mode').checked)};
-setInterval(async()=>{if(document.hidden)return;try{if(state.ticker&&(state.config.same_origin_api||state.config.api_url))await selectTicker(state.ticker);else{await loadFeed();if(state.ticker)render()}}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
+setInterval(async()=>{if(document.hidden)return;try{if(state.ticker&&(state.config.same_origin_api||state.config.api_url))await selectTicker(state.ticker,true,!!state.tickets[state.ticker]&&!state.tickets[state.ticker].saved);else{await loadFeed();if(state.ticker)render()}}catch(e){notify('Snapshot refresh failed: '+e.message,true)}},900000);
 setInterval(()=>{if(state.ticker&&!document.hidden)render()},60000);
 boot();
 
@@ -288,7 +294,7 @@ function requestStatus(x,engine){
  if(!backgroundEngines.includes(engine)||!ticket||ticket.session!==x.last_closed_bar_date)return '';
  if(ticket.status==='full')return 'Research intake is full. Retry Analyze later.';
  if(ticket.status==='intake_unavailable')return 'Research intake is temporarily unavailable. Retry Analyze.';
- return ticket[engine]||'Request received by the Space. GitHub normally collects requests twice an hour. A Space restart before collection can require pressing Analyze again.';
+ return ticket[engine]||'Request received by the Space. GitHub normally collects requests twice an hour. This tab retries intake during its regular refresh until GitHub confirms collection.';
 }
 async function optionalResearchFile(url){
  try{return await fetchJSON(url,20000);}catch(e){if(e.status===404||e instanceof SyntaxError)return null;throw e;}
@@ -299,6 +305,7 @@ async function loadRequested(symbol,id){
  try{
   const receipt=await optionalResearchFile(url+'request.json');
   if(!receipt||receipt.symbol!==symbol||receipt.session!==ticket.session||id!==state.request)return;
+  ticket.saved=true;
   await Promise.all(backgroundEngines.map(async engine=>{
    const result=await optionalResearchFile(url+engine+'.json');
    if(id!==state.request||ticket!==state.tickets[symbol])return;
