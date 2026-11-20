@@ -45,7 +45,7 @@ async function selectTicker(raw,fetchNew=true,background=false){
  }
  const x=state.feed.tickers[t];if(!x||x.error){state.ticker=null;el('dashboard').hidden=true;el('intro').hidden=false;el('intro').textContent=enabled?'No valid result returned.':(state.config.hosting_reason||'On-demand backend unavailable. Only explicitly dated archived research is available.');notify(x?.error||t+' has no published snapshot. No analysis has been invented.',true);return}
  state.ticker=t;el('dashboard').hidden=false;el('intro').hidden=true;render();
- if(fetchNew&&enabled&&currentResult(x)&&!el('archive-mode')?.checked){loadEngines(t,id);if(state.tickets[t])loadRequested(t,id);}
+ if(fetchNew&&enabled&&currentResult(x)&&!el('archive-mode')?.checked){loadEngines(t,id);restoreRequested(t,id);if(state.tickets[t])loadRequested(t,id);}
 }
 function render(){const x=state.feed.tickers[state.ticker];if(!x)return;
  if(!el('archive-mode')?.checked&&!currentResult(x)){renderUnavailable('Fresh analysis unavailable. Archived prices and trading levels are hidden.');return;}const t=x.technical||{},d=x.technical_plan||x.decision||{},f=freshness(x),m=v=>money(v,x.currency);let out='';
@@ -133,7 +133,7 @@ function candles(data,zones,plan){const rows=data.filter(r=>['open','high','low'
 }
 async function loadFeed(){const feed=await fetchJSON('./data/snapshots.json',20000);if(!feed?.tickers)throw Error('Invalid snapshot file');try{const plans=await fetchJSON('./data/plans.json',10000);for(const [symbol,p] of Object.entries(plans)){const x=feed.tickers[symbol];if(x&&p.based_on_date===x.last_closed_bar_date&&p.source_retrieved_at===x.retrieved_at_utc)x.technical_plan=p;}}catch{}for(const [symbol,current] of Object.entries(state.feed.tickers)){const incoming=feed.tickers[symbol];if(!incoming||Date.parse(current.retrieved_at_utc)>Date.parse(incoming.retrieved_at_utc))feed.tickers[symbol]=current;}state.feed=feed;tickerButtons();}
 async function boot(){
- for(const file of ['current-research.json','lean-latest.json','committee-latest.json'])fetchJSON('https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/'+file,20000).then(r=>{for(const [symbol,record] of Object.entries(r.tickers||{})){for(const [key,engine] of Object.entries(record.engines||{})){if(!['operational','operational_historical'].includes(engine.status))continue;state.archives[symbol]=state.archives[symbol]||{};state.archives[symbol][key]=record;}}if(state.ticker)render()}).catch(()=>{});
+ for(const file of ['current-research.json','lean-latest.json','committee-latest.json'])fetchJSON('https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/'+file,20000).then(r=>{for(const [symbol,record] of Object.entries(r.tickers||{})){for(const [key,engine] of Object.entries(record.engines||{})){if(!['operational','operational_historical'].includes(engine.status))continue;rememberResearch(symbol,key,record);}}if(state.ticker)render()}).catch(()=>{});
 
 fetchJSON('./data/frameworks.json',20000).then(r=>{state.frameworks=r;if(state.ticker)render()}).catch(()=>{});fetchJSON('./data/research.json',10000).then(r=>{state.research=r;if(state.ticker&&state.tab==='accuracy')render()}).catch(()=>{});try{state.config=await fetchJSON('./config.json',10000)}catch{state.config={}};
  if(el('personal-access'))el('personal-access').hidden=!state.config.personal_access_required;
@@ -303,7 +303,7 @@ async function loadRequested(symbol,id){
    const result=await optionalResearchFile(url+engine+'.json');
    if(id!==state.request||ticket!==state.tickets[symbol])return;
    if(result?.symbol===symbol&&result.engines?.[engine]?.status==='operational_historical'){
-    state.archives[symbol]??={};state.archives[symbol][engine]=result;
+    rememberResearch(symbol,engine,result);
     ticket[engine]='Completed for '+symbol+' · '+when(result.calculated_at_utc);
    }else{
     const failed=await optionalResearchFile(url+engine+'-failure.json');
@@ -314,3 +314,21 @@ async function loadRequested(symbol,id){
  }catch{if(id===state.request&&state.ticker===symbol){for(const e of backgroundEngines)ticket[e]??='Request received. Could not check GitHub for completion.';render();}}
 }
 setInterval(()=>{if(!document.hidden&&state.tickets[state.ticker])loadRequested(state.ticker,state.request)},120000);
+
+function rememberResearch(symbol,engine,record){
+ if(record?.symbol!==symbol||record.engines?.[engine]?.status!=='operational_historical')return;
+ state.archives[symbol]??={};
+ const prior=state.archives[symbol][engine];
+ const date=String(record.data_last_session||record.research_date||'');
+ const priorDate=String(prior?.data_last_session||prior?.research_date||'');
+ if(!prior||date>priorDate||(date===priorDate&&Date.parse(record.calculated_at_utc)>=Date.parse(prior.calculated_at_utc)))state.archives[symbol][engine]=record;
+}
+async function restoreRequested(symbol,id){
+ const base='https://raw.githubusercontent.com/samin110597-create/kratos-stock-intelligence/main/site/data/requested/'+encodeURIComponent(symbol)+'/';
+ await Promise.allSettled(backgroundEngines.map(async engine=>{
+  const ptr=await optionalResearchFile(base+'latest-'+engine+'.json');
+  if(id!==state.request||ptr?.symbol!==symbol||!/^\d{4}-\d{2}-\d{2}$/.test(ptr.session))return;
+  const record=await optionalResearchFile(base+ptr.session+'/'+engine+'.json');
+  if(id===state.request&&record?.symbol===symbol){rememberResearch(symbol,engine,record);if(state.ticker===symbol)render();}
+ }));
+}
