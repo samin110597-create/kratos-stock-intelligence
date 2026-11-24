@@ -1,0 +1,16 @@
+{
+  "symbol": "MSFT",
+  "forecast_recorded_at_utc": "2026-11-21T03:23:16.627700+00:00",
+  "reference_session": "2026-11-20",
+  "outcome_session": "2026-11-23",
+  "predicted_return": 4.124134257818535e-05,
+  "actual_close_return": 0.016469931411029926,
+  "absolute_error": 0.01642869006845174,
+  "no_change_absolute_error": 0.016469931411029926,
+  "direction_correct": true,
+  "evaluated_at_utc": "2026-11-24T06:17:25.129101+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "d2add306fbb8e694f3df0391731f8712f2e04ef1b9733dc17df090dd2e0207a6",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-24T06:17:22.425009+00:00"
+}
