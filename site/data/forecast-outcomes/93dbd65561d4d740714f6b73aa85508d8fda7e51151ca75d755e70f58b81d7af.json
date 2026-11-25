@@ -1,0 +1,16 @@
+{
+  "symbol": "IREN",
+  "forecast_recorded_at_utc": "2026-11-24T06:17:55.811781+00:00",
+  "reference_session": "2026-11-23",
+  "outcome_session": "2026-11-24",
+  "predicted_return": 0.0012926855772369648,
+  "actual_close_return": -0.1154371922421723,
+  "absolute_error": 0.11672987781940927,
+  "no_change_absolute_error": 0.1154371922421723,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-25T05:01:02.635310+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "93dbd65561d4d740714f6b73aa85508d8fda7e51151ca75d755e70f58b81d7af",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-25T05:01:00.216884+00:00"
+}
