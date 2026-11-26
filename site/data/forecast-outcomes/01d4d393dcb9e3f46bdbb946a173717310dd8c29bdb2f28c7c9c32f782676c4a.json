@@ -1,0 +1,16 @@
+{
+  "symbol": "AMZN",
+  "forecast_recorded_at_utc": "2026-11-25T05:00:38.471430+00:00",
+  "reference_session": "2026-11-24",
+  "outcome_session": "2026-11-25",
+  "predicted_return": 0.0012113888381660824,
+  "actual_close_return": -0.031154626895713577,
+  "absolute_error": 0.03236601573387966,
+  "no_change_absolute_error": 0.031154626895713577,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-26T04:18:23.989575+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "01d4d393dcb9e3f46bdbb946a173717310dd8c29bdb2f28c7c9c32f782676c4a",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-26T04:18:20.758278+00:00"
+}

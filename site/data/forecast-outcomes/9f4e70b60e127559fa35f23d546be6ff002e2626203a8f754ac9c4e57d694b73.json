@@ -1,0 +1,16 @@
+{
+  "symbol": "AVGO",
+  "forecast_recorded_at_utc": "2026-11-25T05:00:45.457808+00:00",
+  "reference_session": "2026-11-24",
+  "outcome_session": "2026-11-25",
+  "predicted_return": 0.0059392278551367705,
+  "actual_close_return": -0.0007307068902446812,
+  "absolute_error": 0.006669934745381452,
+  "no_change_absolute_error": 0.0007307068902446812,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-26T04:18:33.870720+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "9f4e70b60e127559fa35f23d546be6ff002e2626203a8f754ac9c4e57d694b73",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-26T04:18:30.452737+00:00"
+}

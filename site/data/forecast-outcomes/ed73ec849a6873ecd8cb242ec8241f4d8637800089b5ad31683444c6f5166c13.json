@@ -1,0 +1,16 @@
+{
+  "symbol": "AMAT",
+  "forecast_recorded_at_utc": "2026-11-25T05:00:55.704647+00:00",
+  "reference_session": "2026-11-24",
+  "outcome_session": "2026-11-25",
+  "predicted_return": 0.005277285928874696,
+  "actual_close_return": -0.03885599428709752,
+  "absolute_error": 0.044133280215972216,
+  "no_change_absolute_error": 0.03885599428709752,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-26T04:18:48.745879+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "ed73ec849a6873ecd8cb242ec8241f4d8637800089b5ad31683444c6f5166c13",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-26T04:18:45.541036+00:00"
+}
