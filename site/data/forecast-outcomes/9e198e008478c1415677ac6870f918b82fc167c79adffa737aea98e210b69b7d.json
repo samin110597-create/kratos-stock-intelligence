@@ -1,0 +1,16 @@
+{
+  "symbol": "RY.TO",
+  "forecast_recorded_at_utc": "2026-11-26T04:18:09.213246+00:00",
+  "reference_session": "2026-11-25",
+  "outcome_session": "2026-11-26",
+  "predicted_return": 0.0010383007280433563,
+  "actual_close_return": -0.0022283520825758796,
+  "absolute_error": 0.003266652810619236,
+  "no_change_absolute_error": 0.0022283520825758796,
+  "direction_correct": false,
+  "evaluated_at_utc": "2026-11-27T04:27:11.195540+00:00",
+  "meaning": "Endpoint forecast error, not executable trading profit. Vendor history may be revised.",
+  "forecast_record_id": "9e198e008478c1415677ac6870f918b82fc167c79adffa737aea98e210b69b7d",
+  "outcome_source": "Yahoo Finance (unofficial yfinance feed)",
+  "outcome_source_retrieved_at_utc": "2026-11-27T04:27:07.110580+00:00"
+}
